@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'the welcome page' do #, :js => true do #, :js => true do
   it "should have a nice look" do
     visit root_path
-    page.save_screenshot("/tmp/file.png")
+    page.save_screenshot("tmp/screenshots/welcome_spec.png")
   end
 
   it "should link to itself" do

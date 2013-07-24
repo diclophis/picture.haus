@@ -1,10 +1,12 @@
 # OSX Makefile
 
-open: /tmp/file.png
-	open /tmp/file.png
+screenshots = $(patsubst %,tmp/screenshots/%, $(patsubst spec/features/%.rb, %.png, $(wildcard spec/features/*.rb)))
 
-/tmp/file.png: app/*
+open: $(screenshots) 
+	open tmp/screenshots/* 
+
+tmp/screenshots/%.png: app/**/* public/**/*
 	bundle exec rspec
 
 clean:
-	rm /tmp/file.png
+	rm -R tmp/screenshots
