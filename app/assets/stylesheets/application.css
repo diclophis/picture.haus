@@ -1,6 +1,6 @@
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
-div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
+div,li,h1,h2,h3,h4,h5,h6,p,a { margin: 0; padding: 0; }
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 img { border: 0; }
 body { background-color: #E8E4B4; font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; }
@@ -24,6 +24,7 @@ p { font-size: 1.25em; }
 .field_with_errors input { background-color: yellow; }
 .success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
 .notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
+.alert { border: 0.25em solid orange; background-color: yellow; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
 
 .image { float: left; margin: 0 0 2em 0; }
 .imagewrapper { clear: both; }
