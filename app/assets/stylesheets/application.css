@@ -1,11 +1,19 @@
+body { background-color: #E8E4B4; font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; }
+
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
-div,li,h1,h2,h3,h4,h5,h6,p,a { margin: 0; padding: 0; }
+
+label { display: block; }
+input { margin-right: 100%; }
+
+h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
+
+/*
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
-img { border: 0; }
-body { background-color: #E8E4B4; font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; }
 li, p { margin: 0 0 0.5em 0; }
 p { font-size: 1.25em; }
+img { border: 0; }
+*/
 
 #header { background-color: #BEB677; padding: 0.5em 0.5em 0.5em 0.5em; width: 100em; }
 #header ul { float: right; margin: 0 0 0 0; }
@@ -18,13 +26,20 @@ p { font-size: 1.25em; }
 #footer { padding: 0.5em; clear: both; width: 100em; }
 #footer p { text-align: right; padding: 0.25em; }
 
+/*
 #error_explanation { margin: 1em 4em 1em 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
 #error_explanation h2 { color: maroon; margin: 0; }
 #error_explanation ul li { list-style: square; margin: 0 0 0 1em; }
+*/
+
 .field_with_errors input { background-color: yellow; }
+div.field_with_errors { display: inline; }
+
+/*
 .success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
 .notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
 .alert { border: 0.25em solid orange; background-color: yellow; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
+*/
 
 .image { float: left; margin: 0 0 2em 0; }
 .imagewrapper { clear: both; }
