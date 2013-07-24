@@ -10,10 +10,15 @@
   <body>
     <div id="header">
       <h1>
-        <%= yield :tagline %>
+        <% if content_for? :tagline %>
+          <%= yield :tagline %>
+        <% else %>
+          <%= link_to("centerology", root_path) %>
+        <% end %>
       </h1>
     </div>
     <div id="sidebar">
+      <%= link_to "sign up", new_person_registration_path %>
     </div>
     <div id="content">
       <p class="notice"><%= notice %></p>
