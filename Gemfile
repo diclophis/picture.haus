@@ -9,9 +9,6 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
@@ -20,14 +17,14 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+group :development, :test do
+  # Poltergeist is a driver for Capybara. It allows you to run your Capybara tests on a headless WebKit browser, provided by PhantomJS.
+  gem "poltergeist"
 
-# Use unicorn as the app server
-# gem 'unicorn'
+  # Rake is a Make-like program implemented in Ruby. Tasks and dependencies arespecified in standard Ruby syntax.
+  gem "rake"
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
+  # rspec-rails is a testing framework for Rails 3.x and 4.x.
+  gem "rspec-rails"
+end
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
