@@ -4,10 +4,10 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
-# poltergeist phantomjs enabled
+# poltergeist phantomjs enabled for all capybara features
+require 'capybara/rspec'
 require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
-# NOTE: legacy? Capybara.current_driver = Capybara.javascript_driver
+Capybara.default_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
