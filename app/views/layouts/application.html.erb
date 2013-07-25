@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <title>Centerology</title>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -58,19 +57,17 @@
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0);
-        transition: transform 0.66s;
-        transform: rotateX(0deg) translateY(0px) scale3d(1.0, 1.0, 1.0);
         backface-visibility: hidden;
-        -webkit-transition: -webkit-transform 0.66s;
-        -webkit-transform: rotateX(0deg) translateY(0px) scale3d(1.0, 1.0, 1.0);
         -webkit-backface-visibility: hidden;
       }
       canvas, svg {
+        /*
         image-rendering: optimizeSpeed;
         image-rendering: -moz-crisp-edges;
         image-rendering: -webkit-optimize-contrast;
         image-rendering: optimize-contrast;
         -ms-interpolation-mode: nearest-neighbor;
+        */
         -webkit-touch-callout: none;
         -webkit-text-size-adjust: none;
         -webkit-tap-highlight-color: rgba(0,0,0,0); 
@@ -186,7 +183,7 @@
 
       void main(void)
       {
-          vec2 iMouse = vec2(sin(iGlobalTime * 0.033), 10.0 + (10.0 * sin(iGlobalTime * 0.033)));
+          vec2 iMouse = vec2(10.0 + sin(iGlobalTime * 0.033), 1.5 + (15.0 * sin(iGlobalTime * 0.033)));
           vec2 q = gl_FragCoord.xy / iResolution.xy;
           vec2 p = -1.0 + 2.0*q;
           p.x *= iResolution.x/ iResolution.y;
@@ -194,7 +191,7 @@
           
           // camera
           vec3 ro = 4.0*normalize(vec3(cos(2.75-3.0*mo.x), 0.7+(mo.y+1.0), sin(2.75-3.0*mo.x)));
-          vec3 ta = vec3(0.0, 1.0, 0.0);
+          vec3 ta = vec3(0.0, 2.0, 0.0);
           vec3 ww = normalize( ta - ro);
           vec3 uu = normalize(cross( vec3(0.0,1.0,0.0), ww ));
           vec3 vv = normalize(cross(ww,uu));

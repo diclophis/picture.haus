@@ -145,11 +145,10 @@ function onWindowResize(event) {
     if (resizer.currentHeight < resizer.minHeight) { resizer.currentHeight = resizer.minHeight; }
 
     var w = window.innerWidth;
-    var h = document.body.offsetHeight;
-    h = window.innerHeight;
+    var h = window.innerHeight;
 
-    canvas.width = w / 6.0;
-    canvas.height = h / 6.0;
+    canvas.width = w / 8.0;
+    canvas.height = h / 8.0;
 
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';

@@ -1,11 +1,11 @@
 html { width: 99% }
-body { background-color: rgba(0,0,0,0); font-size: 62.5%; width: 66%; margin: 0; padding: 0.5em; }
+body { background-color: rgba(0,0,0,0); width: 98%; margin: 0; padding: 1%; }
 
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
 
 label { display: block; }
-input { width: 90%; margin: 0.5em 100% 0.5em 0.25em; padding: 0.25em; -webkit-appearance:none; }
+input { width: 90%; margin: 0.5em auto 0.5em 0.25em; padding: 0.25em; -webkit-appearance:none; }
 input[type="submit"] { width: 33%; }
 input[type="checkbox"] { width: auto; -webkit-appearance: checkbox; }
 xinput { background: linear-gradient(to bottom, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%); }
@@ -16,7 +16,7 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 
 #sidebar > *, #content > *, #content input, #footer > * {
 /*div, #content label, #content input, #content p, #content a { */
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 /*
@@ -26,13 +26,13 @@ p { font-size: 1.25em; }
 img { border: 0; }
 */
 
-#header { background-color: #BEB677; width: 98%; padding: 1%; }
+#header { background-color: rgba(0,0,0,0.5); width: 98%; padding: 1%; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { padding: 2%; width: 29%; float: left; background: #F9F4E3; }
+#sidebar { padding: 2%; width: 29%; float: left; background: rgba(0,0,0,0.1); }
 
-#content { background-color: #f0f0f0; width: 59%; padding: 4%; float: left; }
+#content { background-color: #f0f0f0; width: 63%; padding: 1% 2% 2% 2%; float: left; }
 
 #footer { padding: 0; clear: both; width: 100%; }
 #footer p { text-align: right; padding: 0.25em; }
