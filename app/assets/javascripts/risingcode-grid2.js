@@ -24,10 +24,10 @@ var main = function() {
 
 document.addEventListener('DOMContentLoaded', main);
 
+
 function init() {
-  canvas = document.createElement("canvas");
+  canvas = document.getElementById("risingcode-canvas");
   effect = document.getElementById("risingcode-grid");
-  content = document.getElementById("content");
   setTimeout(function() {
     //var transform = perp() + " rotateX(40deg) translateY(-" + (canvas.height * 0.0)  + "px) scale3d(2.0, 1.0, 1.0)";
     //canvas.style.webkitTransform = transform;
@@ -123,10 +123,12 @@ function onWindowResize(event) {
   }
 
   effect.style.display = 'none';
-  content.style.display = 'none';
+  //content.style.display = 'none';
   paused = true;
 
   resizer.timeout = setTimeout(function() {
+    canvas = document.getElementById("risingcode-canvas");
+    effect = document.getElementById("risingcode-grid");
     var isMaxWidth = ((resizer.currentWidth === resizer.maxWidth) || (resizer.currentWidth === resizer.minWidth)),
       isMaxHeight = ((resizer.currentHeight === resizer.maxHeight) || (resizer.currentHeight === resizer.minHeight));
 
@@ -143,10 +145,11 @@ function onWindowResize(event) {
     if (resizer.currentHeight < resizer.minHeight) { resizer.currentHeight = resizer.minHeight; }
 
     var w = window.innerWidth;
-    var h = window.innerHeight;
+    var h = document.body.offsetHeight;
+    h = window.innerHeight;
 
-    canvas.width = w / 8;
-    canvas.height = h / 8;
+    canvas.width = w / 6.0;
+    canvas.height = h / 6.0;
 
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
@@ -162,12 +165,24 @@ function onWindowResize(event) {
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform2f(screenProgram.uniformsCache[ 'iResolution' ], screenWidth, screenHeight);
     effect.style.display = 'block';
-    content.style.display = 'block';
+    //content.style.display = 'block';
     paused = false;
     gl.flush();
     requestAnimationFrame(animate);
   }, event ? refreshTimeout : 0);
 }
+
+document.addEventListener('page:before-change', function() {
+  //onWindowResize();
+  effect.remove();
+  paused = true;
+});
+
+document.addEventListener('page:change', function() {
+  document.getElementById("risingcode-grid").remove();
+  //document.body.appendChild(effect);
+  //onWindowResize();
+});
 
 function animate(step) {
   time = ((step / 100000) % 1) * 1000;

@@ -1,4 +1,4 @@
-body { background-color: #E8E4B4; font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; }
+body { background-color: #8daeb7; font-size: 62.5%; width: 66%; margin: 0; padding: 0.5em; }
 
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
@@ -25,15 +25,15 @@ p { font-size: 1.25em; }
 img { border: 0; }
 */
 
-#header { background-color: #BEB677; padding: 0.5em 0.5em 0.5em 0.5em; width: 100em; }
+#header { background-color: #BEB677; width: 98%; padding: 1%; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { padding: 1em; width: 37em; float: left; background: #F9F4E3; }
+#sidebar { padding: 2%; width: 29%; float: left; background: #F9F4E3; }
 
-#content { background-color: #f0f0f0; padding: 2em 0em 2em 4em; width: 58em; float: left; }
+#content { background-color: #f0f0f0; width: 59%; padding: 4%; float: left; }
 
-#footer { padding: 0.5em; clear: both; width: 100em; }
+#footer { padding: 0; clear: both; width: 100%; }
 #footer p { text-align: right; padding: 0.25em; }
 
 #person_remember_me { margin-right: 0; }
