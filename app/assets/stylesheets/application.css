@@ -81,3 +81,33 @@ div.field_with_errors { display: inline; }
 .pagination:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 * html .pagination { height: 1%; }
 *:first-child+html .pagination { overflow: hidden; }
+
+div {
+  margin: 0;
+  padding: 0;
+  max-width: 2048px;
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+#risingcode-grid, #original-grid {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+#risingcode-grid canvas, #original-grid canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+canvas, svg {
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0); 
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0); 
+}
