@@ -12,3 +12,11 @@
 //
 //= require turbolinks
 //= require_tree .
+
+"use strict";
+
+//var strangerOnlyElements = document.getElementsByClassName("stranger-only");
+//for (var strangerOnlyElement in strangerOnlyElements) {
+//console.log(strangerOnlyElement);
+//  strangerOnlyElement.style.display = "block";
+//}
