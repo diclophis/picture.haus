@@ -4,7 +4,12 @@ a { text-decoration: none; outline: none; }
 a:active { outline: none; }
 
 label { display: block; }
-input { margin-right: 100%; }
+input { width: 42%; outline: 2px solid rgba(0,0,0,0); margin: 0.25em 100% 0.25em 0.25em; padding: 0.5em; }
+input[type="submit"] { width: 21%; }
+input[type="checkbox"] { width: auto; }
+input { background: linear-gradient(to bottom, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%); }
+input { background: -webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%); }
+input:focus { border: solid; border-width: 2px; border-color: #4c4ce8 #e7e7ef #e7e7ef #4c4ce8; outline: 2px solid rgba(0,0,0,0); }
 
 h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 
@@ -21,10 +26,14 @@ img { border: 0; }
 
 #sidebar { padding: 1em; width: 37em; float: left; background: #F9F4E3; }
 
-#content { background-color: white; padding: 2em 0em 2em 4em; width: 58em; float: left; }
+#content { background-color: #f0f0f0; padding: 2em 0em 2em 4em; width: 58em; float: left; }
 
 #footer { padding: 0.5em; clear: both; width: 100em; }
 #footer p { text-align: right; padding: 0.25em; }
+
+#person_remember_me { margin-right: 0; }
+label[for="person_remember_me"] { display: inline; }
+
 
 /*
 #error_explanation { margin: 1em 4em 1em 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
