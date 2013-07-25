@@ -14,7 +14,7 @@ if ( !window.requestAnimationFrame ) {
 
 var content, effect, canvas, gl, buffer, screenVertexPosition,
 time = 0, screenWidth = 0, screenHeight = 0,
-screenProgram, resizer = { timeout: null }, refreshTimeout = 2000;
+screenProgram, resizer = { timeout: null }, refreshTimeout = 1000;
 var target = {};
 var paused = false;
 
@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', main);
 function init() {
   canvas = document.getElementById("risingcode-canvas");
   effect = document.getElementById("risingcode-grid");
+  canvas.id = "original-canvas";
+  effect.id = "original-grid";
   setTimeout(function() {
     //var transform = perp() + " rotateX(40deg) translateY(-" + (canvas.height * 0.0)  + "px) scale3d(2.0, 1.0, 1.0)";
     //canvas.style.webkitTransform = transform;
@@ -112,10 +114,10 @@ function createShader(src, type) {
   return shader;
 }
 
-function perp() {
-  var p = "perspective(" + canvas.height / 4.0 + "px)";
-  return p;
-}
+//function perp() {
+//  var p = "perspective(" + canvas.height / 4.0 + "px)";
+//  return p;
+//}
 
 function onWindowResize(event) {
   if (resizer.timeout) {
@@ -127,8 +129,6 @@ function onWindowResize(event) {
   paused = true;
 
   resizer.timeout = setTimeout(function() {
-    canvas = document.getElementById("risingcode-canvas");
-    effect = document.getElementById("risingcode-grid");
     var isMaxWidth = ((resizer.currentWidth === resizer.maxWidth) || (resizer.currentWidth === resizer.minWidth)),
       isMaxHeight = ((resizer.currentHeight === resizer.maxHeight) || (resizer.currentHeight === resizer.minHeight));
 
@@ -160,28 +160,31 @@ function onWindowResize(event) {
     screenWidth = canvas.width;
     screenHeight = canvas.height;
 
-    canvas.style.webkitTransform = perp();
-    canvas.style.transform = perp();
+    //canvas.style.webkitTransform = perp();
+    //canvas.style.transform = perp();
+
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform2f(screenProgram.uniformsCache[ 'iResolution' ], screenWidth, screenHeight);
     effect.style.display = 'block';
     //content.style.display = 'block';
     paused = false;
-    gl.flush();
+    //gl.flush();
     requestAnimationFrame(animate);
   }, event ? refreshTimeout : 0);
 }
 
 document.addEventListener('page:before-change', function() {
   //onWindowResize();
-  effect.remove();
   paused = true;
+  //effect.remove();
 });
 
 document.addEventListener('page:change', function() {
-  document.getElementById("risingcode-grid").remove();
-  //document.body.appendChild(effect);
-  //onWindowResize();
+  //console.log(document.getElementById("risingcode-grid"));
+  console.log("foo");
+  document.body.appendChild(effect);
+  //document.getElementById("risingcode-grid").remove();
+  onWindowResize();
 });
 
 function animate(step) {

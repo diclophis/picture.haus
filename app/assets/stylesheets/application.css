@@ -1,4 +1,5 @@
-body { background-color: #8daeb7; font-size: 62.5%; width: 66%; margin: 0; padding: 0.5em; }
+html { width: 99% }
+body { background-color: rgba(0,0,0,0); font-size: 62.5%; width: 66%; margin: 0; padding: 0.5em; }
 
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
