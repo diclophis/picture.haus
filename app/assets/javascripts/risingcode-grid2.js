@@ -20,7 +20,6 @@ var paused = false;
 
 var main = function() {
   init();
-  requestAnimationFrame(animate);
 }
 
 document.addEventListener('DOMContentLoaded', main);
@@ -83,8 +82,8 @@ function compileScreenProgram() {
 
   gl.useProgram( screenProgram );
 
-  cacheUniformLocation( program, 'time' );
-  cacheUniformLocation( program, 'resolution' );
+  cacheUniformLocation( program, 'iGlobalTime' );
+  cacheUniformLocation( program, 'iResolution' );
 
   screenVertexPosition = gl.getAttribLocation(screenProgram, "position");
   gl.enableVertexAttribArray( screenVertexPosition );
@@ -143,14 +142,17 @@ function onWindowResize(event) {
     if (resizer.currentWidth < resizer.minWidth) { resizer.currentWidth = resizer.minWidth; }
     if (resizer.currentHeight < resizer.minHeight) { resizer.currentHeight = resizer.minHeight; }
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    var w = window.innerWidth;
+    var h = window.innerHeight;
 
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
+    canvas.width = w / 8;
+    canvas.height = h / 8;
 
-    effect.style.width = window.innerWidth + 'px';
-    effect.style.height = window.innerHeight + 'px';
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+
+    effect.style.width = w + 'px';
+    effect.style.height = h + 'px';
 
     screenWidth = canvas.width;
     screenHeight = canvas.height;
@@ -158,7 +160,7 @@ function onWindowResize(event) {
     canvas.style.webkitTransform = perp();
     canvas.style.transform = perp();
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform2f(screenProgram.uniformsCache[ 'resolution' ], screenWidth, screenHeight);
+    gl.uniform2f(screenProgram.uniformsCache[ 'iResolution' ], screenWidth, screenHeight);
     effect.style.display = 'block';
     content.style.display = 'block';
     paused = false;
@@ -169,7 +171,7 @@ function onWindowResize(event) {
 
 function animate(step) {
   time = ((step / 100000) % 1) * 1000;
-  gl.uniform1f(screenProgram.uniformsCache[ 'time' ], time);
+  gl.uniform1f(screenProgram.uniformsCache[ 'iGlobalTime' ], time);
   gl.drawArrays(gl.TRIANGLES, 0, 6);
   if (!paused) {
     requestAnimationFrame(animate);
