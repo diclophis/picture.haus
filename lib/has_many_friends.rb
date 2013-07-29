@@ -16,29 +16,25 @@ module HasManyFriends
                  :foreign_key => 'friend_id',
                  :class_name => 'Friendship'
         
-        has_many :friends_by_me,
+        has_many :friends_by_me, -> { where('accepted_at IS NOT NULL') },
                  :through => :friendships_by_me,
-                 :source => :friendshipped_for_me,
-                 :conditions => 'accepted_at IS NOT NULL'
+                 :source => :friendshipped_for_me
         
-        has_many :friends_for_me,
+        has_many :friends_for_me, -> { where('accepted_at IS NOT NULL') },
                  :through => :friendships_for_me,
-                 :source => :friendshipped_by_me,
-                 :conditions => 'accepted_at IS NOT NULL'
+                 :source => :friendshipped_by_me
 
     #has_many :spam_comments, conditions: { spam: true }, class_name: 'Comment'
     #should be rewritten as the following:
     #has_many :spam_comments, -> { where spam: true }, class_name: 'Comment'
 
-        has_many :pending_friends_by_me,
+        has_many :pending_friends_by_me, -> { where('accepted_at IS NULL') },
                  :through => :friendships_by_me,
-                 :source => :friendshipped_for_me,
-                 :conditions => 'accepted_at IS NULL'
+                 :source => :friendshipped_for_me
         
-        has_many :pending_friends_for_me,
+        has_many :pending_friends_for_me, -> { where('accepted_at IS NULL') },
                  :through => :friendships_for_me,
-                 :source => :friendshipped_by_me,
-                 :conditions => 'accepted_at IS NULL'
+                 :source => :friendshipped_by_me
         
         include HasManyFriends::UserExtensions::InstanceMethods
       end
@@ -64,7 +60,7 @@ module HasManyFriends
       # Accepts a user object and returns the friendship object 
       # associated with both users.
       def friendship(friend)
-        Friendship.find(:first, :conditions => ['(person_id = ? AND friend_id = ?) OR (friend_id = ? AND person_id = ?)', self.id, friend.id, self.id, friend.id])
+        Friendship.where(['(person_id = ? AND friend_id = ?) OR (friend_id = ? AND person_id = ?)', self.id, friend.id, self.id, friend.id]).first
       end
       
       # Accepts a user object and returns true if both users are
