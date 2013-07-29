@@ -45,3 +45,26 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+
+def valid_person
+  @_valid_person_id ||= 0
+  @_valid_person_id += 1
+  person = Person.new
+  person.username = "foo"
+  person.email = "foo-#{@_valid_person_id}@foo.com"
+  person.password = "qwerty123"
+  person.should be_valid
+  person
+end
+
+def valid_friendship
+  person = valid_person
+  person.save!
+  friend = valid_person
+  friend.save!
+  friendship = Friendship.new
+  friendship.friendshipped_for_me = friend
+  friendship.friendshipped_by_me = person
+  friendship
+end

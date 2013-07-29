@@ -5,7 +5,7 @@ screenshots = $(patsubst %,tmp/screenshots/%, $(patsubst spec/features/%.rb, %.p
 open: $(screenshots) 
 	open tmp/screenshots/* 
 
-tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/*
+tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/*
 	bundle exec rspec
 
 clean:
