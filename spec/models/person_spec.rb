@@ -1,9 +1,26 @@
 require 'spec_helper'
 
 describe Person do
-  it "should have a username, email and password" do
-    person = valid_person
-    person.save.should be_true
+  describe "validations" do
+    before :each do
+      @person = valid_person
+      @person.should be_valid
+    end
+
+    it "should have a username" do
+      @person.username = ""
+      @person.should_not be_valid
+    end
+
+    it "should have a email" do
+      @person.email = ""
+      @person.should_not be_valid
+    end
+
+    it "should have a password" do
+      @person.password = ""
+      @person.should_not be_valid
+    end
   end
 
   it "should have friends" do
