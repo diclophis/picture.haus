@@ -17,6 +17,7 @@ time = 0, screenWidth = 0, screenHeight = 0,
 screenProgram, resizer = { timeout: null }, refreshTimeout = 1000;
 var target = {};
 var paused = false;
+var precision = 6.0;
 
 var main = function() {
   init();
@@ -48,7 +49,11 @@ function init() {
 
 function compileScreenProgram() {
   var program = gl.createProgram();
-  var fragment = document.getElementById( 'example' ).textContent;
+
+  var shaders = document.getElementsByClassName("shader");
+  var debugShader = document.getElementsByClassName("debug")[0];
+  var fragment = debugShader.textContent || shaders[Math.floor(Math.random() * shaders.length)].textContent;
+  //var fragment = document.getElementById( 'starnest' ).textContent;
   var vertex = document.getElementById( 'vertexShader' ).textContent;
   var vs = createShader( vertex, gl.VERTEX_SHADER );
   var fs = createShader( fragment, gl.FRAGMENT_SHADER );
@@ -115,8 +120,8 @@ function onWindowResize(event) {
     if (resizer.currentHeight < resizer.minHeight) { resizer.currentHeight = resizer.minHeight; }
     var w = window.innerWidth;
     var h = window.innerHeight;
-    canvas.width = w / 8.0;
-    canvas.height = h / 8.0;
+    canvas.width = w / precision;
+    canvas.height = h / precision;
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     effect.style.width = w + 'px';

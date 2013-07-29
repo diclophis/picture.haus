@@ -31,9 +31,9 @@ img { border: 0; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { padding: 2%; width: 29%; float: left; background: rgba(0,0,0,0.1); }
+#sidebar { padding: 2%; width: 29%; float: left; background: rgba(0,0,0,0.1); min-height: 1em; }
 
-#content { background-color: #f0f0f0; width: 63%; padding: 1% 2% 2% 2%; float: left; }
+#content { background-color: #f0f0f0; width: 63%; padding: 1% 2% 2% 2%; float: left; min-height: 8em; }
 
 #footer { padding: 0; clear: both; width: 100%; }
 #footer p { text-align: right; padding: 0.25em; }
