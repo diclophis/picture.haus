@@ -27,11 +27,11 @@ p { font-size: 1.25em; }
 img { border: 0; }
 */
 
-#header { background-color: rgba(0,0,0,0.5); width: 98%; padding: 1%; }
+#header { background-color: rgba(255,255,255,0.75); width: 98%; padding: 1%; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { padding: 2%; width: 29%; float: left; background: rgba(0,0,0,0.1); min-height: 1em; }
+#sidebar { padding: 2%; width: 29%; float: left; background: rgba(0,0,0,0.5); min-height: 1em; }
 
 #content { background-color: #f0f0f0; width: 63%; padding: 1% 2% 2% 2%; float: left; min-height: 8em; }
 

@@ -6,7 +6,96 @@
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
-<script id="example" class="shader debug" type="x-shader/x-fragment">
+    <script id="noise" class="shader" type="x-shader/x-fragment">
+      #ifdef GL_ES
+      precision highp float;
+      #endif
+      uniform float iGlobalTime;
+      uniform vec2 iResolution;
+//
+// Description : Array and textureless GLSL 2D simplex noise function.
+// Author : Ian McEwan, Ashima Arts.
+// Maintainer : ijm
+// Lastmod : 20110822 (ijm)
+// License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+// Distributed under the MIT License. See LICENSE file.
+// https://github.com/ashima/webgl-noise
+//
+
+vec3 mod289(vec3 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec2 mod289(vec2 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec3 permute(vec3 x) {
+  return mod289(((x*34.0)+1.0)*x);
+}
+
+float snoise(vec2 v)
+  {
+  const vec4 C = vec4(0.211324865405187, // (3.0-sqrt(3.0))/6.0
+                      0.366025403784439, // 0.5*(sqrt(3.0)-1.0)
+                     -0.577350269189626, // -1.0 + 2.0 * C.x
+                      0.024390243902439); // 1.0 / 41.0
+// First corner
+  vec2 i = floor(v + dot(v, C.yy) );
+  vec2 x0 = v - i + dot(i, C.xx);
+
+// Other corners
+  vec2 i1;
+  //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+  //i1.y = 1.0 - i1.x;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  // x0 = x0 - 0.0 + 0.0 * C.xx ;
+  // x1 = x0 - i1 + 1.0 * C.xx ;
+  // x2 = x0 - 1.0 + 2.0 * C.xx ;
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+
+// Permutations
+  i = mod289(i); // Avoid truncation effects in permutation
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
++ i.x + vec3(0.0, i1.x, 1.0 ));
+
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m ;
+  m = m*m ;
+
+// Gradients: 41 points uniformly over a line, mapped onto a diamond.
+// The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+
+// Normalise gradients implicitly by scaling m
+// Approximation of: m *= inversesqrt( a0*a0 + h*h );
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+
+// Compute final noise value at P
+  vec3 g;
+  g.x = a0.x * x0.x + h.x * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+      void main( void )
+      {
+        vec4 p = gl_FragCoord;
+        p.x += (iGlobalTime * 0.1);
+        //vec2 i = vec2(sin(iGlobalTime * 1.0)) * p.xy;
+        vec2 i = vec2(-0.485) * p.xy;
+        float n = snoise(gl_FragCoord.xy + (i * 2.0));
+        float m = n; //snoise(gl_FragCoord.xy + (i * -2.0));
+        float o = n; //snoise(gl_FragCoord.xy + (i * 4.0));
+        gl_FragColor = vec4(n, m, o, 1) * 3.0; //vec4(color * min(255.0, intensity), 1.0);
+      }
+
+    </script>
+<script id="example" class="shader" type="x-shader/x-fragment">
       #ifdef GL_ES
       precision highp float;
       #endif
@@ -209,7 +298,7 @@ void main(void)
   
 }
     </script>
-    <script id="clouds" class="shader" type="x-shader/x-fragment">
+    <script id="clouds" class="shader debug" type="x-shader/x-fragment">
       // Created by inigo quilez - iq/2013
       // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
       #ifdef GL_ES
@@ -217,7 +306,9 @@ void main(void)
       #endif
       uniform float iGlobalTime;
       uniform vec2 iResolution;
-      #define FULL_PROCEDURAL
+      //uniform vec2 iChannel0;
+      uniform sampler2D iChannel0;
+      //#define FULL_PROCEDURAL
       #ifdef FULL_PROCEDURAL
         // hash based 3d value noise
         float hash( float n )
@@ -244,7 +335,7 @@ void main(void)
           vec3 f = fract(x);
           f = f*f*(3.0-2.0*f);
           vec2 uv = (p.xy+vec2(37.0,17.0)*p.z) + f.xy;
-          vec2 rg = texture2D( iChannel0, (uv+ 0.5)/256.0, -100.0 ).yx;
+          vec2 rg = texture2D(iChannel0, (uv+ 0.5)/256.0, -100.0 ).yx;
           return mix( rg.x, rg.y, f.z );
         }
       #endif
@@ -317,8 +408,11 @@ void main(void)
     </script>
     <script id="vertexShader" type="x-shader/x-vertex">
       attribute vec3 position;
+      //attribute vec2 a_texCoord;
+      //varying vec2 iChannel0;
       void main() {
         gl_Position = vec4(position, 1.0);
+        //iChannel0 = a_texCoord;
       }
     </script>
   </head>
