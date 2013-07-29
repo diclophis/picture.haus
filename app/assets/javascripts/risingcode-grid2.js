@@ -40,36 +40,41 @@ function init() {
     return;
   }
   compileScreenProgram();
-  gl.useProgram(screenProgram);
-  target.framebuffer = gl.createFramebuffer();
-  target.renderbuffer = gl.createRenderbuffer();
-  // Create vertex buffer (2 triangles)
-  buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ]), gl.DYNAMIC_DRAW);
-  gl.vertexAttribPointer(screenVertexPosition, 2, gl.FLOAT, false, 0, 0);
+  if (screenProgram) {
+    gl.useProgram(screenProgram);
+    target.framebuffer = gl.createFramebuffer();
+    target.renderbuffer = gl.createRenderbuffer();
+    // Create vertex buffer (2 triangles)
+    buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ]), gl.DYNAMIC_DRAW);
+    gl.vertexAttribPointer(screenVertexPosition, 2, gl.FLOAT, false, 0, 0);
 
-  var texture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, texture);
+    var texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
 
-  // Set the parameters so we can render any size image.
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    // Set the parameters so we can render any size image.
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
-  // Upload the image into the texture.
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    // Upload the image into the texture.
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 
 
-  onWindowResize();
-  window.addEventListener('resize', onWindowResize, false);
+    onWindowResize();
+    window.addEventListener('resize', onWindowResize, false);
+  }
 }
 
 function compileScreenProgram() {
   var program = gl.createProgram();
 
   var shaders = document.getElementsByClassName("shader");
+  if (shaders.length == 0) {
+    return;
+  }
   var debugShader = document.getElementsByClassName("debug")[0];
   var fragment = debugShader ? debugShader.textContent : shaders[Math.floor(Math.random() * shaders.length)].textContent;
   //var fragment = document.getElementById( 'starnest' ).textContent;

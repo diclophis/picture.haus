@@ -1,0 +1,406 @@
+<script id="noise" class="shader" type="x-shader/x-fragment">
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+  uniform float iGlobalTime;
+  uniform vec2 iResolution;
+  //
+  // Description : Array and textureless GLSL 2D simplex noise function.
+  // Author : Ian McEwan, Ashima Arts.
+  // Maintainer : ijm
+  // Lastmod : 20110822 (ijm)
+  // License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+  // Distributed under the MIT License. See LICENSE file.
+  // https://github.com/ashima/webgl-noise
+  //
+
+  vec3 mod289(vec3 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+  }
+
+  vec2 mod289(vec2 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+  }
+
+  vec3 permute(vec3 x) {
+  return mod289(((x*34.0)+1.0)*x);
+  }
+
+  float snoise(vec2 v)
+  {
+  const vec4 C = vec4(0.211324865405187, // (3.0-sqrt(3.0))/6.0
+                    0.366025403784439, // 0.5*(sqrt(3.0)-1.0)
+                   -0.577350269189626, // -1.0 + 2.0 * C.x
+                    0.024390243902439); // 1.0 / 41.0
+  // First corner
+  vec2 i = floor(v + dot(v, C.yy) );
+  vec2 x0 = v - i + dot(i, C.xx);
+
+  // Other corners
+  vec2 i1;
+  //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+  //i1.y = 1.0 - i1.x;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  // x0 = x0 - 0.0 + 0.0 * C.xx ;
+  // x1 = x0 - i1 + 1.0 * C.xx ;
+  // x2 = x0 - 1.0 + 2.0 * C.xx ;
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+
+  // Permutations
+  i = mod289(i); // Avoid truncation effects in permutation
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+  + i.x + vec3(0.0, i1.x, 1.0 ));
+
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m ;
+  m = m*m ;
+
+  // Gradients: 41 points uniformly over a line, mapped onto a diamond.
+  // The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+
+  // Normalise gradients implicitly by scaling m
+  // Approximation of: m *= inversesqrt( a0*a0 + h*h );
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+
+  // Compute final noise value at P
+  vec3 g;
+  g.x = a0.x * x0.x + h.x * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+  }
+
+  void main( void )
+  {
+    vec4 p = gl_FragCoord;
+    p.x += (iGlobalTime * 0.1);
+    //vec2 i = vec2(sin(iGlobalTime * 1.0)) * p.xy;
+    vec2 i = vec2(-0.485) * p.xy;
+    float n = snoise(gl_FragCoord.xy + (i * 2.0));
+    float m = n; //snoise(gl_FragCoord.xy + (i * -2.0));
+    float o = n; //snoise(gl_FragCoord.xy + (i * 4.0));
+    gl_FragColor = vec4(n, m, o, 1) * 3.0; //vec4(color * min(255.0, intensity), 1.0);
+  }
+</script>
+<script id="example" class="shader" type="x-shader/x-fragment">
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+  uniform float iGlobalTime;
+  uniform vec2 iResolution;
+  void main( void )
+  {
+    vec2 uPos = (gl_FragCoord.xy / iResolution.xy);
+    float speed = 0.01;
+    float intensity = 0.0;
+    float ratio = iResolution.x / iResolution.y;
+    float count_x = (5.0);
+    float count_y = (count_x / ratio);
+    float a = (2.0 * 3.14);
+    intensity = step(0.9, (sin(mix(0.0, a * count_x, uPos.x))));
+    intensity += step(0.9, (sin(mix(0.0, a * count_y, uPos.y) + (iGlobalTime * speed))));
+    //vec3 color = vec3(cos(time * uPos.x), sin(time * uPos.y), tan(time * uPos.x));
+    //vec3 color = vec3(sin(uPos.x + time * speed), sin(uPos.y + time * speed), 0.0);
+    vec3 color = vec3(0.0, 1.0, 1.0);
+    gl_FragColor = vec4(color * min(255.0, intensity), 1.0);
+  }
+</script>
+<script id="glowing-grid" class="shader" type="x-shader/x-fragment">
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+  uniform float iGlobalTime;
+  uniform vec2 iResolution;
+  //globals
+  const vec3 background  = vec3(0.1, 0.1, 0.7);
+  const vec3 light_1     = vec3(4.0, 8.0,  3.0);
+  const vec3 light_2     = vec3(-4.0, 8.0, -7.0);
+  const vec2 eps         = vec2(0.001, 0.0);
+  const int maxSteps     = 64;
+
+  float time = iGlobalTime * 0.1;
+
+  vec3 shade(vec3 color, vec3 point, vec3 normal, vec3 rd)
+  {
+    
+    vec3 dtl       = normalize(light_1 - point);
+    float diffuse  = dot(dtl, normal); //diffuse
+    float specular = 0.75 * pow(max(dot(reflect(dtl, normal), rd), 0.0), 64.0); //specular
+    vec3 c = (diffuse + specular) * color * 0.85;
+    
+    dtl      =  normalize(light_2 - point);
+    diffuse  = dot(dtl, normal); //more diffuse
+    specular = 0.9 * pow(max(dot(reflect(dtl, normal), rd), 0.0), 128.0); //more specular
+    return clamp( c + (diffuse + specular) * 0.25 * color, 0.0, 1.0);
+  }
+
+  // estimates the distance from Point p to implicit given geometry
+  float distanceEstimator(vec3 p)
+  {
+    float t = mod(time, 70.0);
+    vec3 holeP = p - vec3(0.5, 0.5, -3.0);
+    p = p - vec3(t, t * 0.5, t * 0.3);
+    
+    float rpm = 1.0;
+    vec3 repeater = mod(p, vec3(rpm * 1.6, rpm, rpm)) - 0.5 * vec3(rpm * 1.6, rpm, rpm);
+    //vec3 repeater = fract(p) - vec3(0.5);
+    float sphere = length(repeater) - 0.06 * rpm;
+    
+    float cylinder = length(repeater.xz) - 0.015 * rpm;
+    cylinder =  min(cylinder, length(repeater.zy) - 0.015 * rpm);
+    cylinder =  min(cylinder, length(repeater.xy) - 0.015 * rpm);
+    
+    float grid = min(cylinder, sphere);
+    
+    // just a big sphere, everything outside the sphere is not shown
+    float eater  = length(holeP) - 3.3;
+    return max(grid, eater);
+    
+  }
+
+  void main() {
+    
+    float ratio  = iResolution.x / iResolution.y;
+    vec2 fragment = gl_FragCoord.xy / iResolution.xy;
+    
+    vec2 uv = -1.0 + 2.0 * fragment;
+    uv.x *= ratio;
+    
+    //camera setup taken from iq's raymarching box: https://www.shadertoy.com/view/Xds3zN
+    vec3 ta = vec3( 0.0, 0.0, -3.5 );
+    vec3 ro = vec3( -0.5+3.2*cos(0.1*time + 6.0), 3.0, 0.5 + 3.2*sin(0.1*time + 6.0) );
+    vec3 cw = normalize( ta-ro );
+    vec3 cp = vec3( 0.0, 1.0, 0.0 );
+    vec3 cu = normalize( cross(cw,cp) );
+    vec3 cv = normalize( cross(cu,cw) );
+    vec3 rd = normalize( uv.x*cu + uv.y*cv + 2.5*cw );
+    
+    vec3 col             = background;
+    float t              = 0.0;
+    vec3 p               = vec3(0.0);
+    
+    // march
+    float steps  = 0.0;
+    float addAll = 0.0;
+    for ( int i = 0; i < maxSteps; i++) {
+      p = ro + t * rd;
+      float distanceEstimation = distanceEstimator(p);
+      if (distanceEstimation > 0.005) {
+        t += distanceEstimation;
+        addAll += smoothstep(0.0, 1.0, distanceEstimation);
+        steps += 1.0;
+      } else {
+        break;
+      }
+    }
+    
+    //float c = float(i) / float(maxSteps);
+    //c = pow(c, 0.25);
+    //col  = vec4(c, c, c, 1.0);
+    
+    vec3 c = vec3(0.35, 0.05, 0.0);//(cos(p * 0.5) + 1.0) / 2.0;
+    vec3 normal = normalize(vec3(distanceEstimator(p + eps.xyy) - distanceEstimator(p - eps.xyy),
+                   distanceEstimator(p + eps.yxy) - distanceEstimator(p - eps.yxy),
+                   distanceEstimator(p + eps.yyx) - distanceEstimator(p - eps.yyx)));
+    
+    col = shade(c, p, normal, rd);
+    col = mix(col, background, steps / float(maxSteps));
+    col = pow(col, vec3(0.8));
+    
+    float glow = smoothstep(steps, 0.0, addAll) * 1.4;
+    col = vec3(glow) * col;
+    gl_FragColor = vec4(col, 1.0); 
+    
+  }
+</script>
+<script id="starnest" class="shader" type="x-shader/x-fragment">
+// Star Nest by Kali
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+  uniform float iGlobalTime;
+  uniform vec2 iResolution;
+
+  #define iterations 17
+  #define formuparam 0.530
+
+  #define volsteps 18
+  #define stepsize 0.100
+
+  #define zoom   0.800
+  #define tile   0.850
+  #define speed  0.001
+
+  #define brightness 0.0015
+  #define darkmatter 0.300
+  #define distfading 0.760
+  #define saturation 0.800
+
+
+  void main(void)
+  {
+  vec2 iMouse = vec2(10.0 + sin(iGlobalTime * 0.003) * 10.0, 20.0 + (15.0 * sin(iGlobalTime * 0.003)));
+  //get coords and direction
+  vec2 uv=gl_FragCoord.xy/iResolution.xy-.5;
+  uv.y*=iResolution.y/iResolution.x;
+  vec3 dir=vec3(uv*zoom,1.);
+  float time=iGlobalTime*speed+.25;
+
+  //mouse rotation
+  float a1=.5+iMouse.x/iResolution.x*2.;
+  float a2=.8+iMouse.y/iResolution.y*2.;
+  mat2 rot1=mat2(cos(a1),sin(a1),-sin(a1),cos(a1));
+  mat2 rot2=mat2(cos(a2),sin(a2),-sin(a2),cos(a2));
+  dir.xz*=rot1;
+  dir.xy*=rot2;
+  vec3 from=vec3(1.,.5,0.5);
+  from+=vec3(time*2.,time,-2.);
+  from.xz*=rot1;
+  from.xy*=rot2;
+
+  //volumetric rendering
+  float s=0.1,fade=1.;
+  vec3 v=vec3(0.);
+  for (int r=0; r<volsteps; r++) {
+  vec3 p=from+s*dir*.5;
+  p = abs(vec3(tile)-mod(p,vec3(tile*2.))); // tiling fold
+  float pa,a=pa=0.;
+  for (int i=0; i<iterations; i++) { 
+    p=abs(p)/dot(p,p)-formuparam; // the magic formula
+    a+=abs(length(p)-pa); // absolute sum of average change
+    pa=length(p);
+  }
+  float dm=max(0.,darkmatter-a*a*.001); //dark matter
+  a*=a*a; // add contrast
+  if (r>3) fade*=1.-dm; // dark matter, don't render near
+  //v+=vec3(dm,dm*.5,0.);
+  v+=fade;
+  v+=vec3(s,s*s,s*s*s*s)*a*brightness*fade; // coloring based on distance
+  fade*=distfading; // distance fading
+  s+=stepsize;
+  }
+  v=mix(vec3(length(v)),v,saturation); //color adjust
+  gl_FragColor = vec4(v*.01,1.);  
+
+  }
+</script>
+<script id="clouds" class="shader debug" type="x-shader/x-fragment">
+  // Created by inigo quilez - iq/2013
+  // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+  uniform float iGlobalTime;
+  uniform vec2 iResolution;
+  //uniform vec2 iChannel0;
+  uniform sampler2D iChannel0;
+  #define FULL_PROCEDURAL
+  #ifdef FULL_PROCEDURAL
+    // hash based 3d value noise
+    float hash( float n )
+    {
+        return fract(sin(n)*43758.5453);
+    }
+    float noise( in vec3 x )
+    {
+        vec3 p = floor(x);
+        vec3 f = fract(x);
+
+        f = f*f*(3.0-2.0*f);
+        float n = p.x + p.y*57.0 + 113.0*p.z;
+        return mix(mix(mix( hash(n+  0.0), hash(n+  1.0),f.x),
+                       mix( hash(n+ 57.0), hash(n+ 58.0),f.x),f.y),
+                   mix(mix( hash(n+113.0), hash(n+114.0),f.x),
+                       mix( hash(n+170.0), hash(n+171.0),f.x),f.y),f.z);
+    }
+  #else
+    // LUT based 3d value noise
+    float noise( in vec3 x )
+    {
+      vec3 p = floor(x);
+      vec3 f = fract(x);
+      f = f*f*(3.0-2.0*f);
+      vec2 uv = (p.xy+vec2(37.0,17.0)*p.z) + f.xy;
+      vec2 rg = texture2D(iChannel0, (uv+ 0.5)/256.0, -100.0 ).yx;
+      return mix( rg.x, rg.y, f.z );
+    }
+  #endif
+
+  vec4 map( in vec3 p )
+  {
+    float d = 0.2 - p.y;
+    vec3 q = p - vec3(1.0,0.1,0.0)*iGlobalTime * 0.1;
+    float f;
+    f  = 0.5000*noise( q ); q = q*2.02;
+    f += 0.2500*noise( q ); q = q*2.03;
+    f += 0.1250*noise( q ); q = q*2.01;
+    f += 0.0625*noise( q );
+    d += 3.0 * f;
+    d = clamp( d, 0.0, 1.0 );
+    vec4 res = vec4( d );
+    res.xyz = mix( 1.15*vec3(1.0,0.95,0.8), vec3(0.7,0.7,0.7), res.x );
+    return res;
+  }
+
+  vec3 sundir = vec3(-1.0,0.0,0.0);
+
+  vec4 raymarch( in vec3 ro, in vec3 rd )
+  {
+    vec4 sum = vec4(0, 0, 0, 0);
+    float t = 0.0;
+    for(int i=0; i<44; i++)
+    {
+      vec3 pos = ro + t*rd;
+      vec4 col = map( pos );
+      float dif =  clamp((col.w - map(pos+0.3*sundir).w)/0.6, 0.0, 1.0 );
+      vec3 brdf = vec3(0.65,0.68,0.7)*1.35 + 0.45*vec3(0.7, 0.5, 0.3)*dif;
+      col.xyz *= brdf;
+      col.a *= 0.35;
+      col.rgb *= col.a;
+      sum = sum + col*(1.0 - sum.a);  
+      t += max(0.1,0.05*t);
+    }
+    sum.xyz /= (0.001+sum.w);
+    return clamp( sum, 0.0, 1.0 );
+  }
+
+  void main(void)
+  {
+    //vec2 iMouse = vec2(10.0 + sin(iGlobalTime * 0.3) * 10.0, 20.0 + (15.0 * sin(iGlobalTime * 0.33)));
+    vec2 iMouse = vec2(0, 0); //10.0 + sin(iGlobalTime * 0.3) * 10.0, 20.0 + (15.0 * sin(iGlobalTime * 0.33)));
+    vec2 q = gl_FragCoord.xy / iResolution.xy;
+    vec2 p = -1.0 + 2.0*q;
+    p.x *= iResolution.x/ iResolution.y;
+    vec2 mo = -1.0 + 2.0*iMouse.xy / iResolution.xy;
+    
+    // camera
+    vec3 ro = 4.0*normalize(vec3(cos(2.75-3.0*mo.x), 0.7+(mo.y+1.0), sin(2.75-3.0*mo.x)));
+    vec3 ta = vec3(0.0, 2.0, 0.0);
+    vec3 ww = normalize( ta - ro);
+    vec3 uu = normalize(cross( vec3(0.0,1.0,0.0), ww ));
+    vec3 vv = normalize(cross(ww,uu));
+    vec3 rd = normalize( p.x*uu + p.y*vv + 1.5*ww );
+
+    vec4 res = raymarch( ro, rd );
+
+    float sun = clamp( dot(sundir,rd), 0.0, 1.0 );
+    vec3 col = vec3(0.6,0.71,0.75) - rd.y*0.2*vec3(1.0,0.5,1.0) + 0.15*0.5;
+    col += 0.2*vec3(1.0,.6,0.1)*pow( sun, 8.0 );
+    col *= 0.95;
+    col = mix( col, res.xyz, res.w );
+    col += 0.1*vec3(1.0,0.4,0.2)*pow( sun, 3.0 );
+      
+    gl_FragColor = vec4( col, 1.0 );
+  }
+</script>
+<script id="vertexShader" type="x-shader/x-vertex">
+  attribute vec3 position;
+  void main() {
+    gl_Position = vec4(position, 1.0);
+  }
+</script>
