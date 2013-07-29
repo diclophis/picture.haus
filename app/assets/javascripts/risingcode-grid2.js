@@ -22,10 +22,10 @@ var image = new Image();
 
 var main = function() {
   //TODO: USE DOM and rails path helper
-  image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
-  image.onload = function() {
-    init();
-  }
+  //image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
+  //image.onload = function() {
+  //  init();
+  //}
 }
 
 
