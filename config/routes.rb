@@ -6,7 +6,9 @@ Centerology::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root :to => 'welcome#index'
 
-  get 'feeds/:username' => 'welcome#feed'
+  get 'feeds/:username' => 'welcome#feed', :as => :feed
+
+  resources :friendships
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

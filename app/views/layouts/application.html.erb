@@ -18,11 +18,7 @@
       </h1>
     </div>
     <div id="sidebar">
-      <% if person_signed_in? %>
-        <%= link_to "profile", edit_person_registration_path %>
-      <% else %>
-        <%= link_to "sign up", new_person_registration_path %>
-      <% end %>
+      <%= yield :sidebar %>
     </div>
     <div id="content">
       <div class="notice"><p><%= notice %></p></div>

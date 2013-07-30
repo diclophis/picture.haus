@@ -1,0 +1,14 @@
+<% content_for :tagline do %>
+  <%=link_to(@feeder.username + "'s feed", feed_url(:username => @feeder.username))%>
+<% end %>
+<% content_for :sidebar do %>
+  <% unless @feeder == current_person %>
+    <%=form_for(@friendship) do |f| %>
+      <%=f.hidden_field :person_id %>
+      <%=f.hidden_field :friend_id %>
+      <%=f.submit%>
+    <% end %>
+  <% end %>
+<% end %>
+<ul class="findings">
+</ul>
