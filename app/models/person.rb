@@ -8,4 +8,6 @@ class Person < ActiveRecord::Base
 
 
   has_many_friends
+  has_many :findings
+  has_many :images, :through => :findings
 end
