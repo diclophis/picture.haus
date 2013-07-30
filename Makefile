@@ -7,7 +7,10 @@ screenshots = $(patsubst %,tmp/screenshots/%, $(patsubst spec/features/%.rb, %.p
 open: $(screenshots) 
 	open tmp/screenshots/* 
 
-tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/test.sqlite3
+Gemfile.lock: Gemfile
+	bundle install
+
+tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/test.sqlite3 Gemfile.lock
 	bundle exec rspec
 
 db/test.sqlite3: db/schema.rb
