@@ -1,5 +1,20 @@
 require 'spec_helper'
 
 describe Image do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before :each do
+    @image = valid_image
+    @image.should be_valid
+  end
+
+  describe "validations" do
+    it "should require :title" do
+      @image.title = nil
+      @image.should_not be_valid
+    end
+
+    it "should require :src" do
+      @image.src = nil
+      @image.should_not be_valid
+    end
+  end
 end

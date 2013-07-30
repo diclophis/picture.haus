@@ -82,8 +82,16 @@ def valid_friendship
   friendship
 end
 
+def valid_image
+  image = Image.new
+  image.title = "title"
+  image.src = "http://google.com"
+  image
+end
+
 def valid_finding
   finding = Finding.new
   finding.person = valid_person
+  finding.image = valid_image
   finding
 end

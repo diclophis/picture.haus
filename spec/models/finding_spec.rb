@@ -11,6 +11,11 @@ describe Finding do
       @finding.person = nil
       @finding.should_not be_valid
     end
+
+    it "should require :image" do
+      @finding.image = nil
+      @finding.should_not be_valid
+    end
   end
 
   describe "tags" do
