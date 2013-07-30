@@ -7,13 +7,13 @@ screenshots = $(patsubst %,tmp/screenshots/%, $(patsubst spec/features/%.rb, %.p
 open: $(screenshots) 
 	open tmp/screenshots/* 
 
-Gemfile.lock: Gemfile
+Gemfile:
 	bundle install
 
-tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/test.sqlite3 Gemfile.lock
+tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/test.sqlite3 Gemfile Gemfile.lock
 	bundle exec rspec
 
-db/test.sqlite3: db/schema.rb
+db/test.sqlite3: db/schema.rb Gemfile
 	RAILS_ENV=$(RAILS_ENV) bundle exec rake db:migrate
 
 clean:
