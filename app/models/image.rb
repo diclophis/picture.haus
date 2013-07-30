@@ -4,5 +4,4 @@ class Image < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :src
-  validates_as_uri :src
 end

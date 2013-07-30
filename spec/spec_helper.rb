@@ -69,11 +69,6 @@ def valid_person
   person.password = "qwerty123"
   person.should be_valid
 
-  finding = Finding.new
-  finding.person = person
-  finding.image = Image.new
-  finding.image.title = "foo"
-  finding.image.src = "http://localhost:3000/assets/noise.png"
 
   person
 end
