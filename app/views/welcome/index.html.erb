@@ -5,3 +5,15 @@
     <%= link_to "sign up", new_person_registration_path %>
   <% end %>
 <% end %>
+
+<%= form_for :finding do |finding| %>
+  <%=finding.label(:tag_list)%>
+  <%=finding.text_field(:tag_list)%>
+  <%= finding.fields_for(:image) do |image| %>
+    <%=image.label(:title)%>
+    <%=image.text_field(:title)%>
+    <%=image.label(:src)%>
+    <%=image.text_field(:src)%>
+  <% end %>
+  <%=finding.submit%>
+<% end %>
