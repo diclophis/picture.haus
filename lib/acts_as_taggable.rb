@@ -365,6 +365,10 @@ class TagList < Array
   end
   
   class << self
+    def returning(value)
+      yield(value)
+      value
+    end
     # Returns a new TagList using the given tag string.
     # 
     #   tag_list = TagList.from("One , Two,  Three")

@@ -81,3 +81,9 @@ def valid_friendship
   friendship.friendshipped_by_me = person
   friendship
 end
+
+def valid_finding
+  finding = Finding.new
+  finding.person = valid_person
+  finding
+end
