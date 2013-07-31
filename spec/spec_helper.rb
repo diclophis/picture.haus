@@ -59,7 +59,6 @@ RSpec.configure do |config|
   end
 end
 
-
 def valid_person
   @_valid_person_id ||= 0
   @_valid_person_id += 1
@@ -68,8 +67,6 @@ def valid_person
   person.email = "foo-#{@_valid_person_id}@foo.com"
   person.password = "qwerty123"
   person.should be_valid
-
-
   person
 end
 
