@@ -81,10 +81,25 @@ def valid_friendship
   friendship
 end
 
-def valid_image
+class Router
+  include Rails.application.routes.url_helpers
+  #delegate :asset_path, :to => ActionController::Base.helpers
+
+  #Rails.application.routes.default_url_options[:host]
+
+  def self.default_url_options
+    ActionMailer::Base.default_url_options.merge({:host => "foo"})
+  end
+end
+
+#$router = Router.new
+#$router.root_url  # http://localhost:3000/posts
+#$router.root_path # /posts
+
+def valid_image #(router = Router.new)
   image = Image.new
   image.title = "title"
-  image.src = "http://google.com"
+  image.src = ActionController::Base.helpers.asset_path("noise.png") #"http://google.com"
   image
 end
 

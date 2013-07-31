@@ -8,7 +8,13 @@ describe Similarity do
     end
 
     it "should have a image" do
-      pending
+      @similarity.image = nil
+      @similarity.should_not be_valid
+    end
+
+    it "should have a similar mage" do
+      @similarity.similar_image = nil
+      @similarity.should_not be_valid
     end
   end
 end
