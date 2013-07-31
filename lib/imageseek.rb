@@ -9,14 +9,14 @@ class ImageSeek
   def self.daemon
     IO.popen(IMGSEEK) { |io|
       i = ""
-      thread = Thread.new {
+      thread = Thread.new { #TODO: try without thread
         while IO.select([io], nil, nil) do
           i = io.gets
-          puts i
+          puts i if ENV['DEBUG_IMGSEEK']
           break if i.nil?
         end
       }
-      sleep 0.1 until i.include?("init finished")
+      sleep 0.1 until i.include?("init finished") #TODO: remove sleep idle loop
       begin
         yield
       rescue => problem
