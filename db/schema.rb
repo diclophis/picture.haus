@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730064433) do
+ActiveRecord::Schema.define(version: 20130731044828) do
 
   create_table "findings", force: true do |t|
     t.integer  "person_id"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 20130730064433) do
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true
   add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true
+
+  create_table "similarities", force: true do |t|
+    t.integer  "image_id"
+    t.integer  "similar_image_id"
+    t.float    "rating"
+    t.string   "join_type",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"

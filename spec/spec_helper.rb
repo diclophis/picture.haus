@@ -97,3 +97,12 @@ def valid_finding
   finding.image = valid_image
   finding
 end
+
+def valid_similarity
+  similarity = Similarity.new
+  similarity.image = valid_image
+  similarity.similar_image = valid_image
+  similarity.rating = 0
+  similarity.join_type = ""
+  similarity
+end
