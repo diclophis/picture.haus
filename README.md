@@ -13,6 +13,12 @@
 
         Gemfile
 
+        git clone git@github.com:ricardocabral/iskdaemon.git
+        CFLAGS=-I/usr/local/Cellar/imagemagick/6.8.0-10/include/ImageMagick python setup.py build
+        PYTHONPATH=build/lib.macosx-10.8-intel-2.7 ./iskdaemon.py 
+        bundle exec rake imageseek:create_similarities
+
+
 * Configuration
 
         config/
