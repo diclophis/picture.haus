@@ -7,7 +7,7 @@ module ActiveRecord #:nodoc:
       
       module ClassMethods
         def acts_as_taggable
-          has_many :taggings, :as => :taggable, :dependent => :destroy, :include => :tag
+          has_many :taggings, -> { includes :tag }, :as => :taggable, :dependent => :destroy
           has_many :tags, :through => :taggings
           
           before_save :save_cached_tag_list
@@ -63,7 +63,11 @@ module ActiveRecord #:nodoc:
         #   :conditions - A piece of SQL conditions to add to the query
         def find_tagged_with(*args)
           options = find_options_for_find_tagged_with(*args)
-          options.blank? ? [] : find(:all, options)
+          if options.blank?
+            []
+          else
+            select(options[:select]).joins(options[:joins]).where(options[:conditions])
+          end
         end
         
         def find_options_for_find_tagged_with(tags, options = {})
@@ -217,7 +221,7 @@ class Tag < ActiveRecord::Base
   
   # LIKE is used for cross-database case-insensitivity
   def self.find_or_create_with_like_by_name(name)
-    find(:first, :conditions => ["name LIKE ?", name]) || create(:name => name)
+    where(["name LIKE ?", name]).first || create(:name => name)
   end
   
   def ==(object)
