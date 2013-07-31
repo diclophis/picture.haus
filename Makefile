@@ -10,10 +10,10 @@ open: $(screenshots)
 Gemfile:
 	bundle install
 
-tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/test.sqlite3 Gemfile Gemfile.lock
+tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/schema.rb
 	bundle exec rspec
 
-db/test.sqlite3: db/schema.rb Gemfile
+db/test.sqlite3: db/schema.rb
 	RAILS_ENV=$(RAILS_ENV) bundle exec rake db:migrate
 
 clean:
