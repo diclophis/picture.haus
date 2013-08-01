@@ -16,3 +16,5 @@
 /tmp
 
 isk-daemon.log
+
+app/assets/images/image-*

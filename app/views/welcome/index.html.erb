@@ -6,6 +6,46 @@
   <% end %>
 <% end %>
 
+<ul>
+  <% @recent_images.each { |image| %>
+    <li class="image">
+      <div class="imagewrapper">
+        <div class="primary">
+          <ul>
+            <li>
+              <p>
+                <%=link_to(h(truncate(image.title)), image.src)%>
+                <br/>
+                <%=truncate(image.src)%>
+                <br/>
+                found <%=time_ago_in_words(image.latest_finding.created_at)%> ago
+                <% if image.findings.count > 1 then %>
+                  by <%=image.findings.count%> other people
+                <% end %>
+              </p>
+            </li>
+            <li>
+              <%=link_to(image_tag(asset_url(File.basename(image.src)), {:width => 10}), root_path)%>
+            </li>
+            <% if current_person then %>
+              <li>
+                <%=link_to(:ditto, {:controller => :findings, :action => :new, "image[src]" => image.src})%>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="similar">
+          <ul>
+          </ul>
+        </div>
+      </div>
+    </li>
+  <% } %>
+  <li>
+    <%=will_paginate(@recent_images)%>
+  </li>
+</ul>
+
 <%= form_for :finding do |finding| %>
   <%=finding.label(:tag_list)%>
   <%=finding.text_field(:tag_list)%>
