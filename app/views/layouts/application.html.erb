@@ -6,6 +6,7 @@
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
+    <%#= render :partial => "shared/shaders" %>
   </head>
   <body>
     <div id="header">
@@ -21,10 +22,12 @@
       <%= yield :sidebar %>
     </div>
     <div id="content">
-      <!--
-      <div class="notice"><p><%= notice %></p></div>
-      <div class="alert"><p><%= alert %></p></div>
-      -->
+      <% if notice %>
+        <div class="notice"><p><%= notice %></p></div>
+      <% end %>
+      <% if alert %>
+        <div class="alert"><p><%= alert %></p></div>
+      <% end %>
       <%= yield %>
       <div id="footer">
         <p>

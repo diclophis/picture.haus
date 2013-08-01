@@ -6,10 +6,10 @@ a:active { outline: none; }
 
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 
-form { overflow: hidden; }
+form { overflow: hidden; padding: 1em; }
 label { display: block; }
 input { width: 90%; margin: 0.5em 100% 0.5em 0.25em; padding: 0.25em; -webkit-appearance:none; }
-input[type="submit"] { width: 10em; }
+input[type="submit"] { width: 12em; }
 input[type="checkbox"] { width: auto; -webkit-appearance: checkbox; }
 
 h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
@@ -53,11 +53,11 @@ label[for="person_remember_me"] { display: inline; }
 .field_with_errors input { background-color: yellow; }
 div.field_with_errors { display: inline; }
 
-.notice { background-color: green; margin: 0.5em 3em 0.5em 0; }
-x.notice p { padding: 0.25em; }
+.notice { margin: 1em 3em 1em 1em; border: 0.25em solid green; background-color: #00aa00; padding: 1em 1em 1em 1em; }
+.notice p { padding: 0; margin: 0; }
 
-.alert { background-color: yellow; margin: 0.5em 3em 0.5em 0; }
-x.alert p { padding: 0.25em; }
+.alert { margin: 1em 3em 1em 1em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 1em 1em 1em 1em; }
+.alert p { padding: 0; margin: 0; }
 
 /* TODO: cloud tag styles */
 

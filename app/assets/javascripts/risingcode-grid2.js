@@ -17,17 +17,16 @@ time = 0, screenWidth = 0, screenHeight = 0,
 screenProgram, resizer = { timeout: null }, refreshTimeout = 1000;
 var target = {};
 var paused = false;
-var precision = 2.0;
+var precision = 6.0;
 var image = new Image();
 
 var main = function() {
   //TODO: USE DOM and rails path helper
-  //image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
-  //image.onload = function() {
-  //  init();
-  //}
+  image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
+  image.onload = function() {
+    init();
+  }
 }
-
 
 // Initialise WebGL
 function init() {
@@ -179,4 +178,3 @@ document.addEventListener('page:change', function() {
 });
 
 document.addEventListener('DOMContentLoaded', main);
-

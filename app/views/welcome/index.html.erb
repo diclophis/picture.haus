@@ -19,9 +19,6 @@
             by <%=image.findings.count%> other people
           <% end %>
         </p>
-        <% if current_person then %>
-          <%=link_to(:ditto, {:controller => :findings, :action => :new, "image[src]" => image.src})%>
-        <% end %>
         <div class="primary" style="background-image: url(<%=asset_url(File.basename(image.src))%>)">
         </div>
       </div>
