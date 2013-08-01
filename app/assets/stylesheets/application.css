@@ -40,16 +40,17 @@ label[for="person_remember_me"] { display: inline; }
 div.field_with_errors { display: inline; }
 
 .notice { background-color: green; margin: 0.5em 3em 0.5em 0; }
-.notice p { padding: 0.25em; }
+x.notice p { padding: 0.25em; }
 
 .alert { background-color: yellow; margin: 0.5em 3em 0.5em 0; }
-.alert p { padding: 0.25em; }
+x.alert p { padding: 0.25em; }
 
 .image { float: left; margin: 0 0 2em 0; }
+.image img { max-width: 100%; max-height: auto; }
 .imagewrapper { clear: both; }
-.primary { width: 37.5em; float: left; }
-.primary img { width: 36.5em; }
-.similar { width: 19.5em; float: left; text-align: center; }
+.primary { width: 60%; float: left; }
+.similar { width: 37.5%; float: left; text-align: center; padding: 0 0 0 2.5%; }
+.similar img { margin: 0 0 5%; }
 
 /* TODO: cloud tag styles */
 
@@ -61,9 +62,9 @@ div.field_with_errors { display: inline; }
 .findings li img { margin: 2em; vertical-align: middle; }
 
 .pagination { }
-.pagination a, .pagination span { font-size: 1.5em; display: block; float: left; padding: 0.25em; }
+.pagination a, .pagination span, .pagination em { display: block; float: left; padding: 0.25em; }
 .pagination span.disabled { }
-.pagination span.current { font-weight: bold; color: red; }
+.pagination em.current { font-weight: bold; color: red; }
 .pagination a { text-decoration: none; }
 .pagination a:hover, .pagination a:focus { }
 .pagination:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }

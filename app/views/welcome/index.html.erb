@@ -25,7 +25,7 @@
               </p>
             </li>
             <li>
-              <%=link_to(image_tag(asset_url(File.basename(image.src)), {:width => 10}), root_path)%>
+              <%=link_to(image_tag(asset_url(File.basename(image.src))), root_path)%>
             </li>
             <% if current_person then %>
               <li>
@@ -36,6 +36,11 @@
         </div>
         <div class="similar">
           <ul>
+            <% image.similar_images.each { |similar_image| %>
+              <li>
+                <%= link_to(image_tag(asset_url(File.basename(similar_image.src))), root_path)%>
+              </li>
+            <% } %>
           </ul>
         </div>
       </div>

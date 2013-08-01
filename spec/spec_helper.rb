@@ -59,6 +59,15 @@ RSpec.configure do |config|
   end
 end
 
+class Router
+  include Rails.application.routes.url_helpers
+  #delegate :asset_path, :to => ActionController::Base.helpers
+  #Rails.application.routes.default_url_options[:host]
+  def self.default_url_options
+    ActionMailer::Base.default_url_options.merge({:host => "foo"})
+  end
+end
+
 def valid_person
   @_valid_person_id ||= 0
   @_valid_person_id += 1
@@ -80,21 +89,6 @@ def valid_friendship
   friendship.friendshipped_by_me = person
   friendship
 end
-
-class Router
-  include Rails.application.routes.url_helpers
-  #delegate :asset_path, :to => ActionController::Base.helpers
-
-  #Rails.application.routes.default_url_options[:host]
-
-  def self.default_url_options
-    ActionMailer::Base.default_url_options.merge({:host => "foo"})
-  end
-end
-
-#$router = Router.new
-#$router.root_url  # http://localhost:3000/posts
-#$router.root_path # /posts
 
 def valid_image #(router = Router.new)
   image = Image.new

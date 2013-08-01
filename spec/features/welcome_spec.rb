@@ -38,8 +38,25 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
         finding.save.should be_true
 
         ImageSeek.add_image(database, image.id, image.src, is_url = false).should == 1
-        #similar_without_keywords = ImageSeek.find_images_similar_to(database, image_one.id, 4).should_not be_empty
       end
+
+      Image.all.each { |image|
+        similar_without_tags = ImageSeek.find_images_similar_to(database, image.id, 4).collect { |image_id, rating|
+          unless image.id == image_id then
+            similar_image = Image.find(image_id)
+            #similar_image.rating = rating
+            [similar_image, rating, "without"]
+          end
+        }
+        (similar_without_tags).compact.each { |similar_image, rating, join_type|
+          similarity = Similarity.new
+          similarity.image_id = image.id
+          similarity.similar_image_id = similar_image.id
+          similarity.rating = rating
+          similarity.join_type = join_type
+          similarity.save.should be_true
+        }
+      }
     }
 
     visit root_path
