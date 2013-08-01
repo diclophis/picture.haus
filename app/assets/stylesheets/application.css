@@ -1,5 +1,5 @@
-html { width: 99% }
-body { background-color: rgba(0,0,0,0); width: 98%; margin: 0; padding: 1%; }
+html { width: 100%; height: 100%; }
+body { background-color: rgba(0,0,0,0); width: 98%; margin: 0; padding: 1%; height: 98%; }
 
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
@@ -22,12 +22,30 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { padding: 2%; width: 29%; float: left; background: rgba(100,100,100,0.5); min-height: 1em; }
+#sidebar { padding: 2%; width: 21%; float: left; background: rgba(100,100,100,0.5); }
 
-#content { background-color: #f0f0f0; width: 63%; padding: 1% 2% 2% 2%; float: left; min-height: 8em; }
+#content { width: 75%; padding: 0; float: left; min-height: 8em; height: 100%; }
 
 #footer { padding: 0; clear: both; width: 100%; }
 #footer p { text-align: right; padding: 0.25em; }
+
+.image { float: left; margin: 0; width: 100%; height: 42em; background: rgba(200, 200, 200, 0.85); padding: 0; }
+.image p { background: rgba(200, 200, 200, 0.85); margin: 0%; padding: 2%; width: 74%; }
+.primary-wrapper { background: rgba(200, 200, 200, 0.85); width: 80%; height: 70%; float: left; 
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+.primary { background: rgba(200, 200, 200, 0.85); width: 100%; height: 100%; float: left; 
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+.similar { background: rgba(1, 0, 0, 0.0); width: 20%; height: 33.33333333%; float: left; text-align: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
 
 #person_remember_me { margin-right: 0; }
 label[for="person_remember_me"] { display: inline; }
@@ -44,13 +62,6 @@ x.notice p { padding: 0.25em; }
 
 .alert { background-color: yellow; margin: 0.5em 3em 0.5em 0; }
 x.alert p { padding: 0.25em; }
-
-.image { float: left; margin: 0 0 2em 0; }
-.image img { max-width: 100%; max-height: auto; }
-.imagewrapper { clear: both; }
-.primary { width: 60%; float: left; }
-.similar { width: 37.5%; float: left; text-align: center; padding: 0 0 0 2.5%; }
-.similar img { margin: 0 0 5%; }
 
 /* TODO: cloud tag styles */
 

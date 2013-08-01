@@ -21,14 +21,16 @@
       <%= yield :sidebar %>
     </div>
     <div id="content">
+      <!--
       <div class="notice"><p><%= notice %></p></div>
       <div class="alert"><p><%= alert %></p></div>
+      -->
       <%= yield %>
-    </div>
-    <div id="footer">
-      <p>
-        &copy; <%=link_to("Land of the Rising Code", "http://risingcode.com")%>
-      </p>
+      <div id="footer">
+        <p>
+          &copy; <%=link_to("Land of the Rising Code", "http://risingcode.com")%>
+        </p>
+      </div>
     </div>
     <div id="risingcode-grid"><canvas id="risingcode-canvas"></canvas></div>
   </body>
