@@ -1,5 +1,5 @@
-html { width: 100%; height: 100%; }
-body { background-color: rgba(0,0,0,0); width: 98%; margin: 0; padding: 1%; height: 98%; }
+html { width: 100%; }
+body { background-color: rgba(0,0,0,0); width: 98%; margin: 0; padding: 1%; }
 
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
@@ -24,7 +24,7 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 
 #sidebar { padding: 2%; width: 21%; float: left; background: rgba(100,100,100,0.5); }
 
-#content { width: 75%; padding: 0; float: left; min-height: 8em; height: 100%; }
+#content { width: 75%; padding: 0; float: left; }
 
 #footer { padding: 0; clear: both; width: 100%; }
 #footer p { text-align: right; padding: 0.25em; }
@@ -42,7 +42,7 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
   background-position: 50% 50%;
 }
 .similar { background: rgba(1, 0, 0, 0.0); width: 20%; height: 33.33333333%; float: left; text-align: center;
-  background-size: cover;
+  background-size: auto;
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
@@ -72,14 +72,12 @@ x.alert p { padding: 0.25em; }
 .findings li { display: inline; }
 .findings li img { margin: 2em; vertical-align: middle; }
 
-.pagination { }
-.pagination a, .pagination span, .pagination em { display: block; float: left; padding: 0.25em; }
+.pagination { float: left; width: 100%; }
+.pagination a, .pagination span, .pagination em { display: block; float: left; padding: 1%; }
 .pagination span.disabled { }
 .pagination em.current { font-weight: bold; color: red; }
 .pagination a { text-decoration: none; }
 .pagination a:hover, .pagination a:focus { }
-.pagination:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-* html .pagination { height: 1%; }
 *:first-child+html .pagination { overflow: hidden; }
 
 div {
