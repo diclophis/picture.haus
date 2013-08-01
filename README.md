@@ -1,8 +1,8 @@
-* About
+# About
 
 Image bookmarking site
 
-* Map
+# Map
 
 Libraries
   HasManyFriends
@@ -37,11 +37,11 @@ Models
     has similar_image
     has rating
 
-* Ruby version
+# Ruby version
 
         ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-darwin12.4.0]
 
-* System dependencies
+# System dependencies
 
         Gemfile
 
@@ -51,19 +51,18 @@ Models
         bundle exec rake imageseek:create_similarities
 
 
-* Configuration
+# Configuration
 
         config/
 
-* Database creation, Database initialization
+# Database creation, Database initialization
 
         bundle exec rake -T | grep db
 
-
-* How to run the test suite
+# How to run the test suite
 
         make
 
-* Services (job queues, cache servers, search engines, etc.)
+# Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+# Deployment instructions
