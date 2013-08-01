@@ -10,4 +10,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation) }
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
   end
+
+  helper_method :current_page
+  def current_page
+    params[:page].to_i < 1 ? 1 : params[:page].to_i
+  end
+  helper_method :current_per_page
+  def current_per_page
+    5
+  end
 end
