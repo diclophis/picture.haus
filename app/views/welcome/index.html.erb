@@ -1,33 +1,14 @@
 <% content_for :sidebar do %>
-  <% if person_signed_in? %>
-    <%= link_to "profile", edit_person_registration_path %>
-  <% else %>
-    <%= link_to "sign up", new_person_registration_path %>
-  <% end %>
+  <p>
+    <% if person_signed_in? %>
+      <%= link_to "profile", edit_person_registration_path %>
+    <% else %>
+      <%= link_to "sign up", new_person_registration_path %>
+    <% end %>
+  </p>
 <% end %>
 
-  <% @recent_images.each { |image| %>
-    <div class="image">
-      <div class="primary-wrapper">
-        <p>
-          <%=link_to(h(truncate(image.title)), image.src)%>
-          <br/>
-          <%=truncate(image.src)%>
-          <br/>
-          found <%=time_ago_in_words(image.latest_finding.created_at)%> ago
-          <% if image.findings.count > 1 then %>
-            by <%=image.findings.count%> other people
-          <% end %>
-        </p>
-        <div class="primary" style="background-image: url(<%=asset_url(File.basename(image.src))%>)">
-        </div>
-      </div>
-      <% image.similar_images.each { |similar_image| %>
-        <div class="similar" style="background-image: url(<%=asset_url(File.basename(similar_image.src))%>)">
-        </div>
-      <% } %>
-    </div>
-  <% } %>
+  <%= render :partial => "shared/image", :collection => @recent_images %>
 
   <%=will_paginate(@recent_images)%>
 
