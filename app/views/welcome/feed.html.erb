@@ -1,6 +1,7 @@
 <% content_for :tagline do %>
   <%=link_to(@feeder.username + "'s feed", feed_url(:username => @feeder.username))%>
 <% end %>
+
 <% content_for :sidebar do %>
   <% unless @feeder == current_person %>
     <%=form_for(@friendship) do |f| %>
@@ -10,6 +11,6 @@
     <% end %>
   <% end %>
 <% end %>
-<ul class="images">
-  <%= render :partial => "shared/image", :collection => @feeder.images %>
-</ul>
+
+<%= render :partial => "shared/image", :collection => @images %>
+<%=will_paginate(@images)%>

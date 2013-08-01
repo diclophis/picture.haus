@@ -8,18 +8,6 @@
   </p>
 <% end %>
 
-  <%= render :partial => "shared/image", :collection => @recent_images %>
+<%= render :partial => "shared/image", :collection => @recent_images %>
+<%=will_paginate(@recent_images)%>
 
-  <%=will_paginate(@recent_images)%>
-
-<%= form_for :finding do |finding| %>
-  <%=finding.label(:tag_list)%>
-  <%=finding.text_field(:tag_list)%>
-  <%= finding.fields_for(:image) do |image| %>
-    <%=image.label(:title)%>
-    <%=image.text_field(:title)%>
-    <%=image.label(:src)%>
-    <%=image.text_field(:src)%>
-  <% end %>
-  <%=finding.submit%>
-<% end %>

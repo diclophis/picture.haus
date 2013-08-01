@@ -22,8 +22,9 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { padding: 2%; width: 21%; float: left; background: rgba(100,100,100,0.5); }
+#sidebar { padding: 1em; width: 21%; float: left; background: rgba(100,100,100,0.5); }
 #sidebar p { padding: 0 0 0 0; margin: 0; }
+#sidebar form { padding: 0; }
 
 #content { width: 75%; padding: 0; float: left; }
 
@@ -47,7 +48,7 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 #person_remember_me { margin-right: 0; }
 label[for="person_remember_me"] { display: inline; }
 
-#error_explanation { margin: 0em 3em 1em 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em 1em 1em 1em; }
+#error_explanation { margin: 0em 0em 1em 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em 1em 1em 1em; }
 #error_explanation h2 { color: maroon; margin: 0; }
 #error_explanation ul li { list-style: square; margin: 0 0 0 1em; }
 
