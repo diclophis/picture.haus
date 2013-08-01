@@ -6,7 +6,6 @@ class Image < ActiveRecord::Base
   validates_presence_of :src
 
   has_one :latest_finding, -> { order :created_at}, :class_name => 'Finding'
-  has_many :similarities, -> { order 'rating ASC' } #uniq/distinct cannot visit
-  has_many :similar_images, :through => :similarities, :limit => 3, :order => 'rating DESC', :uniq => true
-  #has_many :top_similar_images, :source => :similar_image, :through => :similarities, :limit => 3, :order => 'rating ASC', :uniq => true
+  has_many :similarities, -> { order('rating ASC').uniq }
+  has_many :similar_images, -> { order('rating DESC').limit(3).uniq }, :through => :similarities
 end
