@@ -1,9 +1,41 @@
+* About
 
+Image bookmarking site
 
+* Map
 
+Libraries
+  HasManyFriends
+  ActsAsTaggableOnSteriods
 
+Controllers
+  Application
+    current_page
+    current_per_page
 
-== README
+  Welcome
+    index
+    feed
+
+Models
+  Person
+    has username
+    has email
+    has password
+    has found many images 
+
+  Image
+    has title
+    has src
+
+  Finding
+    has person
+    has image
+
+  Similarity
+    has image
+    has similar_image
+    has rating
 
 * Ruby version
 
