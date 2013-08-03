@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails' #, '4.0.0'
+gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -19,7 +19,7 @@ gem 'will_paginate'
 gem 'foreman'
 
 # Use SCSS for stylesheets
-gem 'sass-rails' #, '~> 4.0.0'
+gem 'sass-rails', '~> 4.0.0'
 
 #vulcan build -v -s ./wget-1.13 -c ".
 
@@ -39,6 +39,6 @@ group :development, :test do
   gem "rspec-rails"
 
   # Database Cleaner is a set of strategies for cleaning your database in Ruby.
-  gem "database_cleaner"
+  gem "database_cleaner", '< 1.1.0'
 end
 
