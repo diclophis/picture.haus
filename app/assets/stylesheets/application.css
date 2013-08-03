@@ -1,5 +1,5 @@
 html { width: 100%; }
-body { background-color: rgba(0,0,0,0); width: 98%; margin: 0; padding: 1%; }
+body { background-color: rgba(0,0,0,0); width: 100%; margin: 0; padding: 0%; }
 
 a { text-decoration: none; outline: none; }
 a:active { outline: none; }
@@ -22,16 +22,16 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { padding: 1em; width: 21%; float: left; background: rgba(100,100,100,0.5); }
+#sidebar { padding: 1%; width: 21%; float: left; background: rgba(100,100,100,0.5); }
 #sidebar p { padding: 0 0 0 0; margin: 0; }
 #sidebar form { padding: 0; }
 
-#content { width: 75%; padding: 0; float: left; }
+#content { width: 77%; padding: 0; float: left; }
 
 #footer { padding: 0; clear: both; width: 100%; }
 #footer p { text-align: right; padding: 0.25em; }
 
-.image { float: left; margin: 0; width: 100%; height: 42em; }
+.image { float: left; margin: 0; width: 100%; height: 34em; }
 .image p { margin: 0; padding: 2%; }
 .primary-wrapper { width: 80%; height: 70%; float: left; }
 .primary { width: 100%; height: 100%; float: left; 

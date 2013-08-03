@@ -28,7 +28,7 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
 
     ImageSeek.daemon {
       ImageSeek.create(database).should == database 
-      Dir.glob(Rails.root.join("app/assets/images/*")).each do |f|
+      Dir.glob(Rails.root.join("app/assets/images/image-0*")).each do |f|
         image = valid_image
         image.src = "app/assets/images/" + File.basename(f)
         image.save.should be_true
