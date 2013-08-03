@@ -1,6 +1,8 @@
 # OSX Makefile
 
-RAILS_ENV:=test
+#PYTHONPATH:=/Users/jbardin/Desktop/iskdaemon/src/build/lib.macosx-10.8-intel-2.7
+#IMGSEEK:=/Users/jbardin/Desktop/iskdaemon/src/iskdaemon.py
+#RAILS_ENV:=testx
 LAST_MIGRATION_HASH:=$(shell md5 -q db/schema.rb)
 
 screenshots = $(patsubst %,tmp/screenshots/%, $(patsubst spec/features/%.rb, %.png, $(wildcard spec/features/*.rb)))

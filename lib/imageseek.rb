@@ -1,10 +1,12 @@
 require 'xmlrpc/client'
 
-IMGSEEK="PYTHONPATH=/Users/jbardin/Desktop/iskdaemon/src/build/lib.macosx-10.8-intel-2.7 /Users/jbardin/Desktop/iskdaemon/src/iskdaemon.py 2>&1"
+#IMGSEEK="PYTHONPATH=/Users/jbardin/Desktop/iskdaemon/src/build/lib.macosx-10.8-intel-2.7 /Users/jbardin/Desktop/iskdaemon/src/iskdaemon.py 2>&1"
 
 class ImageSeek
   HOST = "localhost"
   PORT = 31128
+  PYTHONPATH = "/Users/jbardin/Desktop/iskdaemon/src/build/lib.macosx-10.8-intel-2.7"
+  IMGSEEK = "PYTHONPATH=#{PYTHONPATH} /Users/jbardin/Desktop/iskdaemon/src/iskdaemon.py 2>&1"
   @@client = XMLRPC::Client.new(HOST, "/RPC", PORT)
   def self.daemon
     IO.popen(IMGSEEK) { |io|

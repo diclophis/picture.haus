@@ -18,6 +18,9 @@ gem 'turbolinks'
 # will_paginate is a pagination library that integrates with Ruby on Rails, Sinatra, Merb, DataMapper and Sequel
 gem 'will_paginate'
 
+# Foreman is a manager for Procfile-based applications.
+gem 'foreman'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
