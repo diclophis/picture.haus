@@ -1,4 +1,6 @@
 require "capistrano-rbenv"
+require 'bundler/capistrano'
+
 set :rbenv_ruby_version, "2.0.0-p247"
 set :rbenv_plugins, ["rbenv-build", "rbenv-sudo"]
 set :sudo, "rbenv sudo"
