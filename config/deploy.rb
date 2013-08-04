@@ -1,12 +1,21 @@
+require "capistrano-rbenv"
+set :rbenv_ruby_version, "2.0.0-p247"
+set :rbenv_plugins, ["rbenv-build", "rbenv-sudo"]
+set :sudo, "rbenv sudo"
+set :sudo_password, nil
+
+
 set :application, "centerology"
 set :repository,  "git@github.com:diclophis/centerology-4.0"
 set :deploy_to, "/home/ubuntu/centerology"
 #set :user, "ubuntu"
 set :use_sudo, false
+default_run_options[:pty] = true
 
 # set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
+role :app, "centerology.risingcode.com"
 role :web, "centerology.risingcode.com"
 role :db,  "centerology.risingcode.com"
 
@@ -25,3 +34,31 @@ role :db,  "centerology.risingcode.com"
 #     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
 #   end
 # end
+
+namespace :foreman do
+  desc "Export the Procfile to Ubuntu's upstart scripts"
+  task :export, :roles => :app do
+    #run ". ~/.profile && cd #{current_path} && rbenvsudo bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
+    #sudo "bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
+    #sudo "sudo -i bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
+    run "cd #{current_path} && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
+  end
+
+  desc "Start the application services"
+  task :start, :roles => :app do
+    sudo "start #{application}"
+  end
+ 
+  desc "Stop the application services"
+  task :stop, :roles => :app do
+    sudo "stop #{application}"
+  end
+ 
+  desc "Restart the application services"
+  task :restart, :roles => :app do
+    run "sudo start #{application} || sudo restart #{application}"
+  end
+end
+ 
+after "deploy:update", "foreman:export"
+after "deploy:update", "foreman:restart"

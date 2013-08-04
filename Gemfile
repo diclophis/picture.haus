@@ -27,6 +27,8 @@ gem 'sass-rails', '~> 4.0.0'
 # Capistrano is a utility and framework for executing commands in parallel on multiple remote machines, via SSH.
 gem 'capistrano'
 
+gem 'capistrano-rbenv'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
