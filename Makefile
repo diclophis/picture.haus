@@ -1,10 +1,8 @@
 # OSX Makefile
 
-#PYTHONPATH:=/Users/jbardin/Desktop/iskdaemon/src/build/lib.macosx-10.8-intel-2.7
-#IMGSEEK:=/Users/jbardin/Desktop/iskdaemon/src/iskdaemon.py
 RAILS_ENV:=test
 
-screenshots = $(patsubst %,tmp/screenshots/%, $(patsubst spec/features/%.rb, %.png, $(wildcard spec/features/*.rb)))
+screenshots = $(patsubst spec/features/%.rb, tmp/screenshots/%.png, $(wildcard spec/features/*.rb))
 
 open: $(screenshots) 
 	open tmp/screenshots/* 
