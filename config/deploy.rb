@@ -11,6 +11,7 @@ set :deploy_to, "/home/ubuntu/centerology"
 #set :user, "ubuntu"
 set :use_sudo, false
 default_run_options[:pty] = true
+set :rails_env, "production"
 
 # set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
