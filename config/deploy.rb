@@ -44,7 +44,7 @@ namespace :foreman do
     #run ". ~/.profile && cd #{current_path} && rbenvsudo bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
     #sudo "bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
     #sudo "sudo -i bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
-    run "cd #{current_path} && rbenv sudo bundle install && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
+    run "cd #{current_path} && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
   end
 
   desc "Start the application services"
