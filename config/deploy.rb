@@ -17,7 +17,7 @@ default_run_options[:pty] = true
 
 role :app, "centerology.risingcode.com"
 role :web, "centerology.risingcode.com"
-role :db,  "centerology.risingcode.com"
+role :db,  "centerology.risingcode.com", :primary => true
 
 
 # if you want to clean up old releases on each deploy uncomment this:
@@ -56,9 +56,20 @@ namespace :foreman do
  
   desc "Restart the application services"
   task :restart, :roles => :app do
-    run "sudo restart #{application}"
+    run "sudo restart #{application} || sudo start #{application}"
   end
 end
  
 after "deploy:update", "foreman:export"
+after "deploy:update", "deploy:migrate"
 after "deploy:update", "foreman:restart"
+
+namespace :config do
+  task :dot_env, :except => { :no_release => true }, :role => :app do
+    run "ln -sf #{release_path}/config/production.env #{release_path}/.env"
+    run "ln -sf ~/production.database.yml #{release_path}/config/database.yml"
+  end
+end
+
+after "deploy:finalize_update", "config:dot_env" 
+
