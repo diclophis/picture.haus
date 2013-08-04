@@ -38,6 +38,8 @@ ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 }
 */
 
+html { background-color: white; }
+
 html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 
 p { margin: 0.25em 0.5em 0.25em 0.5em; }
@@ -84,11 +86,9 @@ label[for="person_remember_me"] { display: inline; }
 .field_with_errors input { background-color: yellow; }
 div.field_with_errors { display: inline; }
 
-.notice { margin: 1em 3em 1em 1em; border: 0.25em solid green; background-color: #00aa00; padding: 0.5em; }
-.notice p { padding: 0; margin: 0; }
+.notice { margin: 1em 0.5em 1em 0.5em; border: 0.25em solid green; background-color: #00aa00; padding: 0.5em; }
 
-.alert { margin: 1em 3em 1em 1em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 1em 1em 1em 1em; }
-.alert p { padding: 0; margin: 0; }
+.alert { margin: 1em 0.5em 1em 0.5em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 0.5em; }
 
 #risingcode-grid, #original-grid {
   overflow: hidden;
