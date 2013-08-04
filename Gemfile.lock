@@ -146,6 +146,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  coffee-rails
   database_cleaner (< 1.1.0)
   devise
   foreman
