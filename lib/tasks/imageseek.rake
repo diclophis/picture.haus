@@ -1,7 +1,8 @@
 namespace 'imageseek' do
   desc 'Run'
   task 'run' => :environment do
-    exec(ImageSeek::IMGSEEK_CMD)
+    pid = Process.spawn({}, ImageSeek::IMGSEEK_CMD, {:out => $stdout, :err => $stderr})
+    _, status = Process.wait2(pid)
   end
 
   desc 'Create Similarities'
