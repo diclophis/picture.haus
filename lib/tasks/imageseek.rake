@@ -1,4 +1,9 @@
 namespace 'imageseek' do
+  desc 'Run'
+  task 'run' => :environment do
+    exec(ImageSeek::IMGSEEK_CMD)
+  end
+
   desc 'Create Similarities'
   task 'create_similarities' => :environment do
     ImageSeek.daemon {
