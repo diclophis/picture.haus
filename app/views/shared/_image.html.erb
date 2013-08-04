@@ -1,20 +1,24 @@
-    <div class="image">
-      <div class="primary-wrapper">
-        <p>
-          <%=link_to(h(truncate(image.title)), image.src)%>
-          <br/>
-          <%=truncate(image.src)%>
-          <br/>
-          found <%=time_ago_in_words(image.latest_finding.created_at)%> ago
-          <% if image.findings.count > 1 then %>
-            by <%=image.findings.count%> other people
-          <% end %>
-        </p>
-        <div class="primary" style="background-image: url(<%=asset_url(File.basename(image.src))%>)">
-        </div>
-      </div>
-      <% image.similar_images.each { |similar_image| %>
-        <div class="similar" style="background-image: url(<%=asset_url(File.basename(similar_image.src))%>)">
-        </div>
-      <% } %>
+<div class="image">
+  <div class="primary-wrapper">
+    <p>
+      <%=link_to(h(truncate(image.title)), image.src)%>
+      <br/>
+      <%=truncate(image.src)%>
+      <br/>
+      found <%=time_ago_in_words(image.latest_finding.created_at)%> ago
+      <% if image.findings.count > 1 then %>
+        by <%=image.findings.count%> other people
+      <% end %>
+    </p>
+    <div class="primary" style="background-image: url(<%=asset_url(File.basename(image.src))%>)">
+      <%=image_tag(asset_url(File.basename(image.src)))%>
     </div>
+  </div>
+  <div class="secondary-wrapper">
+    <% image.similar_images.each { |similar_image| %>
+      <div class="similar" style="background-image: url(<%=asset_url(File.basename(similar_image.src))%>)">
+        <%=image_tag(asset_url(File.basename(image.src)))%>
+      </div>
+    <% } %>
+  </div>
+</div>

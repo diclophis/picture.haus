@@ -1,11 +1,9 @@
-<% content_for :sidebar do %>
-  <p>
+<% content_for :tagline do %>
     <% if person_signed_in? %>
       <%= link_to "profile", edit_person_registration_path %>
     <% else %>
       <%= link_to "sign up", new_person_registration_path %>
     <% end %>
-  </p>
 <% end %>
 
 <%= render :partial => "shared/image", :collection => @recent_images %>
