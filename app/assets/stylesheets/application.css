@@ -70,8 +70,7 @@ p { margin: 0.25em 0.5em 0.25em 0.5em; }
 .pagination a, .pagination span, .pagination em { padding: 0 0.5% 0 0.5%; }
 .pagination em.current { font-weight: bold; color: red; }
 
-form { overflow: hidden; padding: 1%; }
-label { display: block; }
+form { overflow: hidden; padding: 1em; }
 input { width: 90%; margin: 1% 100% 1% 0.5%; padding: 1%; }
 input[type="submit"] { width: 12em; }
 input[type="checkbox"] { width: auto; }
@@ -79,16 +78,15 @@ input[type="checkbox"] { width: auto; }
 #person_remember_me { margin-right: 0; }
 label[for="person_remember_me"] { display: inline; }
 
-#error_explanation { margin: 0em 0em 1% 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 0.5em; }
+#error_explanation { margin: 0 0 1em 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 0.5em; }
 #error_explanation h2 { color: maroon; margin: 0; }
 #error_explanation ul li { list-style: square; margin: 0 0 0 1em; }
 
 .field_with_errors input { background-color: yellow; }
 div.field_with_errors { display: inline; }
 
-.notice { margin: 1em 0.5em 1em 0.5em; border: 0.25em solid green; background-color: #00aa00; padding: 0.5em; }
-
-.alert { margin: 1em 0.5em 1em 0.5em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 0.5em; }
+.notice { margin: 1em 1em 0 1em; border: 0.25em solid green; background-color: #00aa00; padding: 0.5em; }
+.alert { margin: 1em 1em 0 1em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 0.5em; }
 
 #risingcode-grid, #original-grid {
   overflow: hidden;
