@@ -24,7 +24,8 @@ gem 'foreman'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
-#vulcan build -v -s ./wget-1.13 -c ".
+# Capistrano is a utility and framework for executing commands in parallel on multiple remote machines, via SSH.
+gem 'capistrano'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
