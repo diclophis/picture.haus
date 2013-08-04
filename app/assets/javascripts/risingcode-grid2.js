@@ -177,4 +177,4 @@ document.addEventListener('page:change', function() {
   onWindowResize();
 });
 
-//document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', main);

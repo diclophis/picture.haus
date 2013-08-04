@@ -7,8 +7,6 @@ a:active { outline: none; }
 
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 
-
-
 #sidebar > *, #content > *, #content input, #footer > * {
   font-size: 1em;
 }
