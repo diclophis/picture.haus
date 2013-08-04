@@ -29,6 +29,10 @@ gem 'capistrano'
 
 gem 'capistrano-rbenv'
 
+group :assets do
+  gem 'uglifier'
+end
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
