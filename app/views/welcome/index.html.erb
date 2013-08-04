@@ -1,11 +1,11 @@
 <% content_for :tagline do %>
-    <% if person_signed_in? %>
-      <%= link_to "profile", edit_person_registration_path %>
-    <% else %>
-      <%= link_to "sign up", new_person_registration_path %>
-    <% end %>
+  <% if person_signed_in? %>
+    <%= link_to "profile", edit_person_registration_path %>
+  <% else %>
+    <%= link_to "sign up", new_person_registration_path %>
+  <% end %>
 <% end %>
 
 <%= render :partial => "shared/image", :collection => @recent_images %>
-<%=will_paginate(@recent_images)%>
 
+<%= will_paginate(@recent_images, {:page_links => false, :inner_window => 1, :outer_window => 1}) %>

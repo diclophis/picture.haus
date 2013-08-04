@@ -13,4 +13,5 @@
 <% end %>
 
 <%= render :partial => "shared/image", :collection => @images %>
-<%=will_paginate(@images)%>
+
+<%= will_paginate(@images, {:page_links => false, :inner_window => 1, :outer_window => 1}) %>
