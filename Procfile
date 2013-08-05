@@ -1,2 +1,2 @@
-web: bundle exec rails server puma -p $PORT
-imgseek: $IMGSEEK
+web: bundle exec puma -p $PORT
+#imgseek: $IMGSEEK
