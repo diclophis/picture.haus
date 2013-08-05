@@ -10,11 +10,15 @@ open: $(screenshots)
 Gemfile:
 	bundle install
 
+db/schema.rb:
+	RAILS_ENV=$(RAILS_ENV) bundle exec rake db:migrate
+
+tmp/screenshots/edit_person_registration_spec.png: db/schema.rb
+	RAILS_ENV=$(RAILS_ENV) bundle exec foreman run rspec
+
 tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/schema.rb
 	RAILS_ENV=$(RAILS_ENV) bundle exec foreman run rspec
 
-db/schema.rb:
-	RAILS_ENV=$(RAILS_ENV) bundle exec rake db:migrate
 
 clean:
 	touch db/schema.rb && rm -R db/schema.rb
