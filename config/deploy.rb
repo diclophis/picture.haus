@@ -1,5 +1,6 @@
 require "capistrano-rbenv"
 require 'bundler/capistrano'
+require "puma/capistrano"
 
 set :rbenv_ruby_version, "2.0.0-p247"
 set :rbenv_plugins, ["rbenv-build", "rbenv-sudo"]
@@ -40,6 +41,7 @@ namespace :foreman do
     run "cd #{current_path} && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
   end
 
+=begin
   desc "Start the application services"
   task :start, :roles => :app do
     sudo "start #{application}"
@@ -54,11 +56,12 @@ namespace :foreman do
   task :restart, :roles => :app do
     run "sudo restart #{application} || sudo start #{application}"
   end
+=end
 end
  
 after "deploy:update", "foreman:export"
 after "deploy:update", "deploy:migrate"
-after "deploy:update", "foreman:restart"
+#after "deploy:update", "foreman:restart"
 
 namespace :config do
   task :dot_env, :except => { :no_release => true }, :role => :app do
