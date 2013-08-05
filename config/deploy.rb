@@ -15,13 +15,9 @@ set :use_sudo, false
 default_run_options[:pty] = true
 set :rails_env, "production"
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-
 role :app, "centerology.risingcode.com"
 role :web, "centerology.risingcode.com"
 role :db,  "centerology.risingcode.com", :primary => true
-
 
 # if you want to clean up old releases on each deploy uncomment this:
 # after "deploy:restart", "deploy:cleanup"
@@ -41,9 +37,6 @@ role :db,  "centerology.risingcode.com", :primary => true
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   task :export, :roles => :app do
-    #run ". ~/.profile && cd #{current_path} && rbenvsudo bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
-    #sudo "bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
-    #sudo "sudo -i bundle exec foreman export upstart /etc/init -a centerology -u ubuntu -l /var/log/centerology"
     run "cd #{current_path} && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
   end
 
