@@ -19,7 +19,7 @@ gem 'turbolinks'
 gem 'will_paginate'
 
 # Foreman is a manager for Procfile-based applications.
-gem 'foreman'
+gem 'foreman', :git => 'git@github.com:ddollar/foreman.git'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
