@@ -81,6 +81,7 @@ namespace :config do
   end
   task :production_log, :except => { :no_release => true }, :role => :app do
     run "touch #{shared_path}/log/production.log && chmod 666 #{shared_path}/log/production.log"
+    run "touch #{shared_path}/log/isk-daemon.log && chmod 666 #{shared_path}/log/isk-daemon.log"
   end
 end
 
