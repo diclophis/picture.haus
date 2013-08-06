@@ -59,9 +59,16 @@ namespace :foreman do
  
   desc "Restart the application services"
   task :restart, :roles => :app do
-    run "sudo restart #{application} || sudo start #{application}"
   end
 =end
+end
+
+namespace :deploy do
+  task :start do ; end
+  task :stop do ; end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "sudo restart #{application} || sudo start #{application}"
+  end
 end
  
 after "deploy:update", "foreman:export"
