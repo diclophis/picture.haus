@@ -11,7 +11,6 @@ set :sudo_password, nil
 set :application, "centerology"
 set :repository,  "git@github.com:diclophis/centerology-4.0"
 set :deploy_to, "/home/ubuntu/centerology"
-#set :user, "ubuntu"
 set :use_sudo, false
 default_run_options[:pty] = true
 set :rails_env, "production"
@@ -80,6 +79,10 @@ namespace :config do
     run "ln -sf #{release_path}/config/production.env #{release_path}/.env"
     run "ln -sf ~/production.database.yml #{release_path}/config/database.yml"
   end
+  task :production_log, :except => { :no_release => true }, :role => :app do
+    run "touch #{shared_path}/log/production.log && chmod 666 #{shared_path}/log/production.log"
+  end
 end
 
 after "deploy:finalize_update", "config:dot_env" 
+after "deploy:setup", "config:production_log" 
