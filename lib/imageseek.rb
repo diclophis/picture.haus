@@ -15,7 +15,7 @@ class ImageSeek
           break if i.nil?
         end
       }
-      sleep 0.1 until i.include?("init finished") #TODO: remove sleep idle loop
+      sleep 0.1 until i && i.include?("init finished") #TODO: remove sleep idle loop
       begin
         yield
       rescue => problem

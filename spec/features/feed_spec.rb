@@ -10,7 +10,7 @@ describe 'the edit_person_registration page' do
     finding.person = @person
     finding.image = Image.new
     finding.image.title = "foo"
-    finding.image.src = "/assets/noise.png" #("http://localhost:#{Capybara.server_port}/assets/noise.png")
+    finding.image.src = valid_image.src
     finding.save!
 
     visit feed_path(@person.username)

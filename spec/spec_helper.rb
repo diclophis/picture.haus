@@ -91,9 +91,12 @@ def valid_friendship
 end
 
 def valid_image #(router = Router.new)
+  all_images = Dir.glob("app/assets/images/image-*")
+  @_first_random_image ||= all_images[rand * all_images.length]
+
   image = Image.new
   image.title = "title"
-  image.src = ActionController::Base.helpers.asset_path("noise.png") #"http://google.com"
+  image.src = File.basename(@_first_random_image) #.gsub("app/assets/images/", "") #ActionController::Base.helpers.asset_path("noise.png") #"http://google.com"
   image
 end
 
