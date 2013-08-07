@@ -18,13 +18,13 @@ screenProgram, resizer = { timeout: null }, refreshTimeout = 1000;
 var target = {};
 var paused = false;
 var precision = 6.0;
-var image = new Image();
+var image = null; //new Image();
 
 var main = function() {
   //TODO: USE DOM and rails path helper
   //image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
   //image.onload = function() {
-    init();
+  init();
   //}
 }
 
@@ -49,18 +49,19 @@ function init() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ]), gl.DYNAMIC_DRAW);
     gl.vertexAttribPointer(screenVertexPosition, 2, gl.FLOAT, false, 0, 0);
 
-    var texture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, texture);
+    if (image) {
+      var texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
 
-    // Set the parameters so we can render any size image.
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+      // Set the parameters so we can render any size image.
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
-    // Upload the image into the texture.
-    //gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-
+      // Upload the image into the texture.
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    }
 
     onWindowResize();
     window.addEventListener('resize', onWindowResize, false);
