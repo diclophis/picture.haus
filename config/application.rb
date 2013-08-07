@@ -22,7 +22,7 @@ module Centerology
     config.middleware.use Rack::Deflater
     config.middleware.use Rack::Cache,
     :verbose => true,
-    :metastore   => 'file:/var/cache/rack/meta',
-    :entitystore => 'file:/var/cache/rack/body'
+    :metastore   => 'file:tmp/cache/rack/meta',
+    :entitystore => 'file:tmp/cache/rack/body'
   end
 end
