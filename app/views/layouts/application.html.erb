@@ -13,9 +13,9 @@
   <body>
     <div id="header">
       <h1>
-        <%= link_to(root_path, root_path) %>
+        <%= link_to("root", root_path) %>
         <% if content_for? :tagline %>
-          <%= yield :tagline %>
+          ~ <%= yield :tagline %>
         <% end %>
       </h1>
     </div>
@@ -24,10 +24,14 @@
     </div>
     <div id="content">
       <% if notice %>
-        <div class="notice"><p><%= notice %></p></div>
+        <div id="flash">
+          <div class="notice"><p><%= notice %></p></div>
+        </div>
       <% end %>
       <% if alert %>
-        <div class="alert"><p><%= alert %></p></div>
+        <div id="flash">
+          <div class="alert"><h2><%= alert %></h2></div>
+        </div>
       <% end %>
       <%= yield %>
       <div id="footer">

@@ -36,12 +36,13 @@ ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 
 html { background-color: white; }
 
-html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
+html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; line-height: 1em; }
 
 p { margin: 0.25em 0.5em 0.25em 0.5em; }
 
-div#header, div.pagination, p, form { background-color: rgba(255,255,255,0.8); }
+div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,255,0.8); }
 
+#header { padding: 0.5em; }
 #footer { float: right; }
 #footer p { text-align: right; padding: 0.25em; }
 
@@ -88,8 +89,9 @@ label[for="person_remember_me"] { display: inline; }
 .field_with_errors input { background-color: yellow; }
 div.field_with_errors { display: inline; }
 
-.notice { margin: 1em 1em 0 1em; border: 0.25em solid green; background-color: #00aa00; padding: 0.5em; }
-.alert { margin: 1em 1em 0 1em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 0.5em; }
+#flash { padding: 0.25em 1em 0.25em 1em; margin: 0em; }
+.notice { margin: 0em; border: 0.25em solid green; background-color: #00aa00; padding: 0.5em; }
+.alert { margin: 0em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 0.5em; }
 
 #risingcode-grid, #original-grid {
   overflow: hidden;
@@ -98,6 +100,7 @@ div.field_with_errors { display: inline; }
   left: 0;
   z-index: -1;
 }
+
 #risingcode-grid canvas, #original-grid canvas {
   position: absolute;
   top: 0;

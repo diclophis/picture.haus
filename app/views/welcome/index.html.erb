@@ -1,6 +1,6 @@
 <% content_for :tagline do %>
   <% if person_signed_in? %>
-    <%= link_to "~" + current_person.username, edit_person_registration_path %>
+    <%= link_to current_person.username, edit_person_registration_path %>
   <% else %>
     <%= link_to "sign up", new_person_registration_path %>
   <% end %>
