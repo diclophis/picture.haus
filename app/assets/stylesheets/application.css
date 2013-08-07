@@ -34,28 +34,32 @@ ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 }
 */
 
-html { background-color: white; }
+html { background-color: black; }
 
 html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; line-height: 1em; }
 
-p { margin: 0.25em 0.5em 0.5em 0.5em; }
+p { margin: 0.5em 0.5em 0.5em 0.5em; }
 
 div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,255,0.8); }
 
-#header { padding: 0.5em; margin: 0 0 0.25em 0; }
-#footer { float: right; margin: 0.25em 0 0 0; }
+#header { padding: 0.5em; margin: 0 0 0.5em 0; }
+#footer { float: right; margin: 0 0 0 0; }
 #footer p { text-align: right; padding: 0.25em; }
 
 .image { float: left; margin: 0 0 0.25em 0; width: 100%; height: 33em; position: relative; }
 .image img { opacity: 0; }
-#content p { padding: 0.25em; }
+#content p { padding: 0.5em; }
+
+#content input {
+  font-size: 1.5em;
+}
 
 .primary-wrapper { width: 80%; height: 70%; float: left; }
 .secondary-wrapper { width: 100%; height: 100%; }
 
 .primary {
   overflow: hidden;
-  width: 80%; height: 87%; float: left; 
+  width: 80%; height: 84%; float: left; 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -76,13 +80,13 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,
 .pagination .previous_page, .pagination .next_page { width: 6em; }
 .pagination em.current { font-weight: bold; color: red; }
 
-form { overflow: hidden; padding: 1em; }
-input { width: 90%; margin: 1% 100% 1% 0.5%; padding: 1%; }
-input[type="submit"] { width: 12em; }
+form { overflow: hidden; padding: 1em; -webkit-user-select:none; -moz-user-select:none; }
+input { width: 90%; margin: 0.5em 100% 0.5em 0.25em; padding: 0.25em; }
+input[type="submit"] { width: 12em; -webkit-appearance: none; }
 input[type="checkbox"] { width: auto; }
 
-#person_remember_me { margin-right: 0; }
-label[for="person_remember_me"] { display: inline; }
+#person_remember_me { margin: 1em; }
+label[for="person_remember_me"] { display: inline; x-vertical-align: middle; padding: 2em 2em 2em 5em; margin: 0 0 0 -5em; }
 
 #error_explanation { margin: 0 0 1em 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 0.5em; }
 #error_explanation h2 { color: maroon; margin: 0; }
@@ -91,7 +95,7 @@ label[for="person_remember_me"] { display: inline; }
 .field_with_errors input { background-color: yellow; }
 div.field_with_errors { display: inline; }
 
-#flash { padding: 0.25em 1em 0.25em 1em; margin: 0em; }
+#flash { padding: 1em; margin: 0 0 0em 0; }
 .notice { margin: 0em; border: 0.25em solid green; background-color: #00aa00; padding: 0.5em; }
 .alert { margin: 0em; background-color:#ffcccc; border: 0.25em solid red; background-color: yellow; padding: 0.5em; }
 

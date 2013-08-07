@@ -13,7 +13,11 @@ describe 'the edit_person_registration page' do
       fill_in 'Password', :with => @person.password 
       fill_in 'Password confirmation', :with => @person.password 
 
-      click_on 'Sign up'
+      page.save_screenshot("tmp/screenshots/edit_person_registration_spec_wtf_2.png")
+
+      click_on 'sign up'
+
+      page.save_screenshot("tmp/screenshots/edit_person_registration_spec_wtf.png")
     end
 
     it 'should allow attributes to be edited' do
@@ -28,7 +32,7 @@ describe 'the edit_person_registration page' do
       find_field('Username').value.should == @person.username + "_edited"
       page.save_screenshot("tmp/screenshots/edit_person_registration_spec_004.png")
 
-      click_on 'Update'
+      click_on 'update'
       page.save_screenshot("tmp/screenshots/edit_person_registration_spec_002.png")
 
       visit edit_person_registration_path

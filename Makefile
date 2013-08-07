@@ -23,6 +23,9 @@ tmp/:
 	mkdir tmp/
 
 clean:
+	pkill -f ruby
+	pkill -f python
+	touch /tmp/isk_db && rm /tmp/isk_db
 	(mkdir tmp || touch tmp) && rm -R tmp
 	touch db/schema.rb && rm -R db/schema.rb
 	touch db/test.sqlite3 && rm -R db/test.sqlite3

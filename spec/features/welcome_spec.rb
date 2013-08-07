@@ -8,7 +8,7 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
 
   it "should link to itself" do
     visit root_path
-    page.should have_link root_path
+    page.should have_link "root", root_path
   end
 
   it "should link to risingcode.com" do
@@ -28,7 +28,8 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
 
     ImageSeek.daemon {
       ImageSeek.create(database).should == database 
-      Dir.glob(Rails.root.join("app/assets/images/image-0*")).each do |f|
+      count = 0
+      Dir.glob(Rails.root.join("app/assets/images/image-*")).sort_by { rand }.each do |f|
         image = valid_image
         image.src = File.basename(f)
         image.save.should be_true
@@ -38,6 +39,7 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
         finding.save.should be_true
 
         ImageSeek.add_image(database, image.id, "app/assets/images/" + image.src, is_url = false).should == 1
+        break if (count += 1) > 5
       end
 
       Image.all.each { |image|

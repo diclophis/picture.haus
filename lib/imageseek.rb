@@ -11,7 +11,10 @@ class ImageSeek
       thread = Thread.new { #TODO: try without thread
         while IO.select([io], nil, nil) do
           i = io.gets
-          puts i if ENV['DEBUG_IMGSEEK']
+          #puts i if ENV['DEBUG_IMGSEEK']
+          #puts "\e[32m.\e[0m" if Rails.env.test
+          #i.length.times { $stdout.write(".") } if Rails.env.test
+          #$stdout.flush
           break if i.nil?
         end
       }
