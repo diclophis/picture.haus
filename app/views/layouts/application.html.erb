@@ -5,10 +5,10 @@
     <title><%= request.host %></title>
     <meta name="x-viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
+    <%= render :partial => "shared/shaders" %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
-    <%= render :partial => "shared/shaders" %>
   </head>
   <body>
     <div id="header">
