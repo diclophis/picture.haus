@@ -38,15 +38,15 @@ html { background-color: white; }
 
 html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; line-height: 1em; }
 
-p { margin: 0.25em 0.5em 0.25em 0.5em; }
+p { margin: 0.25em 0.5em 0.5em 0.5em; }
 
 div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,255,0.8); }
 
 #header { padding: 0.5em; margin: 0 0 0.25em 0; }
-#footer { float: right; }
+#footer { float: right; margin: 0.25em 0 0 0; }
 #footer p { text-align: right; padding: 0.25em; }
 
-.image { float: left; margin: 0; width: 100%; height: 33em; }
+.image { float: left; margin: 0 0 0.25em 0; width: 100%; height: 33em; position: relative; }
 .image img { opacity: 0; }
 #content p { padding: 0.25em; }
 
@@ -55,11 +55,13 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,
 
 .primary {
   overflow: hidden;
-  width: 100%; height: 100%; float: left; 
-  margin: 2%;
+  width: 80%; height: 87%; float: left; 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
+  position: absolute;
+  left: 0;
+
 }
 .similar {
   overflow: hidden;
@@ -69,7 +71,7 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,
   background-position: 50% 50%;
 }
 
-.pagination { text-align: center; clear: both; padding: 1em 0 1em 0; }
+.pagination { width: 80%; text-align: center; clear: both; padding: 1em 0 1em 0; }
 .pagination a, .pagination span, .pagination em { padding: 0 0.5% 0 0.5%; display: inline-block; width: 3em; }
 .pagination .previous_page, .pagination .next_page { width: 6em; }
 .pagination em.current { font-weight: bold; color: red; }
