@@ -22,10 +22,10 @@ var image = new Image();
 
 var main = function() {
   //TODO: USE DOM and rails path helper
-  image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
-  image.onload = function() {
+  //image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
+  //image.onload = function() {
     init();
-  }
+  //}
 }
 
 // Initialise WebGL
@@ -59,7 +59,7 @@ function init() {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
     // Upload the image into the texture.
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    //gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 
 
     onWindowResize();
@@ -177,4 +177,4 @@ document.addEventListener('page:change', function() {
   onWindowResize();
 });
 
-//document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', main);

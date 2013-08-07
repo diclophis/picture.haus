@@ -30,7 +30,6 @@ end
 def valid_image #(router = Router.new)
   image = Image.new
   image.title = "title"
-  image.src = ActionController::Base.helpers.asset_path("noise.png") #"http://google.com"
   image
 end
 
@@ -58,14 +57,13 @@ ImageSeek.daemon {
   ImageSeek.create(database)
   Dir.glob(Rails.root.join("app/assets/images/*")).each do |f|
     image = valid_image
-    image.src = "app/assets/images/" + File.basename(f)
+    image.src = File.basename(f)
     image.save
     finding = valid_finding
     finding.person = person
     finding.image = image
     finding.save
-
-    ImageSeek.add_image(database, image.id, image.src, is_url = false)
+    ImageSeek.add_image(database, image.id, f, is_url = false)
   end
 
   Image.all.each { |image|

@@ -8,7 +8,7 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
 
   it "should link to itself" do
     visit root_path
-    page.should have_link 'centerology', root_path
+    page.should have_link root_path
   end
 
   it "should link to risingcode.com" do

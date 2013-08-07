@@ -13,9 +13,8 @@
   <body>
     <div id="header">
       <h1>
-        <%= link_to(request.host, root_path) %>
+        <%= link_to(root_path, root_path) %>
         <% if content_for? :tagline %>
-          &#126;
           <%= yield :tagline %>
         <% end %>
       </h1>
