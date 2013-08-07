@@ -39,6 +39,7 @@ namespace :foreman do
   task :export, :roles => :app do
     run "cd #{current_path} && rbenv sudo bundle exec foreman export daemon /etc/init -a #{application} -u nobody -l /var/log/centerology"
     run "for f in `ls /etc/init/#{application}*.conf`; do rbenv sudo sed -i.bak 's/ --exec bundle / --exec \\/home\\/ubuntu\\/.rbenv\\/shims\\/bundle /' $f; done;"
+    run "for f in `ls /etc/init/#{application}-web-*.conf`; do rbenv sudo sed -i.bak 's/ --chuid nobody / /' $f; done;"
 
 
     #run "cd #{current_path} && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
