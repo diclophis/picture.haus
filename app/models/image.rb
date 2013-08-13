@@ -7,5 +7,5 @@ class Image < ActiveRecord::Base
 
   has_one :latest_finding, -> { order :created_at}, :class_name => 'Finding'
   has_many :similarities, -> { order('rating ASC').uniq }
-  has_many :similar_images, -> { order('rating DESC').limit(3).uniq }, :through => :similarities
+  has_many :similar_images, -> { order('rating DESC').uniq.limit(3) }, :through => :similarities
 end

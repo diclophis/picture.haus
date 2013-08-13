@@ -23,8 +23,8 @@ tmp/:
 	mkdir tmp/
 
 clean:
-	pkill -f ruby
-	pkill -f python
+	pgrep ruby && pkill -f ruby || true
+	pgrep python && pkill -f python || true
 	touch /tmp/isk_db && rm /tmp/isk_db
 	(mkdir tmp || touch tmp) && rm -R tmp
 	touch db/schema.rb && rm -R db/schema.rb

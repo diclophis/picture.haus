@@ -1,0 +1,11 @@
+<%= form_for @finding do |f| %>
+  <%= f.fields_for @image do |i| %>
+    <%= i.label :title %>
+    <%= i.text_field :title %>
+    <%= i.label :src %>
+    <%= i.text_field :src %>
+  <% end %>
+  <%= f.label :tag_list %>
+  <%= f.text_field :tag_list %>
+  <%= f.submit %>
+<% end %>

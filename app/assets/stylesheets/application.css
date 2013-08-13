@@ -1,8 +1,4 @@
-html { }
-
 html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; line-height: 1em; font-size: 100%; }
-
-xp { margin: 0.5em 0.5em 0.5em 0.5em; }
 
 div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,215,0.8); }
 
@@ -23,14 +19,14 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
 
 .primary {
   overflow: hidden;
-  width: 75%; height: 88%; float: left; 
+  width: 75%; height: 100%; float: left; 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   position: absolute;
   left: 0;
-  margin: 2.5% 0 0 0;
 }
+
 .similar {
   overflow: hidden;
   width: 25%; height: 33.33333333%; float: left; text-align: center;
@@ -39,12 +35,10 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
   background-position: 50% 50%;
 }
 
-.pagination { text-align: center; clear: both; padding: 1em 25% 1em 0em; margin: 0 0 0 0; }
+.pagination { text-align: center; clear: both; padding: 2em 25% 2em 0em; margin: 0 0 0 0; }
 .pagination a, .pagination span, .pagination em { padding: 0 0.5% 0 0.5%; display: inline-block; width: 3em; }
 .pagination .previous_page, .pagination .next_page { width: 6em; }
 .pagination em.current { font-weight: bold; color: red; }
-/*
-*/
 
 form { overflow: hidden; padding: 1em; -webkit-user-select:none; -moz-user-select:none; }
 input { width: 90%; margin: 0.5em 100% 0.5em 0.25em; padding: 0.25em; }

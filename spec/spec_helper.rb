@@ -45,6 +45,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  config.include Devise::TestHelpers, :type => :controller
+
   config.before :each do
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
