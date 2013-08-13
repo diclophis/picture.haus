@@ -15,6 +15,10 @@ class FindingsController < ApplicationController
     end
   end
 
+  def index
+    redirect_to :new
+  end
+
   def new
     @finding = Finding.new
     @image = Image.new

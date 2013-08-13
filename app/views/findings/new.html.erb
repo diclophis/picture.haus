@@ -1,9 +1,13 @@
+<% content_for :tagline do %>
+  <%= render :partial => "shared/tagline" %>
+<% end %>
+
 <%= form_for @finding do |f| %>
   <%= f.fields_for @image do |i| %>
     <%= i.label :title %>
-    <%= i.text_field :title %>
+    <%= i.text_field :title, :placeholder => @image.errors.full_messages_for(:title) %>
     <%= i.label :src %>
-    <%= i.text_field :src %>
+    <%= i.text_field :src, :placeholder => @image.errors.full_messages_for(:src) %>
   <% end %>
   <%= f.label :tag_list %>
   <%= f.text_field :tag_list %>

@@ -9,5 +9,5 @@ Centerology::Application.routes.draw do
 
   resources :images, :only => [:show]
 
-  resources :findings, :only => [:create, :new]
+  resources :findings, :only => [:create, :new, :index]
 end
