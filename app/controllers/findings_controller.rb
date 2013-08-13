@@ -17,6 +17,7 @@ class FindingsController < ApplicationController
 
   def new
     @finding = Finding.new
+    @image = Image.new
   end
 
 private
