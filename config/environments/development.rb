@@ -29,4 +29,7 @@ Centerology::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.serve_static_assets = true
+  config.static_cache_control = "private,max-age=0,must-revalidate,no-store"
 end

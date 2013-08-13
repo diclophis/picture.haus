@@ -102,8 +102,6 @@ GEM
       faye-websocket (>= 0.4.4, < 0.5.0)
       http_parser.rb (~> 0.5.3)
     polyglot (0.3.3)
-    puma (2.4.0)
-      rack (>= 1.1, < 2.0)
     rack (1.5.2)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -185,7 +183,6 @@ DEPENDENCIES
   devise
   foreman!
   poltergeist
-  puma
   rack-cache
   rack-rewrite
   rails (= 4.0.0)

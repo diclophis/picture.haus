@@ -20,16 +20,8 @@ var paused = false;
 var precision = 6.0;
 var image = null; //new Image();
 
-var main = function() {
-  //TODO: USE DOM and rails path helper
-  //image.src = "/assets/noise.png";  // MUST BE SAME DOMAIN!!!
-  //image.onload = function() {
-  init();
-  //}
-}
-
 // Initialise WebGL
-function init() {
+var main = function() {
   canvas = document.getElementById("risingcode-canvas");
   effect = document.getElementById("risingcode-grid");
   canvas.id = "original-canvas";
@@ -178,4 +170,4 @@ document.addEventListener('page:change', function() {
   onWindowResize();
 });
 
-document.addEventListener('DOMContentLoaded', main);
+//document.addEventListener('DOMContentLoaded', main);

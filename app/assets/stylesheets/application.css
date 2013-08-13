@@ -1,52 +1,16 @@
-/*
-html { width: 100%; overflow-x: hidden; }
-body { width: 100%; margin: 0; padding: 0%; overflow-x: hidden; }
-
-a { text-decoration: none; outline: none; }
-a:active { outline: none; }
-
-ul { list-style: none; margin: 0 0 0 0; padding: 0; }
-
-#sidebar > *, #content > *, #content input, #footer > * {
-  font-size: 1em;
-}
-
-#header { background-color: rgba(225,225,225,0.75); width: 100%; padding: 0 1% 0.5% 1%; }
-#header ul { float: right; margin: 0 0 0 0; }
-#header li { display: inline; }
-
-#sidebar { padding: 1%; width: 21%; float: left; background: rgba(100, 100, 100, 0.5); }
-#sidebar p { padding: 0 0 0 0; margin: 0; }
-#sidebar form { padding: 0; }
-
-#content { width: 77%; padding: 0; float: left; }
-
-
-.primary {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
-.similar {
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
-*/
-
-html { background-color: black; }
+html { }
 
 html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; line-height: 1em; }
 
-p { margin: 0.5em 0.5em 0.5em 0.5em; }
+xp { margin: 0.5em 0.5em 0.5em 0.5em; }
 
-div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,255,0.8); }
+div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,215,0.8); }
 
 #header { padding: 0.5em; margin: 0 0 0.5em 0; }
 #footer { float: right; margin: 0 0 0 0; }
 #footer p { text-align: right; padding: 0.25em; margin: 0; }
 
-.image { float: left; margin: 0 0 0.25em 0; width: 100%; height: 33em; position: relative; }
+.image { margin: 0 0 0.25em 0; width: 100%; height: 33em; position: relative; clear: both; }
 .image img { opacity: 0; }
 #content p { padding: 0.5em; }
 
@@ -54,12 +18,12 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,
   font-size: 1.5em;
 }
 
-.primary-wrapper { width: 80%; height: 70%; float: left; }
+.primary-wrapper { width: 80%; height: 100%; float: left; }
 .secondary-wrapper { width: 100%; height: 100%; }
 
 .primary {
   overflow: hidden;
-  width: 80%; height: 84%; float: left; 
+  width: 80%; height: 88%; float: left; 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -75,10 +39,12 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(255,255,
   background-position: 50% 50%;
 }
 
-.pagination { width: 80%; text-align: center; clear: both; padding: 1em 0 1em 0em; margin: 0 0 0 0; }
+.pagination { text-align: center; clear: both; padding: 1em 20% 1em 0em; margin: 0 0 0 0; }
 .pagination a, .pagination span, .pagination em { padding: 0 0.5% 0 0.5%; display: inline-block; width: 3em; }
 .pagination .previous_page, .pagination .next_page { width: 6em; }
 .pagination em.current { font-weight: bold; color: red; }
+/*
+*/
 
 form { overflow: hidden; padding: 1em; -webkit-user-select:none; -moz-user-select:none; }
 input { width: 90%; margin: 0.5em 100% 0.5em 0.25em; padding: 0.25em; }

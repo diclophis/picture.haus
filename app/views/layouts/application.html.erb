@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title><%= request.host %></title>
-    <meta name="x-viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 
     <%= render :partial => "shared/shaders" %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
@@ -34,11 +34,13 @@
         </div>
       <% end %>
       <%= yield %>
+      <!--
       <div id="footer">
         <p>
           &copy; <%=link_to("Land of the Rising Code", "http://risingcode.com")%>
         </p>
       </div>
+      -->
     </div>
     <div id="risingcode-grid"><canvas id="risingcode-canvas"></canvas></div>
   </body>

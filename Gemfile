@@ -33,7 +33,7 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'puma'
+#gem 'puma'
 
 gem 'rack-cache'
 gem 'rack-rewrite'

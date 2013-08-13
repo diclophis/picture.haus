@@ -1,15 +1,15 @@
 <div class="image">
+  <p>
+    <%=link_to(h(truncate(image.title)), image.src)%>
+    <br/>
+    <%=truncate(image.src)%>
+    <br/>
+    found <%=time_ago_in_words(image.latest_finding.created_at)%> ago
+    <% if image.findings.count > 1 then %>
+      by <%=image.findings.count%> other people
+    <% end %>
+  </p>
   <div class="primary-wrapper">
-    <p>
-      <%=link_to(h(truncate(image.title)), image.src)%>
-      <br/>
-      <%=truncate(image.src)%>
-      <br/>
-      found <%=time_ago_in_words(image.latest_finding.created_at)%> ago
-      <% if image.findings.count > 1 then %>
-        by <%=image.findings.count%> other people
-      <% end %>
-    </p>
     <div class="primary" style="background-image: url(<%=asset_url((image.src))%>)">
       <%=image_tag(asset_url((image.src)))%>
     </div>
