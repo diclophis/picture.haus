@@ -18,6 +18,8 @@ class Image < ActiveRecord::Base
         req = Net::HTTP.new(url.host, url.port)
         res = req.request_head(url.path)
         errors.add(:src, res.message) unless res.code == "200"
+      rescue ArgumentError => e
+        errors.add(:src, e.message)
       rescue SocketError => e
         errors.add(:src, e.message)
       rescue URI::InvalidURIError => e
