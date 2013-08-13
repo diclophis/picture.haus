@@ -12,7 +12,7 @@ class Image < ActiveRecord::Base
   validate :src_is_fetchable
 
   def src_is_fetchable
-    if src.present?
+    if src.present? && Rails.env != "test"
       begin
         url = URI.parse(src)
         req = Net::HTTP.new(url.host, url.port)

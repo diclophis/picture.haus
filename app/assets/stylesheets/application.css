@@ -42,7 +42,7 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
 
 form { overflow: hidden; padding: 1em; -webkit-user-select:none; -moz-user-select:none; }
 input { width: 90%; margin: 0.5em 100% 0.5em 0.25em; padding: 0.25em; }
-input[type="submit"] { width: 11em; background-color: #aaa; }
+input[type="submit"] { width: 11em; x-background-color: #aaa; }
 input[type="checkbox"] { width: auto; }
 
 #person_remember_me { margin: 1em; }
