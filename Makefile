@@ -16,7 +16,7 @@ db/schema.rb:
 tmp/screenshots/edit_person_registration_spec.png: db/schema.rb
 	RAILS_ENV=$(RAILS_ENV) bundle exec foreman run rspec
 
-tmp/screenshots/%.png: app/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/schema.rb
+tmp/screenshots/%.png: app/**/* app/**/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/schema.rb
 	RAILS_ENV=$(RAILS_ENV) bundle exec foreman run rspec
 
 tmp/:

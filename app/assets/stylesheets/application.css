@@ -6,12 +6,21 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
 #footer { float: right; margin: 0 0 0 0; }
 #footer p { text-align: right; padding: 0.25em; margin: 0; }
 
-.image { margin: 0 0 0.25em 0; width: 100%; height: 33em; position: relative; clear: both; }
+.image { margin: 0 0 0.25em 0; width: 100%; height: 36em; position: relative; clear: both; }
+
+@media (max-width: 50em) {
+  .image { height: 24em; }
+}
+
+@media (max-width: 40em) {
+  .image { height: 14em; }
+}
+
 .image img { opacity: 0; }
 #content p { padding: 0.5em; }
 
 #content input {
-  font-size: 200%;
+  font-size: 192%;
 }
 
 .primary-wrapper { width: 75%; height: 100%; float: left; }
@@ -35,14 +44,14 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
   background-position: 50% 50%;
 }
 
-.pagination { text-align: center; clear: both; padding: 2em 25% 2em 0em; margin: 0 0 0 0; }
+.pagination { text-align: center; clear: both; padding: 2em 0em 2em 0em; margin: 0 0 0 0; }
 .pagination a, .pagination span, .pagination em { padding: 0 0.5% 0 0.5%; display: inline-block; width: 3em; }
 .pagination .previous_page, .pagination .next_page { width: 6em; }
 .pagination em.current { font-weight: bold; color: red; }
 
-form { overflow: hidden; padding: 1em; x-webkit-user-select:none; -moz-user-select:none; }
+form { overflow: hidden; padding: 1em; -webkit-user-select:none; -moz-user-select:none; }
 input { width: 90%; margin: 0.5em 100% 0.5em 0.25em; padding: 0.25em; }
-input[type="submit"] { width: 11em; background-color: #aaa; border-radius: 0px;  -webkit-appearance: none; }
+input[type="submit"] { width: 8em; background-color: #aaa; border-radius: 0px;  -webkit-appearance: none; }
 input[type="checkbox"] { width: auto; }
 
 #person_remember_me { margin: 1em; }
