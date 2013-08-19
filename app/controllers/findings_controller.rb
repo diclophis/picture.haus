@@ -4,7 +4,8 @@ class FindingsController < ApplicationController
 
   def create
     @finding = Finding.new(finding_params)
-    @image = Image.where(:src => image_params[:image][:src]).first || Image.new(image_params[:image])
+    #@image = Image.where(:src => image_params[:image][:src]).first || 
+    @image = Image.new(image_params[:image])
     @finding.image = @image
     @finding.person = current_person
     if @finding.save

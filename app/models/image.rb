@@ -11,6 +11,7 @@ class Image < ActiveRecord::Base
 
   validate :src_is_fetchable
 
+
   def src_is_fetchable
     if src.present? && Rails.env != "test"
       begin
