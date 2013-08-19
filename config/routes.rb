@@ -10,4 +10,6 @@ Centerology::Application.routes.draw do
   resources :images, :only => [:show]
 
   resources :findings, :only => [:create, :new, :index]
+
+  resources :tags, :only => [:index]
 end

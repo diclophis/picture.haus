@@ -11,6 +11,20 @@
 // about supported directives.
 //
 //= require turbolinks
+//= require prototype
 //= require_tree .
 
 "use strict";
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  var finding_tag_list = document.getElementById("finding_tag_list");
+
+  if (finding_tag_list) {
+    var list = new FacebookList('finding_tag_list', 'autocomplete', {
+      newValues: true,
+      fetchFile: '/tags'
+    });
+    console.log(list);
+  }
+});

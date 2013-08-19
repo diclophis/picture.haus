@@ -93,3 +93,51 @@ canvas, svg {
   -webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
 */
+
+/*
+#autocomplete-list ul.holder li.bit-box, #apple-list ul.holder li.bit-box { position: relative; }
+ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
+ul.holder li.bit-box a.closebutton { position: absolute; right: 4px; top: 5px; display: block; width: 7px; height: 7px; font-size: 1px; background: url('/images/close.gif'); }
+ul.holder li.bit-box a.closebutton:hover { background-position: 7px; }
+ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutton:hover { background-position: bottom; }
+#autocomplete { display: none; position: absolute; width: 520px; background: #eee; }
+#autocomplete .default { padding: 5px 7px; border: 1px solid #ccc; border-width: 0 1px 1px; }
+#autocomplete ul { display: none; margin: 0 0 0 0; padding: 0; overflow: auto; }
+#autocomplete ul li { padding: 5px 12px; z-index: 1000; cursor: pointer; margin: 0; list-style-type: none; border: 1px solid #ccc; border-width: 0 1px 1px; }
+#autocomplete ul li em { font-weight: bold; font-style: normal; background: #ccc; }
+#autocomplete ul li.auto-focus { background: #4173CC; color: #fff; }
+#autocomplete ul li.auto-focus em { background: none; }
+*/
+
+/* TextboxList sample CSS */
+ul.holder { margin: 0; overflow: hidden; height: auto !important; height: 1%; padding: 0; }
+*:first-child+html ul.holder { padding-bottom: 2px; } * html ul.holder { padding-bottom: 2px; }
+ul.holder li { float: left; list-style-type: none; margin: 0 0.25em; }
+ul.holder li.bit-box, ul.holder li.bit-input input { }
+ul.holder li.bit-box { background: #DEE7F8; padding: 1em; margin: 1.125em 0.5em 1em 0.5em; }
+ul.holder li.bit-box-focus { background: #598BEC; color: #fff; }
+ul.holder li.bit-input input { }
+ul.holder li.bit-input input.smallinput { }
+
+#add { border: 1px solid #999; width: 550px; margin: 50px; padding: 20px 30px 10px; }
+form ol { margin: 0; padding: 0; }
+form ol li.input-text { margin-bottom: 10px; list-style-type: none; padding-bottom: 10px; }
+form ol li.input-text label { cursor: pointer; display: block; margin-bottom: 1em; }
+form ol li.input-text input { }
+form ul.holder { }
+#autocomplete-list ul.holder li.bit-box, #apple-list ul.holder li.bit-box { padding-right: 15px; position: relative; }
+#apple-list ul.holder li.bit-input { margin: 0; }
+#apple-list ul.holder li.bit-input input.smallinput { width: 5px; }
+ul.holder li.bit-hover { background: #BBCEF1; }
+ul.holder li.bit-box-focus { background: #598BEC; color: #fff; }
+ul.holder li.bit-box a.closebutton { position: absolute; right: 4px; top: 5px; display: block; width: 7px; height: 7px; font-size: 1px; background: url('/images/close.gif'); }
+ul.holder li.bit-box a.closebutton:hover { background-position: 7px; }
+ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutton:hover { background-position: bottom; }
+#autocomplete { display: none; position: absolute; width: 512px; background: #eee; }
+#autocomplete .default { }
+#autocomplete ul { display: none; margin: 0; padding: 0; overflow: auto; }
+#autocomplete ul li { padding: 1em; z-index: 1000; cursor: pointer; margin: 0; list-style-type: none; }
+#autocomplete ul li em { font-weight: bold; font-style: normal; background: #ccc; }
+#autocomplete ul li.auto-focus { background: #4173CC; color: #fff; }
+#autocomplete ul li.auto-focus em { background: none; }
+ul.holder li.bit-input input { }
