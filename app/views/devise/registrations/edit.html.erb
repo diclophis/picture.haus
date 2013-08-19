@@ -15,6 +15,9 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
+  <%= f.label :authentication_token %>
+  <%= f.text_field :authentication_token, :disabled => true, :placeholder => "update to create new token" %>
+
   <%= f.label :password %>
   <i>(leave blank if you don't want to change it)</i>
   <%= f.password_field :password, :autocomplete => "off" %>

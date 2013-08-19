@@ -21,6 +21,16 @@ describe Person do
       @person.password = ""
       @person.should_not be_valid
     end
+
+  end
+
+  it "should have a new authentication token on every save" do
+    person = valid_person
+    person.authentication_token.should be_nil
+
+    person.save!
+
+    person.authentication_token.should_not be_nil
   end
 
   it "should have friends" do

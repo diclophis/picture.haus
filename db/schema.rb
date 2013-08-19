@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130731044828) do
+ActiveRecord::Schema.define(version: 20130819045650) do
 
   create_table "findings", force: true do |t|
     t.integer  "person_id"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20130731044828) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username",               default: "", null: false
+    t.string   "authentication_token"
   end
 
   add_index "people", ["email"], name: "index_people_on_email", unique: true
