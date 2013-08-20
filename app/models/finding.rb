@@ -9,36 +9,32 @@ class Finding < ActiveRecord::Base
 
   after_save :add_image_to_image_seek
 
+  private
+
   def add_image_to_image_seek
-
     $imageseek_databases = ImageSeek.databases
-
     $imageseek_database = $imageseek_databases.first 
-
     unless $imageseek_database
-      $imageseek_database = "index-000" # Time.now.to_i || rand ?
+      $imageseek_database = "index-000"
       ImageSeek.create($imageseek_database)
     end
-
     image_added = ImageSeek.add_image($imageseek_database, self.image.id, self.image.src, is_url = true)
-    p image_added
-
-    #similar_with_keywords_anded = ImageSeek.find_images_similar_with_keywords_to($imageseek_database, self.image.id, 4, "0", 1)
-    #similar_with_keywords_anded.find { |image_id, rating|
-    #  image_id == image_one.id && rating > 80.0
-    #}.should be_true
-    #similar_with_keywords_ored = ImageSeek.find_images_similar_with_keywords_to($imageseek_database, self.image.id, 4, "0", 0)
-    #.should_not be_empty
-    #(database_id, image_id, count = 10, keywords = "", join = 0)
-
-    # (database_id, image_id, count = 10)
-    similar_without_keywords = ImageSeek.find_images_similar_to($imageseek_database, self.image.id, 4)
-
-    similar_without_keywords.each do |image_id, rating|
-      similarity = Similarity.new({:image_id => self.image.id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
-      similarity.save!
-    end
-
+    link_similar(self.image.id)
     ImageSeek.save_databases
+  end
+
+  def link_similar(root_image_id, depth = 0, max_depth = 2)
+    similar_without_keywords = ImageSeek.find_images_similar_to($imageseek_database, root_image_id, 6)
+    similar_without_keywords.each do |image_id, rating|
+      unless image_id == root_image_id
+        if rating.to_f < 90.0
+          similarity = Similarity.new({:image_id => root_image_id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
+          similarity.save!
+          if (depth < max_depth) 
+            link_similar(image_id, depth + 1, max_depth)
+          end
+        end
+      end
+    end
   end
 end

@@ -178,7 +178,11 @@ document.addEventListener('page:before-change', function() {
     secondaryDivs.style = "";
   }
   document.body.style = "display: none;";
+  console.log("wtf");
+  return false;
 });
+
+
 
 var wangChung = function() {
   if (shaderz) {
@@ -194,7 +198,19 @@ var wangChung = function() {
     });
   }
   document.body.style = "";
-  console.log("foo");
+
+  var forms = document.getElementsByTagName('form');
+  for (var i=0; i<forms.length; i++) {
+    forms[i].addEventListener('submit', function(ev) {
+      var inputs = this.getElementsByTagName('input');
+      for (var j=0; j<inputs.length; j++) {
+        if (inputs[j].type == "submit") {
+          inputs[j].value = "...";
+          inputs[j].disabled = 'disabled';
+        }
+      };
+    });
+  }
 };
 
 document.addEventListener('page:change', function() {
