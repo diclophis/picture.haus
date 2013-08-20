@@ -33,7 +33,7 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
   background-repeat: no-repeat;
   background-position: 50% 50%;
   position: absolute;
-  left: 0;
+  left: 2%;
 }
 
 .similar {

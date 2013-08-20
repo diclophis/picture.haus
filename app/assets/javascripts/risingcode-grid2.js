@@ -162,7 +162,7 @@ function animate(step) {
   }
 }
 
-document.addEventListener('page:fetch', function() {
+document.addEventListener('page:before-change', function() {
   paused = true;
   var primaryDivs = document.getElementsByClassName('primary');
   for (var i=0; i<primaryDivs.length; i++) {
@@ -172,6 +172,7 @@ document.addEventListener('page:fetch', function() {
   for (var i=0; i<secondaryDivs.length; i++) {
     secondaryDivs.style = "";
   }
+  document.body.style = "display: none;";
 });
 
 document.addEventListener('page:change', function() {
@@ -179,15 +180,15 @@ document.addEventListener('page:change', function() {
     document.body.appendChild(effect);
     onWindowResize();
   }
+  FastClick.attach(document.body);
+  document.body.style = "";
+  console.log("foo");
 });
 
 window.addEventListener('load', function() {
   FastClick.attach(document.body);
 }, false);
 
-document.addEventListener('page:change', function() {
-  FastClick.attach(document.body);
-});
 
 if (shaderz) {
   document.addEventListener('DOMContentLoaded', main);
