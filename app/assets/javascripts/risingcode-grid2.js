@@ -161,7 +161,7 @@ function animate(step) {
   }
 }
 
-document.addEventListener('page:before-change', function() {
+document.addEventListener('page:fetch', function() {
   paused = true;
   var primaryDivs = document.getElementsByClassName('primary');
   for (var i=0; i<primaryDivs.length; i++) {
