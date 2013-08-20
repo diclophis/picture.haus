@@ -38,7 +38,8 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
 
 .similar {
   overflow: hidden;
-  width: 25%; height: 33.33333333%; float: left; text-align: center;
+  width: 20%; height: 33.33333333%; float: left; text-align: center;
+  margin-left: 4%;
   background-size: auto 90%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
