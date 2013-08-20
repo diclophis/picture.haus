@@ -1,6 +1,6 @@
 var shaderz = false;
-// Greetings to Iq/RGBA! ;)
 
+// Greetings to Iq/RGBA! ;)
 var content, effect, canvas, gl, buffer, screenVertexPosition,
 time = 0, screenWidth = 0, screenHeight = 0,
 screenProgram, resizer = { timeout: null }, refreshTimeout = 1000;
@@ -23,6 +23,11 @@ if ( !window.requestAnimationFrame ) {
 
 // Initialise WebGL
 var main = function() {
+
+  if (!shaderz) {
+    return;
+  }
+
   canvas = document.getElementById("risingcode-canvas");
   effect = document.getElementById("risingcode-grid");
   canvas.id = "original-canvas";
@@ -175,21 +180,29 @@ document.addEventListener('page:before-change', function() {
   document.body.style = "display: none;";
 });
 
-document.addEventListener('page:change', function() {
+var wangChung = function() {
   if (shaderz) {
     document.body.appendChild(effect);
     onWindowResize();
   }
   FastClick.attach(document.body);
+  var finding_tag_list = document.getElementById("finding_tag_list");
+  if (finding_tag_list) {
+    var list = new FacebookList('finding_tag_list', 'autocomplete', {
+      newValues: true,
+      fetchFile: '/tags'
+    });
+  }
   document.body.style = "";
   console.log("foo");
+};
+
+document.addEventListener('page:change', function() {
+  wangChung();
 });
 
 window.addEventListener('load', function() {
-  FastClick.attach(document.body);
+  wangChung();
 }, false);
 
-
-if (shaderz) {
-  document.addEventListener('DOMContentLoaded', main);
-}
+document.addEventListener('DOMContentLoaded', main);
