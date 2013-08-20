@@ -177,6 +177,7 @@ ul.holder li.bit-input input { }
    from {-webkit-transform: rotate(0deg);}
    to {-webkit-transform: rotate(359deg);}
 }
+
 @-moz-keyframes rotation {
    from {-moz-transform: rotate(0deg);}
    to {-moz-transform: rotate(359deg);}
@@ -188,4 +189,4 @@ ul.holder li.bit-input input { }
 @keyframes rotation {
    from {transform: rotate(0deg);}
    to {transform: rotate(359deg);}
-
+}
