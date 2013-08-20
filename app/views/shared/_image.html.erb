@@ -11,6 +11,7 @@
   </p>
   <a href="<%=image_path(image.id)%>">
     <div class="primary-wrapper">
+      <div class="spinner"></div>
       <div class="primary" style="background-image: url(<%=asset_url((image.src))%>)">
         <%=image_tag(asset_url((image.src)))%>
       </div>
