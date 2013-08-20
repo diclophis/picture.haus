@@ -13,7 +13,7 @@
     <div class="primary-wrapper">
       <div class="spinner"></div>
       <div class="primary" style="background-image: url(<%=asset_url((image.src))%>)">
-        <%=image_tag(asset_url((image.src)))%>
+        <%#=image_tag(asset_url((image.src)))%>
       </div>
     </div>
   </a>
@@ -21,7 +21,7 @@
     <% image.similar_images.each { |similar_image| %>
       <a href="<%=image_path(similar_image.id)%>">
         <div class="similar" style="background-image: url(<%=asset_url((similar_image.src))%>)">
-          <%=image_tag(asset_url((image.src)))%>
+          <%#=image_tag(asset_url((image.src)))%>
         </div>
       </a>
     <% } %>

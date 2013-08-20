@@ -44,8 +44,8 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
   background-position: 50% 50%;
 }
 
-.pagination { text-align: center; clear: both; padding: 2em 0em 2em 0em; margin: 0 0 0 0; }
-.pagination a, .pagination span, .pagination em { padding: 0 0.5% 0 0.5%; display: inline-block; width: 3em; }
+.pagination { text-align: center; clear: both; padding: 0em 0em 0em 0em; margin: 0 0 0 0; }
+.pagination a, .pagination span, .pagination em { padding: 2em 3em 2em 3em; display: inline-block; width: 3em; }
 .pagination .previous_page, .pagination .next_page { width: 6em; }
 .pagination em.current { font-weight: bold; color: red; }
 
