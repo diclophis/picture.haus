@@ -174,8 +174,12 @@ document.addEventListener('page:before-change', function() {
 });
 
 document.addEventListener('page:change', function() {
-  document.body.appendChild(effect);
-  onWindowResize();
+  if (shaderz) {
+    document.body.appendChild(effect);
+    onWindowResize();
+  }
 });
 
-//document.addEventListener('DOMContentLoaded', main);
+if (shaderz) {
+  document.addEventListener('DOMContentLoaded', main);
+}

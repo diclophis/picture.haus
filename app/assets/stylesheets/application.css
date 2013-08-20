@@ -143,21 +143,26 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 #autocomplete ul li.auto-focus em { background: none; }
 ul.holder li.bit-input input { }
 
-/*
 .spinner {
-   height: 64px;
-   width: 64px;
-   margin:0 auto;
-   position:relative;
+   height: 8px;
+   width: 8px;
    -webkit-animation: rotation .6s infinite linear;
    -moz-animation: rotation .6s infinite linear;
    -o-animation: rotation .6s infinite linear;
    animation: rotation .6s infinite linear;
    border:6px solid rgba(0,174,239,.15);
    border-radius:100%;
-   position: absolute;
-   left: 30%;
-   top: 60%;
+   position: relative;
+   margin: 0;
+   float: left;
+   z-index: -1;
+   left: 45%;
+   top: 25%;
+}
+
+.primary .spinner {
+  left: 50%;
+  top: 42%;
 }
 
 .spinner:before {
@@ -192,4 +197,3 @@ ul.holder li.bit-input input { }
    from {transform: rotate(0deg);}
    to {transform: rotate(359deg);}
 }
-*/
