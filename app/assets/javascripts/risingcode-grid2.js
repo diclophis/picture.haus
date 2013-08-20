@@ -1,15 +1,4 @@
-if ( !window.requestAnimationFrame ) {
-  window.requestAnimationFrame = ( function() {
-    return window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function ( callback, element ) {
-        window.setTimeout( callback, 1000 / 60 );
-      };
-  } )();
-}
-
+var shaderz = false;
 // Greetings to Iq/RGBA! ;)
 
 var content, effect, canvas, gl, buffer, screenVertexPosition,
@@ -19,6 +8,18 @@ var target = {};
 var paused = false;
 var precision = 6.0;
 var image = null; //new Image();
+
+if ( !window.requestAnimationFrame ) {
+  window.requestAnimationFrame = ( function() {
+    return window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function ( callback, element ) {
+        window.setTimeout( callback, 1000 / 30 );
+      };
+  } )();
+}
 
 // Initialise WebGL
 var main = function() {
@@ -178,6 +179,14 @@ document.addEventListener('page:change', function() {
     document.body.appendChild(effect);
     onWindowResize();
   }
+});
+
+window.addEventListener('load', function() {
+  FastClick.attach(document.body);
+}, false);
+
+document.addEventListener('page:change', function() {
+  FastClick.attach(document.body);
 });
 
 if (shaderz) {
