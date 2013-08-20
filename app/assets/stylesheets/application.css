@@ -142,6 +142,7 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 #autocomplete ul li.auto-focus em { background: none; }
 ul.holder li.bit-input input { }
 
+/*
 .spinner {
    height: 64px;
    width: 64px;
@@ -190,3 +191,4 @@ ul.holder li.bit-input input { }
    from {transform: rotate(0deg);}
    to {transform: rotate(359deg);}
 }
+*/

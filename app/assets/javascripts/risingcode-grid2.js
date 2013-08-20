@@ -163,6 +163,14 @@ function animate(step) {
 
 document.addEventListener('page:before-change', function() {
   paused = true;
+  var primaryDivs = document.getElementsByClassName('primary');
+  for (var i=0; i<primaryDivs.length; i++) {
+    primaryDivs.style = "";
+  }
+  var secondaryDivs = document.getElementsByClassName('secondary');
+  for (var i=0; i<secondaryDivs.length; i++) {
+    secondaryDivs.style = "";
+  }
 });
 
 document.addEventListener('page:change', function() {
