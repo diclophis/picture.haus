@@ -20,3 +20,5 @@ isk-daemon.log
 app/assets/images/image-*
 
 .env
+
+config/newrelic.yml

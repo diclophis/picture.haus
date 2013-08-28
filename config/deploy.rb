@@ -91,3 +91,11 @@ end
 
 after "deploy:finalize_update", "config:dot_env" 
 after "deploy:setup", "config:production_log" 
+
+namespace :deploy do
+  task :symlink_shared do
+    run "ln -s #{shared_path}/newrelic.yml #{release_path}/config/"
+  end
+end
+
+before "deploy:restart", "deploy:symlink_shared"
