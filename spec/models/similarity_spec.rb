@@ -20,6 +20,7 @@ describe Similarity do
 
   describe ImageSeek do
     it "is a daemon" do
+      pending
       ImageSeek.daemon {
 
         database = Time.now.to_i

@@ -12,6 +12,7 @@ class Finding < ActiveRecord::Base
   private
 
   def add_image_to_image_seek
+    return if Rails.env.test?
     $imageseek_databases = ImageSeek.databases
     $imageseek_database = $imageseek_databases.first 
     unless $imageseek_database

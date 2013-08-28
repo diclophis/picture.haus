@@ -17,6 +17,8 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
   end
 
   it "should have awesome images" do
+    pending
+
     person = valid_person
     person.save.should be_true
     database = Time.now.to_i
