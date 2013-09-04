@@ -2,7 +2,9 @@ html,body,p,div,h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; line-height: 1em; fon
 
 div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,215,0.8); }
 
-#header { padding: 1.5em; margin: 0 0 0.5em 0; }
+#header { padding: 0; margin: 0 0 0.5em 0; }
+#header h1 { padding: 0.7em 0 0.7em 0; }
+#header a { padding: 0.7em 0.5em 0.7em 0.5em; }
 #footer { float: right; margin: 0 0 0 0; }
 #footer p { text-align: right; padding: 0.25em; margin: 0; }
 
@@ -23,12 +25,13 @@ div#flash, div#header, div.pagination, p, form { background-color: rgba(215,215,
   font-size: 192%;
 }
 
-.primary-wrapper { width: 75%; height: 100%; float: left; }
-.secondary-wrapper { width: 100%; height: 100%; }
+.primary-wrapper { width: 75%; height: 100%; float: left; padding: 0.75em 0 0.75em 0; }
+.secondary-wrapper { width: 100%; height: 100%; padding: 0.75em 0 0.75em 0; }
 
 .primary {
   overflow: hidden;
-  width: 75%; height: 100%; float: left; 
+  width: 75%; height: 100%;
+  float: left; 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
