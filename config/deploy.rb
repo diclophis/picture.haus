@@ -79,7 +79,6 @@ after "deploy:update", "deploy:migrate"
 namespace :config do
   task :dot_env, :except => { :no_release => true }, :role => :app do
     run "ln -sf #{release_path}/config/production.env #{release_path}/.env"
-    run "ln -sf ~/production.database.yml #{release_path}/config/database.yml"
   end
   task :production_log, :except => { :no_release => true }, :role => :app do
     run "touch #{shared_path}/log/production.log && chmod 666 #{shared_path}/log/production.log"
@@ -93,13 +92,14 @@ namespace :config do
 end
 
 after "deploy:finalize_update", "config:dot_env" 
+after "deploy:finalize_update", "deploy:symlink_shared"
 after "deploy:setup", "config:production_log" 
 after "deploy:setup", "config:install_mysql_table" 
 
 namespace :deploy do
   task :symlink_shared do
-    run "ln -s #{shared_path}/newrelic.yml #{release_path}/config/"
+    run "ln -sf #{shared_path}/newrelic.yml #{release_path}/config/"
+    run "ln -sf #{shared_path}/database.yml #{release_path}/config/"
   end
 end
 
-before "deploy:restart", "deploy:symlink_shared"
