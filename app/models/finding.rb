@@ -21,7 +21,7 @@ class Finding < ActiveRecord::Base
     end
     image_added = ImageSeek.add_image($imageseek_database, self.image.id, self.image.src, is_url = true)
     link_similar(self.image.id)
-    ImageSeek.save_databases
+    #ImageSeek.save_databases
   end
 
   def link_similar(root_image_id, depth = 0, max_depth = 2)
