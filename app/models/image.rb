@@ -11,14 +11,14 @@ class Image < ActiveRecord::Base
 
   validate :src_is_fetchable
 
-
   def src_is_fetchable
     if src.present? && Rails.env != "test"
       begin
         url = URI.parse(src)
         req = Net::HTTP.new(url.host, url.port)
         res = req.request_head(url.path)
-        errors.add(:src, res.message) unless res.code == "200"
+        errors.add(:src, [res.code, res.message].join(",")) unless res.code == "200"
+        errors.add(:src, "not an image") unless res['Content-Type'].include?("image")
       rescue ArgumentError => e
         errors.add(:src, e.message)
       rescue SocketError => e
