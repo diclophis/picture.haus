@@ -9,6 +9,9 @@ gem 'rails', '4.0.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+# Use MySQL as database for Active Record
+gem 'mysql2'
+
 # CoffeeScript adapter for the Rails asset pipeline. Also adds support to use CoffeeScript to respond to JavaScript requests (use .js.coffee views)
 gem 'coffee-rails'
 

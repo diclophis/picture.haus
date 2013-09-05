@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20130819045650) do
     t.string   "authentication_token"
   end
 
-  add_index "people", ["email"], name: "index_people_on_email", unique: true
-  add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true
+  add_index "people", ["email"], name: "index_people_on_email", unique: true, using: :btree
+  add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
 
   create_table "similarities", force: true do |t|
     t.integer  "image_id"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20130819045650) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type"], name: "index_taggings_on_taggable_id_and_taggable_type"
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type"], name: "index_taggings_on_taggable_id_and_taggable_type", using: :btree
 
   create_table "tags", force: true do |t|
     t.string "name"
