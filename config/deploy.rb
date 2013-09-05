@@ -15,9 +15,7 @@ set :use_sudo, false
 default_run_options[:pty] = true
 set :rails_env, "production"
 
-role :app, "centerology.risingcode.com"
-role :web, "centerology.risingcode.com"
-role :db,  "centerology.risingcode.com", :primary => true
+server "kvtx-live.com", :app, :web, :db, :primary => true
 
 # if you want to clean up old releases on each deploy uncomment this:
 # after "deploy:restart", "deploy:cleanup"
@@ -87,10 +85,16 @@ namespace :config do
     run "touch #{shared_path}/log/production.log && chmod 666 #{shared_path}/log/production.log"
     run "touch #{shared_path}/log/isk-daemon.log && chmod 666 #{shared_path}/log/isk-daemon.log"
   end
+  task :install_mysql_table, :role => :db do
+    run "test -d /tmp/database/mysql || mysql_install_db --datadir=/tmp/database --user="
+    run "sudo chown -Rv nobody:ubuntu /tmp/database"
+    run "sudo chmod -v g+rwx /tmp/database"
+  end
 end
 
 after "deploy:finalize_update", "config:dot_env" 
 after "deploy:setup", "config:production_log" 
+after "deploy:setup", "config:install_mysql_table" 
 
 namespace :deploy do
   task :symlink_shared do

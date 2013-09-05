@@ -23,6 +23,8 @@ tmp/:
 	mkdir tmp/
 
 clean:
+	pgrep mysql && pkill -f mysql || true
+	pgrep balance && sudo pkill -f balance || true
 	pgrep ruby && pkill -f ruby || true
 	pgrep python && pkill -f python || true
 	touch /tmp/isk_db && rm /tmp/isk_db

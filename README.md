@@ -58,6 +58,7 @@ Models
 # Database creation, Database initialization
 
         bundle exec rake -T | grep db
+        mysql_install_db --datadir=/tmp/database --basedir=/usr/local/Cellar/mysql/5.6.10
 
 # How to run the test suite
 
