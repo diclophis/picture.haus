@@ -18,7 +18,9 @@ class Image < ActiveRecord::Base
         req = Net::HTTP.new(url.host, url.port)
         res = req.request_head(url.path)
         errors.add(:src, [res.code, res.message].join(",")) unless res.code == "200"
-        errors.add(:src, "not an image") unless res['Content-Type'].include?("image")
+        if res['Content-Type'].strip.present?
+          errors.add(:src, "not an image") unless res['Content-Type'].include?("image")
+        end
       rescue ArgumentError => e
         errors.add(:src, e.message)
       rescue SocketError => e
