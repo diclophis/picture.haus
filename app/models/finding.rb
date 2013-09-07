@@ -24,7 +24,7 @@ class Finding < ActiveRecord::Base
     link_similar(self.image.id)
   end
 
-  def link_similar(root_image_id, depth = 0, max_depth = 2)
+  def link_similar(root_image_id, depth = 0, max_depth = 1)
     similar_without_keywords = ImageSeek.find_images_similar_to($imageseek_database, root_image_id, 6)
     similar_without_keywords.each do |image_id, rating|
       unless image_id == root_image_id
