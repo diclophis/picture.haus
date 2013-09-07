@@ -16,13 +16,12 @@ class Finding < ActiveRecord::Base
     $imageseek_databases = ImageSeek.databases
     $imageseek_database = $imageseek_databases.first 
     unless $imageseek_database
-      $imageseek_database = "index-000"
+      $imageseek_database = 0 
       ImageSeek.create($imageseek_database)
       ImageSeek.save_databases
     end
     image_added = ImageSeek.add_image($imageseek_database, self.image.id, self.image.src, is_url = true)
     link_similar(self.image.id)
-    #ImageSeek.save_databases
   end
 
   def link_similar(root_image_id, depth = 0, max_depth = 2)
@@ -31,7 +30,7 @@ class Finding < ActiveRecord::Base
       unless image_id == root_image_id
         if rating.to_f < 90.0
           similarity = Similarity.new({:image_id => root_image_id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
-          similarity.save!
+          similarity.save
           if (depth < max_depth) 
             link_similar(image_id, depth + 1, max_depth)
           end

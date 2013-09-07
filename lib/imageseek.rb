@@ -50,7 +50,9 @@ class ImageSeek
     return client.call('getClusterDb', id.to_i, count)
   end
   def self.add_image(database_id, image_id, image_path, is_url = true)
-    return client.call('addImg', database_id.to_i, image_id.to_i, image_path, is_url)
+    unless client.call('isImgOnDb', database_id.to_i, image_id.to_i)
+      return client.call('addImg', database_id.to_i, image_id.to_i, image_path, is_url)
+    end
   end
   def self.add_keyword_to_image(database_id, image_id, keyword)
     return client.call('addKeywordImg', database_id.to_i, image_id.to_i, keyword)
