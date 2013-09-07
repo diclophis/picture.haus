@@ -18,6 +18,7 @@ class Finding < ActiveRecord::Base
     unless $imageseek_database
       $imageseek_database = "index-000"
       ImageSeek.create($imageseek_database)
+      ImageSeek.save_databases
     end
     image_added = ImageSeek.add_image($imageseek_database, self.image.id, self.image.src, is_url = true)
     link_similar(self.image.id)

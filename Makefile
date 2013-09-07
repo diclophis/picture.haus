@@ -28,6 +28,6 @@ clean:
 	pgrep ruby && pkill -f ruby || true
 	pgrep python && pkill -f python || true
 	touch /tmp/isk_db && rm /tmp/isk_db
-	(mkdir tmp || touch tmp) && rm -R tmp
+	(mkdir -p tmp || touch tmp) && rm -R tmp
 	touch db/schema.rb && rm -R db/schema.rb
 	touch db/test.sqlite3 && rm -R db/test.sqlite3
