@@ -13,7 +13,7 @@ set :use_sudo, false
 default_run_options[:pty] = true
 set :rails_env, "production"
 
-set :database_path, "#{shared_path}/database"
+set :database_path, "/opt/database"
 
 server "kvtx-live.com", :app, :web, :db, :primary => true
 
