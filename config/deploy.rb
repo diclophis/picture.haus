@@ -25,6 +25,7 @@ namespace :foreman do
     run "cd #{current_path} && rbenv sudo bundle exec foreman export daemon /etc/init -a #{application} -u nobody -l /var/log/centerology"
     run "for f in `ls /etc/init/#{application}*.conf`; do rbenv sudo sed -i.bak 's/ --exec bundle / --exec \\/home\\/ubuntu\\/.rbenv\\/shims\\/bundle /' $f; done;"
     run "for f in `ls /etc/init/#{application}-web-*.conf`; do rbenv sudo sed -i.bak 's/ --chuid nobody / /' $f; done;"
+    #run "for f in `ls /etc/init/#{application}-app-*.conf`; do rbenv sudo sed -i.bak 's/respawn/respawn\\nreload signal SIGUSR2/' $f; done;"
     run "for f in `ls /etc/init/#{application}-database-*.conf`; do rbenv sudo sed -i.bak 's/ --chuid nobody / --chuid mysql /' $f; done;"
     run "touch #{current_path}/tmp/sessions && rm -R #{current_path}/tmp/sessions && mkdir -p #{current_path}/tmp/sessions && chmod 777 #{current_path}/tmp/sessions"
     run "touch #{current_path}/tmp/sockets && rm -R #{current_path}/tmp/sockets && mkdir -p #{current_path}/tmp/sockets && chmod 777 #{current_path}/tmp/sockets"
