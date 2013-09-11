@@ -18,7 +18,6 @@ set :database_path, "/var/lib/mysql"
 server "kvtx-live.com", :app, :web, :db, :primary => true
 
 # if you want to clean up old releases on each deploy uncomment this:
-# after "deploy:restart", "deploy:cleanup"
 
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
@@ -31,8 +30,6 @@ namespace :foreman do
     run "touch #{current_path}/tmp/sockets && rm -R #{current_path}/tmp/sockets && mkdir -p #{current_path}/tmp/sockets && chmod 777 #{current_path}/tmp/sockets"
     run "chmod 777 #{current_path}/tmp/pids"
     run "sudo initctl reload-configuration"
-    #run "cd #{current_path} && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
-    #run "for f in `ls /etc/init/#{application}*.conf`; do rbenv sudo sed -i.bak 's/ su - ubuntu -c / /' $f; done;"
   end
 end
 
@@ -57,7 +54,6 @@ namespace :config do
     run "sudo chown -Rv mysql:ubuntu #{database_path}"
     run "test -d #{database_path}/mysql || sudo mysql_install_db --datadir=#{database_path}"
     run "sudo chown -Rv mysql:ubuntu #{database_path}"
-    #run "sudo chmod -v g+rwx #{database_path}"
     run "sudo chmod -v 700 #{database_path}"
   end
 end
@@ -69,9 +65,10 @@ namespace :deploy do
   end
 end
 
-after "deploy:update", "foreman:export"
-#after "deploy:update", "deploy:migrate"
-after "deploy:finalize_update", "config:dot_env" 
-after "deploy:finalize_update", "deploy:symlink_shared"
 after "deploy:setup", "config:production_log" 
 after "deploy:setup", "config:install_mysql_table" 
+after "deploy:update", "foreman:export"
+after "deploy:update", "deploy:migrate"
+after "deploy:finalize_update", "config:dot_env" 
+after "deploy:finalize_update", "deploy:symlink_shared"
+after "deploy:restart", "deploy:cleanup"
