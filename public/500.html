@@ -27,12 +27,11 @@
       try{l=g[i][j];if(l++){y=l<v?u(l,y,-v,1):u(l-v,y-v,v);g[i][j]=l==z?0:l}}catch(e){}
       d.beginPath();e(x+h,y+h,1);e(x+h,y+z);e(x+w,y+k,1);e(x+w,y+90);e(x+h,y+z);e(x,y+90);e(x,y+k);d.fillStyle='rgba(100,'+a(255-16*i)+','+a(255-16*j)+',.9)';
       d.fill();d.stroke();d.beginPath();e(x,y+k,1);e(x+h,y);e(x+w,y+k);e(x+h,y+h);e(x,y+k);d.fillStyle='rgba(35,'+a(190-16*i)+','+a(190-16*j)+',.9)';d.fill();d.stroke()}}};
-      c.onmousemove=
       (function foo(e) {
         if (time > 5) {
           time = 0;
           var o = (mx % 9);
-          var p = 0;
+          var p = parseInt(Math.random() * 9) % 9;
           if (!g[o]) {
             g[o]=[];
           }
@@ -43,7 +42,7 @@
         }
         $();
         time += 1;
-        setTimeout(foo, 33);
+        setTimeout(foo, 42);
       })();
     </script>
   </body>

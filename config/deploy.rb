@@ -36,7 +36,7 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "sudo reload #{application}-app || sudo start #{application}-app"
+    run "sudo restart #{application}-app || sudo start #{application}-app"
   end
 end
 
@@ -63,7 +63,7 @@ namespace :deploy do
 end
 
 after "deploy:update", "foreman:export"
-after "deploy:update", "deploy:migrate"
+#after "deploy:update", "deploy:migrate"
 after "deploy:finalize_update", "config:dot_env" 
 after "deploy:finalize_update", "deploy:symlink_shared"
 after "deploy:setup", "config:production_log" 
