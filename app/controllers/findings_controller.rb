@@ -1,6 +1,8 @@
 class FindingsController < ApplicationController
   before_filter :authenticate_person!
 
+  skip_before_filter :verify_authenticity_token
+
   def create
     @finding = Finding.new(finding_params)
     @image = Image.where(:src => image_params[:image][:src]).first || Image.new(image_params[:image])
