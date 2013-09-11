@@ -13,7 +13,7 @@ set :use_sudo, false
 default_run_options[:pty] = true
 set :rails_env, "production"
 
-set :database_path, "/tmp/database"
+set :database_path, "/var/lib/mysql"
 
 server "kvtx-live.com", :app, :web, :db, :primary => true
 
@@ -53,11 +53,12 @@ namespace :config do
     run "touch #{shared_path}/log/isk-daemon.log && chmod 666 #{shared_path}/log/isk-daemon.log"
   end
   task :install_mysql_table, :role => :db do
-    run "test -d #{database_path}/mysql || mysql_install_db --datadir=#{database_path} --user="
+    run "sudo test -d #{database_path} || sudo mkdir -p #{database_path}"
     run "sudo chown -Rv mysql:ubuntu #{database_path}"
-    run "sudo chmod -v g+rwx #{database_path}"
-    run "sudo rm -Rf #{shared_path}/database"
-    #run "sudo mv -f #{database_path} #{shared_path}"
+    run "test -d #{database_path}/mysql || sudo mysql_install_db --datadir=#{database_path}"
+    run "sudo chown -Rv mysql:ubuntu #{database_path}"
+    #run "sudo chmod -v g+rwx #{database_path}"
+    run "sudo chmod -v 700 #{database_path}"
   end
 end
 
