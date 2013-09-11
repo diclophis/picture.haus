@@ -13,7 +13,7 @@ set :use_sudo, false
 default_run_options[:pty] = true
 set :rails_env, "production"
 
-set :database_path, "/opt/database"
+set :database_path, "/tmp/database"
 
 server "kvtx-live.com", :app, :web, :db, :primary => true
 
@@ -55,6 +55,8 @@ namespace :config do
     run "test -d #{database_path}/mysql || mysql_install_db --datadir=#{database_path} --user="
     run "sudo chown -Rv nobody:ubuntu #{database_path}"
     run "sudo chmod -v g+rwx #{database_path}"
+    run "sudo rm -Rf #{shared_path}/database"
+    run "sudo mv -f #{database_path} #{shared_path}"
   end
 end
 
