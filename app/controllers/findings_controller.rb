@@ -1,6 +1,5 @@
 class FindingsController < ApplicationController
   before_filter :authenticate_person!
-  protect_from_forgery :with => :null_session
 
   def create
     @finding = Finding.new(finding_params)
