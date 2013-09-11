@@ -13,6 +13,8 @@ set :use_sudo, false
 default_run_options[:pty] = true
 set :rails_env, "production"
 
+set :database_path, "#{shared_path}/database"
+
 server "kvtx-live.com", :app, :web, :db, :primary => true
 
 # if you want to clean up old releases on each deploy uncomment this:
@@ -27,6 +29,7 @@ namespace :foreman do
     run "touch #{current_path}/tmp/sessions && rm -R #{current_path}/tmp/sessions && mkdir -p #{current_path}/tmp/sessions && chmod 777 #{current_path}/tmp/sessions"
     run "touch #{current_path}/tmp/sockets && rm -R #{current_path}/tmp/sockets && mkdir -p #{current_path}/tmp/sockets && chmod 777 #{current_path}/tmp/sockets"
     run "chmod 777 #{current_path}/tmp/pids"
+    run "sudo initctl reload-configuration"
     #run "cd #{current_path} && rbenv sudo bundle exec foreman export upstart /etc/init -a #{application} -u ubuntu -l /var/log/centerology"
     #run "for f in `ls /etc/init/#{application}*.conf`; do rbenv sudo sed -i.bak 's/ su - ubuntu -c / /' $f; done;"
   end
@@ -49,9 +52,9 @@ namespace :config do
     run "touch #{shared_path}/log/isk-daemon.log && chmod 666 #{shared_path}/log/isk-daemon.log"
   end
   task :install_mysql_table, :role => :db do
-    run "test -d /tmp/database/mysql || mysql_install_db --datadir=/tmp/database --user="
-    run "sudo chown -Rv nobody:ubuntu /tmp/database"
-    run "sudo chmod -v g+rwx /tmp/database"
+    run "test -d #{database_path}/mysql || mysql_install_db --datadir=#{database_path} --user="
+    run "sudo chown -Rv nobody:ubuntu #{database_path}"
+    run "sudo chmod -v g+rwx #{database_path}"
   end
 end
 
