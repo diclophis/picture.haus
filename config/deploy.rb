@@ -38,7 +38,7 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "sudo restart #{application}-app || sudo start #{application}-app"
+    run "sudo reload #{application}-app-1 || sudo start #{application}-app"
   end
 end
 
