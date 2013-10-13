@@ -1,4 +1,5 @@
 <% content_for :tagline do %>
+  <%= File.basename(@image.src) %>
   <%= render :partial => "shared/tagline" %>
 <% end %>
 
