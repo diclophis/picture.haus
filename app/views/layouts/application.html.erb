@@ -15,7 +15,7 @@
       <h1>
         <%= link_to(request.host, root_path) %>
         <% if content_for? :tagline %>
-          ~ <%= yield :tagline %>
+          <%= yield :tagline %>
         <% end %>
       </h1>
     </div>
