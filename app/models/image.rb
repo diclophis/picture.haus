@@ -21,6 +21,8 @@ class Image < ActiveRecord::Base
         if res['Content-Type'].strip.present?
           errors.add(:src, "not an image") unless res['Content-Type'].include?("image")
         end
+      rescue EOFError => e
+        errors.add(:src, e.message)
       rescue ArgumentError => e
         errors.add(:src, e.message)
       rescue SocketError => e
