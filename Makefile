@@ -31,3 +31,7 @@ clean:
 	(mkdir -p tmp || touch tmp) && rm -R tmp
 	touch db/schema.rb && rm -R db/schema.rb
 	touch db/test.sqlite3 && rm -R db/test.sqlite3
+
+live:
+	git commit -a && git push origin master && bundle exec cap deploy
+
