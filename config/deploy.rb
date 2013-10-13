@@ -22,7 +22,7 @@ server "kvtx-live.com", :app, :web, :db, :primary => true
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   task :export, :roles => :app do
-    run "cd #{current_path} && rbenv sudo bundle exec foreman export daemon /etc/init -a #{application} -u nobody -l /var/log/centerology"
+    run "cd #{current_path} && rbenv sudo bundle exec foreman export daemon /etc/init -a #{application} -u nobody -l /var/log/centerology -d #{current_path}"
     run "for f in `ls /etc/init/#{application}*.conf`; do rbenv sudo sed -i.bak 's/ --exec bundle / --exec \\/home\\/ubuntu\\/.rbenv\\/shims\\/bundle /' $f; done;"
     run "for f in `ls /etc/init/#{application}-web-*.conf`; do rbenv sudo sed -i.bak 's/ --chuid nobody / /' $f; done;"
     run "for f in `ls /etc/init/#{application}-app-*.conf`; do rbenv sudo sed -i.bak 's/respawn/respawn\\nreload signal SIGUSR2/' $f; done;"
