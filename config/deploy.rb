@@ -49,6 +49,9 @@ namespace :config do
     run "(cd ~/.rbenv/plugins/ruby-build && git status) || git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build"
     run "(rbenv versions | grep 2.0.0-p247) || rbenv install 2.0.0-p247"
     run "test -f isk-daemon_0.9-linux-2.6-i386.deb || wget https://github.com/downloads/ricardocabral/iskdaemon/isk-daemon_0.9-linux-2.6-i386.deb"
+    #echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.profile
+    #echo 'eval "$(rbenv init -)"' >> ~/.profile
+    #exec $SHELL -l
   end
   task :dot_env, :except => { :no_release => true }, :role => :app do
     run "ln -sf #{release_path}/config/production.env #{release_path}/.env"
