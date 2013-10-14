@@ -1,5 +1,5 @@
 <% content_for :tagline do %>
-  <%= File.basename(@image.src) %>
+  <%= truncate(File.basename(@image.src), {:length => 10}) %>
   <%= render :partial => "shared/tagline" %>
 <% end %>
 
