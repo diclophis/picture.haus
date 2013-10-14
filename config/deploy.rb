@@ -43,6 +43,13 @@ namespace :deploy do
 end
 
 namespace :config do
+  task :install_packages do
+    run "sudo apt-get install -y nodejs phantomjs swig ruby git-core build-essential libssl-dev libsqlite3-dev python-support libmagickcore-dev libmagickcore5 libmagickcore-dev libmagickcore5-extra libbz2-dev  libdjvulibre-dev  libexif-dev  libfreetype6-dev  libgraphviz-dev  libjasper-dev  libjpeg-dev liblcms2-dev liblqr-1-0-dev libltdl-dev libopenexr-dev libpng-dev librsvg2-dev libtiff5-dev libwmf-dev libx11-dev libxext-dev libxml2-dev libxt-dev pkg-config libfftw3-double3 libfontconfig1 libjasper1 libjbig0 libjpeg8 liblcms2-2 liblqr-1-0 libltdl7 libtiff5 imagemagick-common ghostscript gsfonts mysql-server libmysqlclient-dev libreadline-dev"
+    run "(cd ~/.rbenv && git status) || git clone https://github.com/sstephenson/rbenv.git ~/.rbenv"
+    run "(cd ~/.rbenv/plugins/ruby-build && git status) || git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build"
+    run "(rbenv versions | grep 2.0.0-p247) || rbenv install 2.0.0-p247"
+    run "test -f isk-daemon_0.9-linux-2.6-i386.deb || wget https://github.com/downloads/ricardocabral/iskdaemon/isk-daemon_0.9-linux-2.6-i386.deb"
+  end
   task :dot_env, :except => { :no_release => true }, :role => :app do
     run "ln -sf #{release_path}/config/production.env #{release_path}/.env"
   end
@@ -66,6 +73,7 @@ namespace :deploy do
   end
 end
 
+after "deploy:setup", "config:install_packages" 
 after "deploy:setup", "config:production_log" 
 after "deploy:setup", "config:install_mysql_table" 
 after "deploy:update", "foreman:export"
