@@ -8,6 +8,6 @@ describe 'the signin page' do
 
   it "should link to root" do
     visit root_path
-    page.should have_link "root", root_path
+    page.should have_link "127.0.0.1", root_path
   end
 end

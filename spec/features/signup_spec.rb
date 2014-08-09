@@ -8,7 +8,7 @@ describe 'the signup page' do
 
   it "should link to root" do
     visit root_path
-    page.should have_link "root", root_path
+    page.should have_link "127.0.0.1", root_path
   end
 
   it "should remember username and email but not password on submit" do

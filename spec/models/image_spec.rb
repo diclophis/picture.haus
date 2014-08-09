@@ -12,8 +12,9 @@ describe Image do
       @image.should_not be_valid
     end
 
-    it "should require :src" do
+    it "should require :src or :pending_upload" do
       @image.src = nil
+      @image.pending_upload = nil
       @image.should_not be_valid
     end
   end

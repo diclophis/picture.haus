@@ -2,12 +2,15 @@
   <%= render :partial => "shared/tagline" %>
 <% end %>
 
-<%= form_for @finding do |f| %>
+<%= form_for @finding, :multipart => true do |f| %>
+  <%= error_messages_for(@finding, @finding.image) %>
   <%= f.fields_for @image do |i| %>
     <%= i.label :title %>
-    <%= i.text_field :title, :placeholder => @image.errors.full_messages_for(:title) %>
+    <%= i.text_field :title %>
     <%= i.label :src %>
-    <%= i.text_field :src, :placeholder => @image.errors.full_messages_for(:src) %>
+    <%= i.text_field :src %>
+    <%= i.label :add %>
+    <%= i.file_field :pending_upload %>
   <% end %>
   <%= f.label :tag_list %>
   <%= f.text_field :tag_list %>

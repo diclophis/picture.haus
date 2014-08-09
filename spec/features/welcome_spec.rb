@@ -8,7 +8,7 @@ describe 'the welcome page' do #, :js => true do #, :js => true do
 
   it "should link to itself" do
     visit root_path
-    page.should have_link "root", root_path
+    page.should have_link "127.0.0.1"
   end
 
   it "should link to sign up" do

@@ -1,6 +1,6 @@
 <div class="image">
   <p>
-    <%=link_to(h(truncate(image.title)), asset_url(image.src))%>
+    <%=link_to(h(truncate(image.title)), image_path(image.id))%>
     <br/>
     <%=truncate(File.basename(image.src))%>
     <br/>
@@ -11,7 +11,7 @@
   </p>
   <a href="<%=image_path(image.id)%>">
     <div class="primary-wrapper">
-      <div class="primary" style="background-image: url(<%=asset_url((image.src))%>)">
+      <div class="primary" style="background-image: url(<%=asset_url((image.public_url))%>)">
         <%#=image_tag(asset_url((image.src)))%>
       </div>
     </div>
@@ -19,7 +19,7 @@
   <div class="secondary-wrapper">
     <% image.similar_images.each { |similar_image| %>
       <a href="<%=image_path(similar_image.id)%>">
-        <div class="similar" style="background-image: url(<%=asset_url((similar_image.src))%>)">
+        <div class="similar" style="background-image: url(<%=asset_url((similar_image.public_url))%>)">
           <%#=image_tag(asset_url((image.src)))%>
         </div>
       </a>
