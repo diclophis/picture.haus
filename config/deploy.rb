@@ -2,9 +2,9 @@ require "capistrano-rbenv"
 require 'bundler/capistrano'
 
 set :rbenv_ruby_version, "2.0.0-p247"
-set :rbenv_plugins, ["rbenv-build", "rbenv-sudo"]
-set :sudo, "rbenv sudo"
-set :sudo_password, nil
+#set :rbenv_plugins, ["rbenv-build", "rbenv-sudo"]
+#set :sudo, "rbenv sudo"
+#set :sudo_password, nil
 
 set :application, "centerology"
 set :repository,  "git@github.com:diclophis/centerology-4.0"
@@ -54,7 +54,7 @@ namespace :config do
     #exec $SHELL -l
   end
   task :dot_env, :except => { :no_release => true }, :role => :app do
-    run "ln -sf #{release_path}/config/production.env #{release_path}/.env"
+    run "ln -sf #{shared_path}/config/production.env #{release_path}/.env"
   end
   task :production_log, :except => { :no_release => true }, :role => :app do
     run "touch #{shared_path}/log/production.log && chmod 666 #{shared_path}/log/production.log"
@@ -71,8 +71,8 @@ end
 
 namespace :deploy do
   task :symlink_shared do
-    run "ln -sf #{shared_path}/newrelic.yml #{release_path}/config/"
-    run "ln -sf #{shared_path}/database.yml #{release_path}/config/"
+    #run "ln -sf #{shared_path}/newrelic.yml #{release_path}/config/"
+    #run "ln -sf #{shared_path}/database.yml #{release_path}/config/"
   end
 end
 
