@@ -24,15 +24,15 @@ class Finding < ActiveRecord::Base
       ImageSeek.create($imageseek_database)
       ImageSeek.save_databases
     end
-    image_added = ImageSeek.add_image($imageseek_database, self.image.id, self.image.src, is_url = true)
+    image_added = ImageSeek.add_image($imageseek_database, self.image.id, self.image.public_url, is_url = true)
     link_similar(self.image.id)
   end
 
   def link_similar(root_image_id, depth = 0, max_depth = 1)
-    similar_without_keywords = ImageSeek.find_images_similar_to($imageseek_database, root_image_id, 6)
+    similar_without_keywords = ImageSeek.find_images_similar_to($imageseek_database, root_image_id, 32)
     similar_without_keywords.each do |image_id, rating|
       unless image_id == root_image_id
-        if rating.to_f < 90.0
+        if rating.to_f < 90.0 && is_still_found = Finding.find_by_image_id(image_id)
           similarity = Similarity.new({:image_id => root_image_id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
           similarity.save
           if (depth < max_depth) 

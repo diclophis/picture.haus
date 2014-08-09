@@ -10,19 +10,23 @@ module HasManyFriends
       def has_many_friends(options={})
         has_many :friendships_by_me,
                  :foreign_key => 'person_id',
-                 :class_name => 'Friendship'
+                 :class_name => 'Friendship',
+                 :dependent => :destroy
         
         has_many :friendships_for_me,
                  :foreign_key => 'friend_id',
-                 :class_name => 'Friendship'
+                 :class_name => 'Friendship',
+                 :dependent => :destroy
         
         has_many :friends_by_me, -> { where('accepted_at IS NOT NULL') },
                  :through => :friendships_by_me,
-                 :source => :friendshipped_for_me
+                 :source => :friendshipped_for_me,
+                 :dependent => :destroy
         
         has_many :friends_for_me, -> { where('accepted_at IS NOT NULL') },
                  :through => :friendships_for_me,
-                 :source => :friendshipped_by_me
+                 :source => :friendshipped_by_me,
+                 :dependent => :destroy
 
     #has_many :spam_comments, conditions: { spam: true }, class_name: 'Comment'
     #should be rewritten as the following:
@@ -30,11 +34,13 @@ module HasManyFriends
 
         has_many :pending_friends_by_me, -> { where('accepted_at IS NULL') },
                  :through => :friendships_by_me,
-                 :source => :friendshipped_for_me
+                 :source => :friendshipped_for_me,
+                 :dependent => :destroy
         
         has_many :pending_friends_for_me, -> { where('accepted_at IS NULL') },
                  :through => :friendships_for_me,
-                 :source => :friendshipped_by_me
+                 :source => :friendshipped_by_me,
+                 :dependent => :destroy
         
         include HasManyFriends::UserExtensions::InstanceMethods
       end
