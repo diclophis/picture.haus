@@ -31,6 +31,6 @@ private
   end
 
   def image_params
-    params.require(:finding).permit(:image => [:src, :title])
+    params.require(:finding).permit(:image => [:src, :title, :pending_upload])
   end
 end
