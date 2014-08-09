@@ -1,7 +1,5 @@
 # OSX Makefile
 
-RAILS_ENV:=test
-
 screenshots=$(patsubst spec/features/%.rb, tmp/screenshots/%.png, $(wildcard spec/features/*.rb))
 
 open: test
@@ -9,10 +7,10 @@ open: test
 	open tmp/screenshots/* 
 
 test: app/**/* app/**/**/* public/**/* spec/**/* db/migrate/* lib/* spec/* db/schema.rb
-	RAILS_ENV=$(RAILS_ENV) sh run.sh rspec
+	sh run.sh rspec
 
 db/schema.rb: Gemfile
-	RAILS_ENV=$(RAILS_ENV) sh run.sh rake db:create db:migrate db:seed
+	sh run.sh rake db:create db:migrate db:seed
 
 Gemfile:
 	bundle install
