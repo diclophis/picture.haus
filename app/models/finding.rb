@@ -9,6 +9,10 @@ class Finding < ActiveRecord::Base
 
   after_save :add_image_to_image_seek
 
+  before_destroy { |record|
+    record.image.similarities.destroy_all
+  }
+
   private
 
   def add_image_to_image_seek

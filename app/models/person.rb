@@ -12,4 +12,8 @@ class Person < ActiveRecord::Base
   has_many_friends
   has_many :findings
   has_many :images, :through => :findings
+
+  before_destroy { |record|
+    record.findings.destroy_all
+  }
 end
