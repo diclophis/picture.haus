@@ -1,4 +1,9 @@
+require 'rubygems'
+require 'fog'
+
 class Image < ActiveRecord::Base
+  attr_accessor :pending_upload
+
   has_many :findings, -> { order :created_at }
   has_one :latest_finding, -> { order :created_at }, :class_name => 'Finding'
 
@@ -9,21 +14,26 @@ class Image < ActiveRecord::Base
   has_many :similarities, -> { order('rating ASC').uniq }
   has_many :similar_images, -> { order('rating DESC').uniq.limit(3) }, :through => :similarities
 
-  validate :src_is_fetchable
+  before_validation :src_is_fetchable
+
+  before_destroy { |record|
+    raise
+  }
 
   def src_is_fetchable
-    if src.present? && Rails.env != "test"
+    body = nil
+
+    if src.present?
       begin
         url = URI.parse(src)
-        req = Net::HTTP.new(url.host, url.port)
-        res = req.request_head(url.path)
-        errors.add(:src, [res.code, res.message].join(",")) unless res.code == "200"
-        if res['Content-Type'].strip.present?
-          errors.add(:src, "not an image") unless res['Content-Type'].include?("image")
+        unless url.is_a?(URI::Generic)
+          res = Net::HTTP.get_response(url)
+          errors.add(:src, ["fetch", res.code, res.message].join(",")) unless res.code == "200"
+          if res['Content-Type'].strip.present?
+            errors.add(:src, "not an image") unless res['Content-Type'].include?("image")
+          end
         end
       rescue EOFError => e
-        errors.add(:src, e.message)
-      rescue ArgumentError => e
         errors.add(:src, e.message)
       rescue SocketError => e
         errors.add(:src, e.message)
@@ -31,5 +41,51 @@ class Image < ActiveRecord::Base
         errors.add(:src, e.message)
       end
     end
+
+    unless body
+      if pending_upload && pending_upload.size > 0
+        self.src = pending_upload.original_filename
+        #body = pending_upload
+        body = open(pending_upload.path, 'rb', :encoding => 'BINARY')
+      else
+        size = nil
+        body = nil
+        errors.add(:src, "size")
+      end
+    end
+
+    if body
+      # create a connection
+      connection = Fog::Storage.new({
+        :provider                 => 'AWS',
+        :aws_access_key_id        => ENV["AWS_ACCESS_KEY_ID"],
+        :aws_secret_access_key    => ENV["AWS_SECRET_ACCESS_KEY"]
+      })
+
+      ## First, a place to contain the glorious details
+      #directory = connection.directories.create(
+      #  :key    => "fog-demo-#{Time.now.to_i}", # globally unique name
+      #  :public => true
+      #)
+      directory = connection.directories.get("risingcode-2") || connection.directories.create(:key => "risingcode-2", :public => true)
+
+      # list directories
+      #p connection.directories
+
+      # upload that resume
+      key = Digest::MD5.hexdigest(src)
+
+      file = directory.files.get(key)
+      file = directory.files.new(:key => key) unless file
+      file.body = body
+      file.acl = 'public-read'
+      raise unless file.save
+
+      connection = nil
+    end
+  end
+
+  def public_url
+    "https://risingcode-2.s3.amazonaws.com/" + Digest::MD5.hexdigest(src)
   end
 end

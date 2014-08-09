@@ -32,6 +32,8 @@ gem 'capistrano'
 
 gem 'capistrano-rbenv'
 
+gem 'fog'
+
 group :assets do
   gem 'uglifier'
 end

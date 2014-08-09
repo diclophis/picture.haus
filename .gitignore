@@ -22,3 +22,5 @@ app/assets/images/image-*
 .env
 
 config/newrelic.yml
+
+.DS_Store

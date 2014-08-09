@@ -14,7 +14,7 @@ describe FindingsController do
         @params = {
           :finding => {
             :image => {
-              :src => "http://any.uri",
+              :pending_upload => fixture_file_upload("fog.png", "image/png"),
               :title => "anything"
             },
             :tag_list => "tagged"

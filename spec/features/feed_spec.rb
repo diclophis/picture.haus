@@ -10,7 +10,7 @@ describe 'the edit_person_registration page' do
     finding.person = @person
     finding.image = Image.new
     finding.image.title = "foo"
-    finding.image.src = valid_image.src
+    finding.image.pending_upload = valid_image.pending_upload
     finding.save!
 
     visit feed_path(@person.username)
