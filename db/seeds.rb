@@ -51,6 +51,8 @@ end
 
 person = valid_person
 person.save
+
+=begin
 database = Time.now.to_i
 
 ImageSeek.daemon {
@@ -84,3 +86,4 @@ ImageSeek.daemon {
     }
   }
 }
+=end

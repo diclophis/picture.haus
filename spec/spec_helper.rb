@@ -9,6 +9,9 @@ require 'capybara/rspec'
 require 'capybara/poltergeist'
 Capybara.default_driver = :poltergeist
 
+# Mock fogging: https://github.com/fog/fog
+Fog.mock!
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -95,10 +98,14 @@ end
 def valid_image #(router = Router.new)
   all_images = Dir.glob("app/assets/images/image-*")
   @_first_random_image ||= all_images[rand * all_images.length]
+  raise "cannot find fixture image" unless @_first_random_image
 
   image = Image.new
   image.title = "title"
-  image.src = File.basename(@_first_random_image) #.gsub("app/assets/images/", "") #ActionController::Base.helpers.asset_path("noise.png") #"http://google.com"
+  @_pending_upload_class ||= Struct.new(:original_filename, :path)
+  image.pending_upload = @_pending_upload_class.new
+  image.pending_upload.original_filename = File.basename(@_first_random_image)
+  image.pending_upload.path = @_first_random_image
   image
 end
 
