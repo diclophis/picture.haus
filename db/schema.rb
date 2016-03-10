@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20130819045650) do
 
-  create_table "findings", force: true do |t|
+  create_table "findings", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "image_id"
     t.text     "notes"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20130819045650) do
     t.datetime "updated_at"
   end
 
-  create_table "friendships", force: true do |t|
+  create_table "friendships", force: :cascade do |t|
     t.integer  "person_id",   null: false
     t.integer  "friend_id",   null: false
     t.datetime "accepted_at"
@@ -30,14 +30,14 @@ ActiveRecord::Schema.define(version: 20130819045650) do
     t.datetime "updated_at"
   end
 
-  create_table "images", force: true do |t|
+  create_table "images", force: :cascade do |t|
     t.string   "title"
     t.string   "src"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "people", force: true do |t|
+  create_table "people", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -54,29 +54,29 @@ ActiveRecord::Schema.define(version: 20130819045650) do
     t.string   "authentication_token"
   end
 
-  add_index "people", ["email"], name: "index_people_on_email", unique: true, using: :btree
-  add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
+  add_index "people", ["email"], name: "index_people_on_email", unique: true
+  add_index "people", ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true
 
-  create_table "similarities", force: true do |t|
+  create_table "similarities", force: :cascade do |t|
     t.integer  "image_id"
     t.integer  "similar_image_id"
     t.float    "rating"
-    t.string   "join_type",        null: false
+    t.string   "join_type",        limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "taggings", force: true do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
     t.string   "taggable_type"
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type"], name: "index_taggings_on_taggable_id_and_taggable_type", using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type"], name: "index_taggings_on_taggable_id_and_taggable_type"
 
-  create_table "tags", force: true do |t|
+  create_table "tags", force: :cascade do |t|
     t.string "name"
   end
 
