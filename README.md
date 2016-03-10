@@ -170,4 +170,10 @@ Models
 * http://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion
 
 
-
+# bärḏin.haus
+https://bitbucket.org/dermotte/liresolr
+https://github.com/kzwang/elasticsearch-image/issues/19
+http://www.lire-project.net/
+http://demo-itec.uni-klu.ac.at/liredemo/
+https://github.com/jobready/flynn-elasticsearch/blob/develop/Dockerfile
+https://flynn.io/
