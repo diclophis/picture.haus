@@ -12,7 +12,7 @@ class Image < ActiveRecord::Base
 
   has_one :latest_finding, -> { order :created_at}, :class_name => 'Finding'
   has_many :similarities, -> { order('rating ASC').uniq }
-  has_many :similar_images, -> { order('rating DESC').uniq.limit(3) }, :through => :similarities
+  has_many :similar_images, -> { select('images.*', 'similarities.rating').order('rating DESC').uniq.limit(3) }, :through => :similarities
 
   before_validation :src_is_fetchable
 
