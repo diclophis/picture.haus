@@ -1,3 +1,16 @@
+<script id="colorz" class="shader debug" type="x-shader/x-fragment">
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+  uniform float iGlobalTime;
+  uniform vec2 iResolution;
+
+  void main(void) {
+    vec2 position = (gl_FragCoord.xy / min(iResolution.x, iResolution.y));
+    vec2 mouse = vec2(sin(iGlobalTime * 0.005), cos(iGlobalTime * 0.01));
+    gl_FragColor = vec4(pow(position.x, mouse.y), pow(position.y, mouse.x), pow(mouse.x + mouse.y, mouse.x - mouse.y), 1.0);
+  }
+</script>
 <script id="noise" class="shader" type="x-shader/x-fragment">
   #ifdef GL_ES
   precision highp float;
