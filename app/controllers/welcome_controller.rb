@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
     .all
     .select("images.*, count(*) as popularity, MAX(findings.created_at) as newness")
     .joins("JOIN findings ON (findings.image_id = images.id)")
-    .group("findings.image_id")
+    .group("findings.image_id, images.id")
     .order("newness DESC, popularity DESC, findings.created_at DESC")
     .paginate(
       :per_page => current_per_page,
