@@ -4,9 +4,58 @@
 
 # baseline
 
+    - name: ensure aptitude is installed
+      sudo: true
+      apt: pkg=aptitude state=present
+
+    - name: install sources.list
+      sudo: true
+      copy: src=files/trusty-sources.list dest=/etc/apt/sources.list
+
     - name: update and upgrade apt-get
       sudo: true
-      apt: update_cache=true cache_valid_time=600
+      apt: update_cache=true cache_valid_time=60
+
+    - name: install main system packages (1/2)
+      apt: pkg={{ item }} state=present
+      sudo: true
+      with_items:
+        - unattended-upgrades
+        - apt-transport-https
+        - build-essential
+        - git
+        - screen
+        - vim
+        - psmisc
+        - curl
+        - zip
+        - rsync
+        - wget
+        - htop # super nice top gui
+        - tree
+        - mailutils
+        - console-setup
+        - kbd
+        - xkb-data
+        - man-db
+        - libc-bin
+        - dnsutils
+        - pv
+        - libssl1.0.0
+        - openssl
+        - libssl-dev
+        - update-manager-core
+        - update-notifier-common
+        - libpcap0.8
+        - tcpdump
+        - aptitude
+        - python-setuptools
+        - libc6-dev
+        - g++
+        - zlib1g-dev
+        - python-pkg-resources
+        - iftop
+        - nethogs
 
 # flynn
 
