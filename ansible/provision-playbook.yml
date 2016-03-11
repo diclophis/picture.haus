@@ -1,0 +1,49 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+
+#    - name: find/create the vpc
+#      ec2_vpc:
+#        cidr_block: 172.23.0.0/16
+#
+#        subnets: "{{ vpc_subnets }}"
+#        internet_gateway: yes
+#        resource_tags:
+#          Name: "{{ app_env }}"
+#        wait: yes
+#      register: vpc
+
+    - name: determine public ip
+      shell: "dig +short myip.opendns.com @resolver1.opendns.com"
+      register: public_ip_result
+
+    - set_fact:
+        public_ip: "{{ public_ip_result.stdout }}"
+
+    - debug: msg="{{ public_ip }}"
+
+    - ec2_group:
+        name: bardin-haus
+        description: allows SSH and HTTP only
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{ public_ip }}/32" 
+
+    - ec2:
+        instance_type: m3.large
+        image: ami-22245442
+        keypair: "{{ lookup('ENV', 'EC2_KEYPAIR') }}"
+        exact_count: 1
+        wait: yes
+        group: bardin-haus
+        instance_tags:
+          Name: "bardin-haus"
+        count_tag:
+          Name: "bardin-haus"

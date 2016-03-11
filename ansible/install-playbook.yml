@@ -1,0 +1,6 @@
+---
+- hosts: bardin-haus
+  tasks:
+  - name: update and upgrade apt-get
+    sudo: true
+    apt: update_cache=true cache_valid_time=600
