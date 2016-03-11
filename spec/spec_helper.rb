@@ -98,7 +98,7 @@ end
 def valid_image #(router = Router.new)
   all_images = Dir.glob("app/assets/images/image-*")
   @_first_random_image ||= all_images[rand * all_images.length]
-  raise "cannot find fixture image" unless @_first_random_image
+  raise "cannot find fixture images, check app/assets/images" unless @_first_random_image
 
   image = Image.new
   image.title = "title"

@@ -32,7 +32,8 @@ end
 
 group :development, :test do
   # Rake is a Make-like program implemented in Ruby. Tasks and dependencies arespecified in standard Ruby syntax.
-  gem "rake"
+  # http://stackoverflow.com/questions/35893584/nomethoderror-undefined-method-last-comment-after-upgrading-to-rake-11/35893941
+  gem 'rake', '< 11.0'
 
   # bindings for the SQLite3 embedded database
   gem 'sqlite3'
@@ -40,7 +41,7 @@ end
 
 group :test do
   ## Poltergeist is a driver for Capybara. It allows you to run your Capybara tests on a headless WebKit browser, provided by PhantomJS.
-  #gem "poltergeist"
+  gem "poltergeist"
 
   # Database Cleaner is a set of strategies for cleaning your database in Ruby.
   gem "database_cleaner", '< 1.1.0'
@@ -59,6 +60,8 @@ group :test do
 
   # A library for generating fake data such as names, addresses, and phone numbers
   gem 'faker'
+
+  gem 'test-unit'
 end
 
 group :production do

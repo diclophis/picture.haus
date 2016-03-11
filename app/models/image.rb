@@ -59,18 +59,21 @@ class Image < ActiveRecord::Base
       connection = Fog::Storage.new({
         :provider                 => 'AWS',
         :aws_access_key_id        => ENV["AWS_ACCESS_KEY_ID"],
-        :aws_secret_access_key    => ENV["AWS_SECRET_ACCESS_KEY"]
+        :aws_secret_access_key    => ENV["AWS_SECRET_KEY"],
+        :region                   => "us-west-1"
       })
+
+      #puts ENV.inspect
 
       ## First, a place to contain the glorious details
       #directory = connection.directories.create(
       #  :key    => "fog-demo-#{Time.now.to_i}", # globally unique name
       #  :public => true
       #)
-      directory = connection.directories.get("risingcode-2") || connection.directories.create(:key => "risingcode-2", :public => true)
+      directory = connection.directories.get(bucket) || connection.directories.create(:key => bucket, :public => true)
 
       # list directories
-      #p connection.directories
+      # puts connection.directories
 
       # upload that resume
       key = Digest::MD5.hexdigest(src)
@@ -86,6 +89,10 @@ class Image < ActiveRecord::Base
   end
 
   def public_url
-    "https://risingcode-2.s3.amazonaws.com/" + Digest::MD5.hexdigest(src)
+    "https://#{bucket}.s3.amazonaws.com/" + Digest::MD5.hexdigest(src)
+  end
+
+  def bucket
+    ENV["AWS_S3_BUCKET"]
   end
 end

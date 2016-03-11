@@ -182,3 +182,10 @@ https://flynn.io/
         imgseek: $IMGSEEK
         web: $SUDO -n balance -d -f -b ::ffff:0.0.0.0 80 0.0.0.0:18080
         database: $MYSQLD --default-storage-engine=MyISAM --skip-grant-tables --skip-networking --datadir=$MYSQLD_DATA --log-error=/dev/stderr --long_query_time=1 --log-queries-not-using-indexes --slow-query-log=1 --slow_query_log_file=- --socket=/tmp/mysql.sock
+
+http://docs.ansible.com/ansible/ec2_facts_module.html
+http://docs.ansible.com/ansible/ec2_vpc_module.html
+http://docs.ansible.com/ansible/ec2_group_module.html
+http://cloud-images.ubuntu.com/locator/ec2/
+http://docs.ansible.com/ansible/ec2_module.html
+https://aws.amazon.com/ec2/instance-types/
