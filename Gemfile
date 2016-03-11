@@ -25,6 +25,8 @@ gem 'rack-rewrite'
 
 gem 'newrelic_rpm'
 
+gem 'mime-types'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

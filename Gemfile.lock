@@ -287,6 +287,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   fog
+  mime-types
   mocha
   newrelic_rpm
   pg
