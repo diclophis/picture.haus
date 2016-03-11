@@ -12,9 +12,9 @@
       sudo: true
       copy: src=files/trusty-sources.list dest=/etc/apt/sources.list
 
-    - name: update and upgrade apt-get
+    - name: update and safe upgrade apt-get packages
       sudo: true
-      apt: update_cache=true cache_valid_time=60
+      apt: update_cache=true cache_valid_time=60 upgrade=safe
 
     - name: install main system packages (1/2)
       apt: pkg={{ item }} state=present

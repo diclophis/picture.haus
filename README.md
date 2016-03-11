@@ -189,3 +189,4 @@ http://docs.ansible.com/ansible/ec2_group_module.html
 http://cloud-images.ubuntu.com/locator/ec2/
 http://docs.ansible.com/ansible/ec2_module.html
 https://aws.amazon.com/ec2/instance-types/
+https://curbsidr.com/blog/ror-minimum-rights-policy-for-s3-that-works-with-carrierwave/
