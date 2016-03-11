@@ -2,18 +2,6 @@
 - hosts: localhost
   connection: local
   tasks:
-
-#    - name: find/create the vpc
-#      ec2_vpc:
-#        cidr_block: 172.23.0.0/16
-#
-#        subnets: "{{ vpc_subnets }}"
-#        internet_gateway: yes
-#        resource_tags:
-#          Name: "{{ app_env }}"
-#        wait: yes
-#      register: vpc
-
     - name: determine public ip
       shell: "dig +short myip.opendns.com @resolver1.opendns.com"
       register: public_ip_result
@@ -32,9 +20,13 @@
             to_port: 80
             cidr_ip: 0.0.0.0/0
           - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: "{{ public_ip }}/32"
+          - proto: tcp
             from_port: 22
             to_port: 22
-            cidr_ip: "{{ public_ip }}/32" 
+            cidr_ip: "{{ public_ip }}/32"
 
     - ec2:
         instance_type: m3.large
@@ -47,3 +39,24 @@
           Name: "bardin-haus"
         count_tag:
           Name: "bardin-haus"
+      register: instance
+
+    - name: "provision naked DNS"
+      route53:
+        command: create
+        zone: "bardin.haus"
+        record: "bardin.haus"
+        type: A
+        ttl: 60
+        value: "{{ instance.tagged_instances[0].public_ip }}"
+        overwrite: true
+
+    - name: "provision wildcard DNS"
+      route53:
+        command: create
+        zone: "bardin.haus"
+        record: "*.bardin.haus"
+        type: CNAME
+        ttl: 60
+        value: "bardin.haus"
+        overwrite: true

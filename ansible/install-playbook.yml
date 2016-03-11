@@ -1,6 +1,136 @@
 ---
 - hosts: bardin-haus
   tasks:
-  - name: update and upgrade apt-get
-    sudo: true
-    apt: update_cache=true cache_valid_time=600
+
+# baseline
+
+    - name: update and upgrade apt-get
+      sudo: true
+      apt: update_cache=true cache_valid_time=600
+
+# flynn
+
+    - sudo: true
+      apt: pkg=ufw state=absent
+
+    - name: Install Flynn Client
+      sudo: true
+      shell: "test -e /usr/local/bin/flynn || (L=/usr/local/bin/flynn && curl -sSL -A \"`uname -sp`\" https://dl.flynn.io/cli | zcat >$L && chmod +x $L)"
+
+    - name: Install Flynn Server
+      sudo: true
+      shell: "test -e /tmp/install-flynn || curl -fsSL -o /tmp/install-flynn https://dl.flynn.io/install-flynn"
+
+    - name: ensure the dependencies for flynn get held at particular versions
+      sudo: true
+      shell: (apt-mark showhold | grep {{ item }}) || apt-mark hold {{ item }}
+      with_items:
+        - libvirt-bin
+        - libvirt0
+        - libxen-4.4
+        - libxenstore3.0
+        - librados2
+
+    - sudo: true
+      shell: stop flynn-host || true
+      when: '{{ lookup("env", "BOOTSTRAP_FLYNN")|bool }}'
+
+    - sudo: true
+      shell: "(bash /tmp/install-flynn --clean --yes) || true"
+      when: '{{ lookup("env", "BOOTSTRAP_FLYNN")|bool }}'
+
+    - sudo: true
+      shell: "(echo > /var/log/upstart/flynn-host.log)"
+      when: '{{ lookup("env", "BOOTSTRAP_FLYNN")|bool }}'
+
+    - sudo: true
+      shell: bash /tmp/install-flynn
+      when: '{{ lookup("env", "BOOTSTRAP_FLYNN")|bool }}'
+
+    - name: detect flynn-host status
+      sudo: true
+      shell: status flynn-host
+      register: flynn_status_result
+
+    - debug: msg="{{ flynn_status_result.stdout }}"
+    - debug: msg="{{ flynn_status_result.stdout.find('stop/waiting') }}"
+
+    - name: create flynn-host discovery token
+      sudo: true
+      shell: flynn-host init --init-discovery
+      when: flynn_status_result.stdout.find("stop/waiting") != -1
+      register: flynn_host_discovery_token_result
+
+    - when: flynn_status_result.stdout.find("stop/waiting") != -1
+      set_fact:
+        flynn_host_discovery_token: "{{ flynn_host_discovery_token_result.stdout }}"
+
+    - debug: msg="{{ flynn_host_discovery_token }}"
+      when: flynn_status_result.stdout.find("stop/waiting") != -1
+
+    - name: start flynn-host
+      sudo: true
+      service: name=flynn-host state=started enabled=true
+      when: flynn_status_result.stdout.find("stop/waiting") != -1
+
+    - name: detect flynn-host status 2
+      sudo: true
+      shell: status flynn-host
+      register: flynn_status_result_alt
+
+    - debug: msg="{{ flynn_status_result_alt.stdout }}"
+    - debug: msg="{{ flynn_status_result_alt.stdout.find('stop/waiting') }}"
+
+    - name: start flynn-host
+      sudo: true
+      service: name=flynn-host state=stopped enabled=true
+      when: '{{ lookup("env", "BOOTSTRAP_FLYNN")|bool }}'
+
+    - name: detect flynn-host status
+      sudo: true
+      shell: status flynn-host
+      register: flynn_status_result
+
+    - debug: msg="{{ flynn_status_result.stdout }}"
+    - debug: msg="{{ flynn_status_result.stdout.find('stop/waiting') }}"
+
+    - name: start flynn-host discovery with token
+      sudo: true
+      shell: flynn-host init
+      when: flynn_status_result.stdout.find("stop/waiting") != -1 or lookup("env", "BOOTSTRAP_FLYNN")|bool
+
+    - name: start flynn-host
+      sudo: true
+      service: name=flynn-host state=started enabled=true
+      when: flynn_status_result.stdout.find("stop/waiting") != -1 or lookup("env", "BOOTSTRAP_FLYNN")|bool
+
+    - name: detect flynn-host status 2
+      sudo: true
+      shell: status flynn-host
+      register: flynn_status_result_alt
+
+    - debug: msg="{{ flynn_status_result_alt.stdout }}"
+    - debug: msg="{{ flynn_status_result_alt.stdout.find('stop/waiting') }}"
+
+    - name: detect flynn-host status
+      sudo: true
+      shell: status flynn-host
+      register: flynn_status_result
+
+    - debug: msg="{{ flynn_status_result.stdout }}"
+    - debug: msg="{{ flynn_status_result.stdout.find('flynn-host stop/waiting') }}"
+
+    - name: bootstrap flynn
+      register: bootstrap_flynn_result
+      shell: CLUSTER_DOMAIN=bardin.haus flynn-host bootstrap
+      when: '{{ lookup("env", "BOOTSTRAP_FLYNN")|bool }}'
+
+    - debug: msg="{{ bootstrap_flynn_result }}"
+
+    - name: detect flynn-host status 2
+      sudo: true
+      shell: status flynn-host
+      register: flynn_status_result_alt
+
+    - debug: msg="{{ flynn_status_result_alt.stdout }}"
+    - debug: msg="{{ flynn_status_result_alt.stdout.find('stop/waiting') }}"
