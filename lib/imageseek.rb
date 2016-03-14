@@ -66,14 +66,31 @@ class ImageSeek
     # return client.call('getClusterDb', id.to_i, count)
   end
 
-  def self.add_image(database_id, image_id, image_path, is_url = true)
+  def self.add_image(image_id, image_path, is_url = true)
     # unless client.call('isImgOnDb', database_id.to_i, image_id.to_i)
     #   return client.call('addImg', database_id.to_i, image_id.to_i, image_path, is_url)
     # end
-    #puts image_path
+
+    image_url = URI.parse(image_path)
+    key = File.basename(image_url.path)
+
+      bucket = ENV["AWS_S3_BUCKET"]
+      connection = Fog::Storage.new({
+        :provider                 => 'AWS',
+        :aws_access_key_id        => ENV["AWS_ACCESS_KEY_ID"],
+        :aws_secret_access_key    => ENV["AWS_SECRET_KEY"],
+        :region                   => "us-west-1"
+      })
+      directory = connection.directories.get(bucket) || connection.directories.create(:key => bucket, :public => true)
+      image_io = directory.files.get(key)
+
+      #puts file.inspect
+      #return nil
+
+    puts image_path
     indexed_image_id = nil
-    open(image_path) do |image_io|
-      image_base64 = Base64.encode64(image_io.read)
+    #open(image_path) do |image_io|
+      image_base64 = Base64.encode64(image_io.body)
       #puts image_base64.inspect
       http = Net::HTTP.new(ES_HOST, ES_PORT)
       json_body = {
@@ -89,7 +106,7 @@ class ImageSeek
         puts parsed_body.inspect
         indexed_image_id = parsed_body["_id"]
       end
-    end
+    #end
     indexed_image_id
   end
 
@@ -107,7 +124,7 @@ class ImageSeek
     # return client.call('getKeywordsImg', database_id.to_i, image_id.to_i)
   end
 
-  def self.find_images_similar_to(database_id, image_id, count = 10)
+  def self.find_images_similar_to(image_id, count = 10)
     # return client.call('queryImgID', database_id.to_i, image_id.to_i, count)
     []
   rescue
