@@ -24,6 +24,10 @@
             to_port: 443
             cidr_ip: "{{ public_ip }}/32"
           - proto: tcp
+            from_port: 9200
+            to_port: 9200
+            cidr_ip: "{{ public_ip }}/32"
+          - proto: tcp
             from_port: 22
             to_port: 22
             cidr_ip: "{{ public_ip }}/32"

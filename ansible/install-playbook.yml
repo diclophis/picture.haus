@@ -56,6 +56,7 @@
         - python-pkg-resources
         - iftop
         - nethogs
+        #- openjdk-7-jre
 
 # flynn
 
@@ -183,3 +184,81 @@
 
     - debug: msg="{{ flynn_status_result_alt.stdout }}"
     - debug: msg="{{ flynn_status_result_alt.stdout.find('stop/waiting') }}"
+
+# elasticsearch
+
+    - name: ensure elasticsearch PGP keys are installed
+      sudo: true
+      apt_key: state=present url="https://packages.elastic.co/GPG-KEY-elasticsearch"
+
+    - name: ensure the elasticsearch apt repository is added
+      sudo: true
+      apt_repository: state=present repo='deb http://packages.elastic.co/elasticsearch/2.x/debian stable main'
+
+    - name: ensure the elasticsearch server is installed
+      sudo: true
+      apt: pkg={{ item }} state=present
+      with_items:
+        - elasticsearch=2.*
+
+    - name: ensure elasticsearch-head plugin is installed
+      sudo: true
+      shell: creates=/usr/share/elasticsearch/plugins/head /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+
+    #- name: ensure elasticsearch-image plugin is installed
+    #  sudo: true
+    #  shell: creates=/usr/share/elasticsearch/plugins/elasticsearch-image /usr/share/elasticsearch/bin/plugin install kiwionly/elasticsearch-image
+
+#    #- name: install basic elasticsearch.yml
+#    #  sudo: true
+#    #  template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml owner=root group=root mode=0644 backup=true
+#    #  notify:
+#    #    - restart elasticsearch
+#
+#    #- name: install basic elasticsearch.init-defaults
+#    #  sudo: true
+#    #  template: src=elasticsearch.init-defaults.j2 dest=/etc/default/elasticsearch owner=root group=root mode=0644 backup=true
+#    #  notify:
+#    #    - restart elasticsearch
+#
+#    #- name: ensure perms for elasticsearch
+#    #  sudo: true
+#    #  shell: chown -R elasticsearch-shared:elasticsearch-shared /var/lib/elasticsearch /var/run/elasticsearch /var/log/elasticsearch /etc/elasticsearch
+
+    - name: enable elasticsearch
+      sudo: true
+      service: name=elasticsearch state=started enabled=true
+
+    #- shell: "true"
+    #  notify:
+    #    - restart elasticsearch
+
+
+#dpkg -l | grep jdk
+#sudo apt-get remove default-jre-headless openjdk-7-jre openjdk-7-jre-headless openjdk-7-jdk openjdk-7-jre
+#dpkg -l | grep jdk
+#apt-get remove gradle
+#sudo apt-get remove gradle
+#sudo apt-get autoremove
+#sudo apt-add-repository ppa:webupd8team/java
+#sudo apt-get update
+#sudo apt-get install oracle-java8-installer
+#sudo add-apt-repository ppa:cwchien/gradle
+#sudo apt-get update
+#sudo apt-get install gradle
+#gradle plugin
+#sudo /usr/share/elasticsearch/bin/plugin install file:///home/ubuntu/elasticsearch-image-master/build/distributions/elasticsearch-image-2.2.0.zip
+#cp /usr/share/elasticsearch/plugins/elasticsearch-image/metadata-extractor-2.8.1.jar /usr/share/elasticsearch/lib/
+#/etc/init.d/elasticsearch stop
+#/etc/init.d/elasticsearch start
+#tail -f /var/log/elasticsearch/bardin-haus.log 
+#tail -n 1000 -f /var/log/elasticsearch/bardin-haus.log 
+#rm /usr/share/elasticsearch/plugins/elasticsearch-image/lire.jar 
+#rm /usr/share/elasticsearch/plugins/elasticsearch-image/metadata-extractor-2.8.1.jar 
+#/etc/init.d/elasticsearch start
+#tail -n 1000 -f /var/log/elasticsearch/bardin-haus.log 
+#ls
+#cp lib/lire.jar /usr/share/elasticsearch/lib/
+#/etc/init.d/elasticsearch start
+#tail -n 1000 -f /var/log/elasticsearch/bardin-haus.log 
+#wget http://central.maven.org/maven2/com/adobe/xmp/xmpcore/5.1.2/xmpcore-5.1.2.jar

@@ -1,12 +1,16 @@
-require 'xmlrpc/client'
+#require 'xmlrpc/client'
+require 'open-uri'
+require 'net/http'
 
 class ImageSeek
   HOST = "localhost"
   PORT = 31128
   IMGSEEK_CMD = "#{ENV['IMGSEEK']} 2>&1"
+  ES_HOST = "bardin.haus"
+  ES_PORT = "9200"
 
   def self.client
-    client = XMLRPC::Client.new(HOST, "/RPC", PORT)
+    #client = XMLRPC::Client.new(HOST, "/RPC", PORT)
   end
 
   def self.daemon
@@ -34,6 +38,7 @@ class ImageSeek
       end
     }
 =end
+    yield
   end
 
   def self.shutdown
@@ -65,7 +70,27 @@ class ImageSeek
     # unless client.call('isImgOnDb', database_id.to_i, image_id.to_i)
     #   return client.call('addImg', database_id.to_i, image_id.to_i, image_path, is_url)
     # end
-    true
+    #puts image_path
+    indexed_image_id = nil
+    open(image_path) do |image_io|
+      image_base64 = Base64.encode64(image_io.read)
+      #puts image_base64.inspect
+      http = Net::HTTP.new(ES_HOST, ES_PORT)
+      json_body = {
+        "image_id" => image_id,
+        "my_img" => image_base64
+      }.to_json
+      #puts json_body
+      response = http.request_post('/test/test', json_body)
+      #puts response.inspect
+      #puts response.body.inspect
+      if response.is_a?(Net::HTTPCreated)
+        parsed_body = JSON.parse(response.body)
+        puts parsed_body.inspect
+        indexed_image_id = parsed_body["_id"]
+      end
+    end
+    indexed_image_id
   end
 
   def self.add_keyword_to_image(database_id, image_id, keyword)

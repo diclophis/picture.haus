@@ -26,9 +26,9 @@ describe FindingsController do
         sign_in @person
       end
 
-      it "should work with authentication_tokens" do
-        @params[:authentication_token] =  @person.authentication_token
-      end
+      #it "should work with authentication_tokens" do
+      #  @params[:authentication_token] =  @person.authentication_token
+      #end
 
       after :each do
         lambda {
