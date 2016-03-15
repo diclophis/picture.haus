@@ -81,6 +81,7 @@ class ImageSeek
         :aws_secret_access_key    => ENV["AWS_SECRET_KEY"],
         :region                   => "us-west-1"
       })
+
       directory = connection.directories.get(bucket) || connection.directories.create(:key => bucket, :public => true)
       image_io = directory.files.get(key)
 
@@ -94,17 +95,20 @@ class ImageSeek
       #puts image_base64.inspect
       http = Net::HTTP.new(ES_HOST, ES_PORT)
       json_body = {
-        "image_id" => image_id,
+        "image_id" => image_id.to_s,
         "my_img" => image_base64
       }.to_json
       #puts json_body
-      response = http.request_post('/test/test', json_body)
+      response = http.request_post('/test/test?refresh=true', json_body)
       #puts response.inspect
       #puts response.body.inspect
       if response.is_a?(Net::HTTPCreated)
         parsed_body = JSON.parse(response.body)
+        puts image_id
         puts parsed_body.inspect
         indexed_image_id = parsed_body["_id"]
+      else
+        puts response.inspect
       end
     #end
     indexed_image_id
@@ -126,7 +130,42 @@ class ImageSeek
 
   def self.find_images_similar_to(image_id, count = 10)
     # return client.call('queryImgID', database_id.to_i, image_id.to_i, count)
-    []
+
+      http = Net::HTTP.new(ES_HOST, ES_PORT)
+      json_body = {
+        "fields" => ["image_id"],
+        "size" => count,
+        "query" => {
+            "image" => {
+                "my_img" => {
+                    "feature" => "CEDD",
+                    "index" => "test",
+                    "type" => "test",
+                    "id" => image_id.to_s,
+                    "hash" => "BIT_SAMPLING"
+                }
+            }
+        }
+      }.to_json
+      puts "SEARCH!!!"
+      puts json_body
+      response = http.request_post('/test/test/_search', json_body)
+      if response.is_a?(Net::HTTPOK)
+        response_struct = JSON.parse(response.body)
+        # {{"total"=>2, "max_score"=>2.0, "hits"=>[{"_index"=>"test", "_type"=>"test", "_id"=>"1", "_score"=>2.0, "fields"=>{"image_id"=>[1]}}, {"_index"=>"test", "_type"=>"test", "_id"=>"2", "_score"=>0.01244655, "fields"=>{"image_id"=>[2]}}]}}
+        if has_hits = response_struct["hits"]
+          hits = has_hits["hits"]
+          return hits.collect do |hit|
+            [hit["_id"], hit["_score"]]
+          end
+        end
+      else
+        puts "?!!!!!!!"
+        puts response.inspect
+        puts response.body
+      end
+
+    return []
   rescue
     []
   end

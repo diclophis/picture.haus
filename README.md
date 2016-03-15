@@ -190,3 +190,8 @@ http://cloud-images.ubuntu.com/locator/ec2/
 http://docs.ansible.com/ansible/ec2_module.html
 https://aws.amazon.com/ec2/instance-types/
 https://curbsidr.com/blog/ror-minimum-rights-policy-for-s3-that-works-with-carrierwave/
+https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
+http://docs.ruby-lang.org/en/2.0.0/Net/HTTP.html
+http://ruby-doc.org/core-2.0.0/IO.html#method-c-read
+http://ruby-doc.org/stdlib-2.2.0/libdoc/base64/rdoc/Base64.html
+http://ruby-doc.org/stdlib-1.9.3/libdoc/yaml/rdoc/YAML.html

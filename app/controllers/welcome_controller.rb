@@ -4,14 +4,15 @@ class WelcomeController < ApplicationController
     
     Image
     .all
-    .select("images.*, count(*) as popularity, MAX(findings.created_at) as newness")
     .joins("JOIN findings ON (findings.image_id = images.id)")
     .group("findings.image_id, images.id")
-    .order("newness DESC, popularity DESC, newness DESC")
+    .order("findings.created_at DESC")
     .paginate(
       :per_page => current_per_page,
       :page => current_page, 
     )
+    #.select("count(*) as popularity, MAX(findings.created_at) as newness")
+    #.order("newness DESC, popularity DESC, newness DESC")
   end
 
   def feed

@@ -31,9 +31,10 @@ class Finding < ActiveRecord::Base
 
   def link_similar(root_image_id, depth = 0, max_depth = 1)
     #similar_without_keywords = ImageSeek.find_images_similar_to($imageseek_database, root_image_id, 32)
-    similar_without_keywords = ImageSeek.find_images_similar_to(root_image_id, 32)
+    similar_without_keywords = ImageSeek.find_images_similar_to(root_image_id, 10)
+    puts "????????????? #{similar_without_keywords.inspect}"
     similar_without_keywords.each do |image_id, rating|
-      unless image_id == root_image_id
+      unless image_id.to_i == root_image_id.to_i
         if rating.to_f < 90.0 && is_still_found = Finding.find_by_image_id(image_id)
           similarity = Similarity.new({:image_id => root_image_id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
           similarity.save
