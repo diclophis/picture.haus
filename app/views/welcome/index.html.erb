@@ -2,6 +2,6 @@
   <%= render :partial => "shared/tagline" %>
 <% end %>
 
-<%= render :partial => "shared/image", :collection => @recent_images %>
+<%= render :partial => "shared/image", :collection => @recent_images, :locals => { :max_similar_images => 3 } %>
 
 <%= will_paginate(@recent_images, {:page_links => false, :inner_window => 1, :outer_window => 1}) %>

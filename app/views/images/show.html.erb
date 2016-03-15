@@ -3,4 +3,4 @@
   <%= render :partial => "shared/tagline" %>
 <% end %>
 
-<%= render :partial => "shared/image", :collection => [@image] %>
+<%= render :partial => "shared/image", :collection => [@image], :locals => { :max_similar_images => 10 } %>
