@@ -195,3 +195,10 @@ http://docs.ruby-lang.org/en/2.0.0/Net/HTTP.html
 http://ruby-doc.org/core-2.0.0/IO.html#method-c-read
 http://ruby-doc.org/stdlib-2.2.0/libdoc/base64/rdoc/Base64.html
 http://ruby-doc.org/stdlib-1.9.3/libdoc/yaml/rdoc/YAML.html
+http://stackoverflow.com/questions/24830248/elasticsearch-id-based-on-document-field
+https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
+https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html
+http://stackoverflow.com/questions/16242121/rails-4-passing-variable-to-partial
+http://stackoverflow.com/questions/17155734/css-selector-for-all-table-columns-greater-than-nth-of-type2
+https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child
