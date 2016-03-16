@@ -24,7 +24,7 @@ class FindingsController < ApplicationController
     @image = Image.new
   end
 
-private
+  private
 
   def finding_params
     params.require(:finding).permit(:tag_list)

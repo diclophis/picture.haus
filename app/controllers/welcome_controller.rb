@@ -11,6 +11,7 @@ class WelcomeController < ApplicationController
       :per_page => current_per_page,
       :page => current_page, 
     )
+    #TODO: figure out better homepage SQL finders/scopes
     #.select("count(*) as popularity, MAX(findings.created_at) as newness")
     #.order("newness DESC, popularity DESC, newness DESC")
   end

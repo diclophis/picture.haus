@@ -12,6 +12,6 @@
   <% end %>
 <% end %>
 
-<%= render :partial => "shared/image", :collection => @images %>
+<%= render :partial => "shared/image", :collection => @images, :locals => { :max_similar_images => 3 } %>
 
 <%= will_paginate(@images, {:page_links => false, :inner_window => 1, :outer_window => 1}) %>

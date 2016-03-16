@@ -51,39 +51,3 @@ end
 
 person = valid_person
 person.save
-
-=begin
-database = Time.now.to_i
-
-ImageSeek.daemon {
-  ImageSeek.create(database)
-  Dir.glob(Rails.root.join("app/assets/images/*")).each do |f|
-    image = valid_image
-    image.src = File.basename(f)
-    image.save
-    finding = valid_finding
-    finding.person = person
-    finding.image = image
-    finding.save
-    ImageSeek.add_image(database, image.id, f, is_url = false)
-  end
-
-  Image.all.each { |image|
-    similar_without_tags = ImageSeek.find_images_similar_to(database, image.id, 4).collect { |image_id, rating|
-      unless image.id == image_id then
-        similar_image = Image.find(image_id)
-        #similar_image.rating = rating
-        [similar_image, rating, "without"]
-      end
-    }
-    (similar_without_tags).compact.each { |similar_image, rating, join_type|
-      similarity = Similarity.new
-      similarity.image_id = image.id
-      similarity.similar_image_id = similar_image.id
-      similarity.rating = rating
-      similarity.join_type = join_type
-      similarity.save
-    }
-  }
-}
-=end

@@ -48,7 +48,6 @@ class Image < ActiveRecord::Base
     unless body
       if pending_upload && pending_upload.size > 0
         self.src = pending_upload.original_filename
-        #body = pending_upload
         body = open(pending_upload.path, 'rb', :encoding => 'BINARY')
       else
         size = nil
@@ -66,17 +65,7 @@ class Image < ActiveRecord::Base
         :region                   => ENV["AWS_S3_REGION"]
       })
 
-      #puts ENV.inspect
-
-      ## First, a place to contain the glorious details
-      #directory = connection.directories.create(
-      #  :key    => "fog-demo-#{Time.now.to_i}", # globally unique name
-      #  :public => true
-      #)
       directory = connection.directories.get(bucket) || connection.directories.create(:key => bucket, :public => true)
-
-      # list directories
-      # puts connection.directories
 
       #TODO!!!!
       # upload that resume
@@ -97,7 +86,7 @@ class Image < ActiveRecord::Base
   end
 
   def public_url
-    "https://#{bucket}.s3.amazonaws.com/" + key #Digest::MD5.hexdigest(src)
+    "https://#{bucket}.s3.amazonaws.com/" + key
   end
 
   def bucket

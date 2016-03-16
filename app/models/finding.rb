@@ -16,23 +16,13 @@ class Finding < ActiveRecord::Base
   private
 
   def add_image_to_image_seek
-    #return if Rails.env.test?
-    #$imageseek_databases = ImageSeek.databases
-    #$imageseek_database = $imageseek_databases.first 
-    #unless $imageseek_database
-    #  $imageseek_database = 0 
-    #  ImageSeek.create($imageseek_database)
-    #  ImageSeek.save_databases
-    #end
-    #image_added = ImageSeek.add_image($imageseek_database, self.image.id, self.image.public_url, is_url = true)
     image_added = ImageSeek.add_image(self.image.id, self.image.public_url, is_url = true)
     link_similar(self.image.id)
   end
 
+  #TODO: make this not be recursive, and actually use tag-based weighting/nested search
   def link_similar(root_image_id, depth = 0, max_depth = 1)
-    #similar_without_keywords = ImageSeek.find_images_similar_to($imageseek_database, root_image_id, 32)
     similar_without_keywords = ImageSeek.find_images_similar_to(root_image_id, 10)
-    puts "????????????? #{similar_without_keywords.inspect}"
     similar_without_keywords.each do |image_id, rating|
       unless image_id.to_i == root_image_id.to_i
         if rating.to_f < 90.0 && is_still_found = Finding.find_by_image_id(image_id)

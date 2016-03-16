@@ -6,6 +6,7 @@ class Person < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  #TODO: for 'api' access requirements
   # before_save :ensure_authentication_token
 
   has_many_friends
