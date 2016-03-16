@@ -146,10 +146,6 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 #autocomplete ul li.auto-focus em { background: none; }
 ul.holder li.bit-input input { }
 
-/*
-div.secondary-wrapper div.similar:nth-of-type(2) ~ div.similar {
-*/
-
 div.secondary-wrapper a:nth-of-type(n+4) div.similar {
   width: 33%;
   margin-left: 0%;

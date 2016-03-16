@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Centerology::Application.config.secret_key_base = '25ccac08616138275ee64e25f16c7c8029f9e65e515e3bac0c8a4c77f3603822984537c10c0c5968883793ea8d3e8d1260c59c4e489ebd56e78445917f48343c'
+Centerology::Application.config.secret_key_base = ENV["RAILS_SECRET_KEY_BASE"] || (Rails.env.test? ? "fake" : (raise "please set RAILS_SECRET_KEY_BASE in your ENV"))
