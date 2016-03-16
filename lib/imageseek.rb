@@ -1,46 +1,9 @@
-#require 'xmlrpc/client'
 require 'open-uri'
 require 'net/http'
 
 class ImageSeek
-  HOST = "localhost"
-  PORT = 31128
-  IMGSEEK_CMD = "#{ENV['IMGSEEK']} 2>&1"
   ES_HOST = ENV["ELASTICSEARCH_HOST"]
   ES_PORT = ENV["ELASTICSEARCH_PORT"].to_i
-
-  def self.client
-    #client = XMLRPC::Client.new(HOST, "/RPC", PORT)
-  end
-
-  def self.daemon
-=begin
-    IO.popen(IMGSEEK_CMD) { |io|
-      i = ""
-      thread = Thread.new { #TODO: try without thread
-        while IO.select([io], nil, nil) do
-          i = io.gets
-          #puts i if ENV['DEBUG_IMGSEEK']
-          #puts "\e[32m.\e[0m" if Rails.env.test
-          #i.length.times { $stdout.write(".") } if Rails.env.test
-          #$stdout.flush
-          break if i.nil?
-        end
-      }
-      sleep 0.1 until i && i.include?("init finished") #TODO: remove sleep idle loop
-      begin
-        yield
-      rescue => problem
-        raise problem
-      ensure
-        self.shutdown
-        thread.join
-      end
-    }
-=end
-    yield
-  end
-
 
   def self.add_image(image_id, image_path, is_url = true)
     image_url = URI.parse(image_path)
