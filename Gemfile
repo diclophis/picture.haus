@@ -17,14 +17,19 @@ gem 'will_paginate'
 # cloud services library
 gem 'fog'
 
+# A ruby web server built for concurrency http://puma.io
 gem 'puma'
 
+# Real HTTP Caching for Ruby Web Apps http://rtomayko.github.io/rack-cache/
 gem 'rack-cache'
 
+# A rack middleware for enforcing rewrite rules.
 gem 'rack-rewrite'
 
+# New Relic RPM Ruby Agent http://www.newrelic.com
 gem 'newrelic_rpm'
 
+# The mime-types library provides a library and registry for information about MIME content type definitions.
 gem 'mime-types'
 
 group :doc do

@@ -1,5 +1,7 @@
 ---
-- hosts: bardin-haus
+- hosts: picture-haus
+  vars_files:
+    - vars/picture-haus.yml
   tasks:
 
 # baseline
@@ -31,7 +33,7 @@
         - zip
         - rsync
         - wget
-        - htop # super nice top gui
+        - htop
         - tree
         - mailutils
         - console-setup
@@ -56,7 +58,6 @@
         - python-pkg-resources
         - iftop
         - nethogs
-        #- openjdk-7-jre
 
 # flynn
 
@@ -172,7 +173,7 @@
 
     - name: bootstrap flynn
       register: bootstrap_flynn_result
-      shell: CLUSTER_DOMAIN=bardin.haus flynn-host bootstrap
+      shell: CLUSTER_DOMAIN="{{ picture_haus_naked_domain }}" flynn-host bootstrap
       when: '{{ lookup("env", "BOOTSTRAP_FLYNN")|bool }}'
 
     - debug: msg="{{ bootstrap_flynn_result }}"

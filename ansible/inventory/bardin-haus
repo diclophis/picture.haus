@@ -1,2 +1,0 @@
-[bardin-haus]
-ec2-54-215-64-139.us-west-1.compute.amazonaws.com ansible_ssh_user=ubuntu

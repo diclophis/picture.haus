@@ -24,3 +24,9 @@ app/assets/images/image-*
 config/newrelic.yml
 
 .DS_Store
+
+# generated via ansible
+ansible/inventory/picture-haus
+
+# required to be customized
+ansible/vars/picture-haus.yml

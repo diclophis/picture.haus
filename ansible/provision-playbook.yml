@@ -1,6 +1,8 @@
 ---
 - hosts: localhost
   connection: local
+  vars_files:
+    - vars/picture-haus.yml
   tasks:
     - name: determine public ip
       shell: "dig +short myip.opendns.com @resolver1.opendns.com"
@@ -12,7 +14,7 @@
     - debug: msg="{{ public_ip }}"
 
     - ec2_group:
-        name: bardin-haus
+        name: "{{ picture_haus_ec2_group }}"
         description: allows SSH and HTTP only
         rules:
           - proto: tcp
@@ -34,7 +36,7 @@
 
     - ec2:
         instance_type: m3.large
-        image: ami-22245442
+        image: "{{ picture_haus_ami }}"
         keypair: "{{ lookup('ENV', 'EC2_KEYPAIR') }}"
         volumes:
           - device_name: /dev/sda1
@@ -42,18 +44,18 @@
             volume_size: "500"
         exact_count: 1
         wait: yes
-        group: bardin-haus
+        group: "{{ picture_haus_ec2_group }}"
         instance_tags:
-          Name: "bardin-haus"
+          Name: "{{ picture_haus_instance_name }}"
         count_tag:
-          Name: "bardin-haus"
+          Name: "{{ picture_haus_instance_name }}"
       register: instance
 
     - name: "provision naked DNS"
       route53:
         command: create
-        zone: "bardin.haus"
-        record: "bardin.haus"
+        zone: "{{ picture_haus_naked_domain }}"
+        record: "{{ picture_haus_naked_domain }}"
         type: A
         ttl: 60
         value: "{{ instance.tagged_instances[0].public_ip }}"
@@ -62,9 +64,16 @@
     - name: "provision wildcard DNS"
       route53:
         command: create
-        zone: "bardin.haus"
-        record: "*.bardin.haus"
+        zone: "{{ picture_haus_naked_domain }}"
+        record: "*.{{ picture_haus_naked_domain }}"
         type: CNAME
         ttl: 60
-        value: "bardin.haus"
+        value: "{{ picture_haus_naked_domain }}"
         overwrite: true
+
+    - name: "set picture_haus_host"
+      set_fact:
+        picture_haus_host: "{{ instance.tagged_instances[0].public_ip }}"
+
+    - name: "create picture-haus inventory"
+      template: src=templates/inventory.j2 dest=inventory/picture-haus

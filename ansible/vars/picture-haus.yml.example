@@ -1,0 +1,5 @@
+---
+picture_haus_ami: ami-22245442
+picture_haus_naked_domain: my-example-gallery.com
+picture_haus_ec2_group: my-example-gallery-security-group
+picture_haus_instance_name: my-example-gallery-instance-name 
