@@ -77,9 +77,9 @@ class ImageSeek
       bucket = ENV["AWS_S3_BUCKET"]
       connection = Fog::Storage.new({
         :provider                 => 'AWS',
-        :aws_access_key_id        => ENV["AWS_ACCESS_KEY_ID"],
-        :aws_secret_access_key    => ENV["AWS_SECRET_KEY"],
-        :region                   => "us-west-1"
+        :aws_access_key_id        => ENV["AWS_S3_ACCESS_KEY_ID"],
+        :aws_secret_access_key    => ENV["AWS_S3_SECRET_KEY"],
+        :region                   => ENV["AWS_S3_REGION"]
       })
 
       directory = connection.directories.get(bucket) || connection.directories.create(:key => bucket, :public => true)

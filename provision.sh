@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source ~/.bardin-haus-ec2-credentials.sh
+source ~/.picture-haus-env.sh
 
 export ANSIBLE_CONFIG=ansible/pipeline.cfg
 

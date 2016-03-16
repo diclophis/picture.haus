@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source ~/.bardin-haus-photography-ec2-credentials.sh
+source ~/.picture-haus-env.sh
 
 export PORT=4444
 

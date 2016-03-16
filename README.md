@@ -202,3 +202,43 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-f
 http://stackoverflow.com/questions/16242121/rails-4-passing-variable-to-partial
 http://stackoverflow.com/questions/17155734/css-selector-for-all-table-columns-greater-than-nth-of-type2
 https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child
+
+
+        # example ~/.picture-haus-env.sh
+        #
+        # these define an overall region and ssh key settings, used by ansible during provisioning
+        #
+        export EC2_REGION="us-west-1"
+        export EC2_KEYPAIR="your-keypair-name"
+
+        # these AWS_XXX tokens should have permissions to allow creation
+        # of ec2 instances, route53 zones, etc for provisioning servers
+        #
+        export AWS_ACCESS_KEY_ID="your-ec2-access-key-id"
+        export AWS_SECRET_KEY="your-ec2-secret-key"
+
+        # these AWS_S3_XXX tokens should have the following permissions
+        # to allow creation of s3 objects in the given bucket
+        #
+        #  {
+        #   "Statement": [
+        #     {
+        #       "Effect": "Allow",
+        #       "Action": [
+        #         "s3:AbortMultipartUpload",
+        #         "s3:CreateBucket",
+        #         "s3:DeleteBucket",
+        #         "s3:DeleteObject",
+        #         "s3:PutObject",
+        #         "s3:PutObjectAcl"
+        #       ],
+        #       "Resource": [
+        #         "arn:aws:s3:::my-bucket-of-images/*"
+        #       ]
+        #     }
+        #   ]
+        #  }
+        #
+        export AWS_S3_ACCESS_KEY_ID="your-s3-access-key-id"
+        export AWS_S3_SECRET_KEY="your-s3-secret-key"
+        export AWS_S3_BUCKET="your-s3-bucket"

@@ -9,6 +9,7 @@ class Image < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :src
+  validates_presence_of :key
 
   has_one :latest_finding, -> { order :created_at}, :class_name => 'Finding'
   has_many :similarities, -> { order('rating ASC').uniq }
@@ -21,6 +22,8 @@ class Image < ActiveRecord::Base
   }
 
   def src_is_fetchable
+    return if key
+
     body = nil
 
     if src.present?
@@ -58,9 +61,9 @@ class Image < ActiveRecord::Base
       # create a connection
       connection = Fog::Storage.new({
         :provider                 => 'AWS',
-        :aws_access_key_id        => ENV["AWS_ACCESS_KEY_ID"],
-        :aws_secret_access_key    => ENV["AWS_SECRET_KEY"],
-        :region                   => "us-west-1"
+        :aws_access_key_id        => ENV["AWS_S3_ACCESS_KEY_ID"],
+        :aws_secret_access_key    => ENV["AWS_S3_SECRET_KEY"],
+        :region                   => ENV["AWS_S3_REGION"]
       })
 
       #puts ENV.inspect
@@ -75,21 +78,26 @@ class Image < ActiveRecord::Base
       # list directories
       # puts connection.directories
 
+      #TODO!!!!
       # upload that resume
-      key = Digest::MD5.hexdigest(src)
+      new_key = SecureRandom.uuid #Digest::MD5.hexdigest(src)
 
-      file = directory.files.get(key)
-      file = directory.files.new(:key => key) unless file
+      file = directory.files.get(new_key)
+      file = directory.files.new(:key => new_key) unless file
       file.body = body
       file.acl = 'public-read'
+      saved = file.save
       raise unless file.save
+      self.key = new_key
 
       connection = nil
+    else
+      raise "missing body"
     end
   end
 
   def public_url
-    "https://#{bucket}.s3.amazonaws.com/" + Digest::MD5.hexdigest(src)
+    "https://#{bucket}.s3.amazonaws.com/" + key #Digest::MD5.hexdigest(src)
   end
 
   def bucket
