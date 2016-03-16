@@ -4,12 +4,12 @@ picture.haus is a photo gallery rails app with CBIR based image similarity that 
 
 # System dependencies
 
-  1. ansible
-  2. ruby 2.2.3
-  3. ec2
-  4. flynn
+1. ansible
+2. ruby 2.2.3
+3. ec2
+4. flynn
 
-  see `ansible/` directory for more details
+see `ansible/` directory for more details
 
 # Configuration
 
@@ -58,7 +58,7 @@ picture.haus is a photo gallery rails app with CBIR based image similarity that 
 
 # Database creation, Database initialization
 
-  see `db/seeds.rb`
+see `db/seeds.rb`
 
 # How to run the test suite
 
@@ -66,7 +66,7 @@ picture.haus is a photo gallery rails app with CBIR based image similarity that 
 
 # Deployment instructions
 
-  see `FLYNN.md`
+see `FLYNN.md`
 
 # Overview of Controllers/Models and Libraries
 
