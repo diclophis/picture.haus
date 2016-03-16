@@ -1,74 +1,109 @@
 # About
 
-Image bookmarking site
-
-# Map
-
-Libraries
-  HasManyFriends
-  ActsAsTaggableOnSteriods
-
-Controllers
-  Application
-    current_page
-    current_per_page
-
-  Welcome
-    index
-    feed
-
-Models
-  Person
-    has username
-    has email
-    has password
-    has found many images 
-
-  Image
-    has title
-    has src
-
-  Finding
-    has person
-    has image
-
-  Similarity
-    has image
-    has similar_image
-    has rating
-
-# Ruby version
-
-        ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-darwin12.4.0]
+picture.haus is a photo gallery rails app with CBIR based image similarity that builds a deep network of your picture streams.
 
 # System dependencies
 
-        Gemfile
+  1. ansible
+  2. ruby 2.2.3
+  3. ec2
+  4. flynn
 
-        git clone git@github.com:ricardocabral/iskdaemon.git
-        CFLAGS=-I/usr/local/Cellar/imagemagick/6.8.0-10/include/ImageMagick python setup.py build
-        PYTHONPATH=build/lib.macosx-10.8-intel-2.7 ./iskdaemon.py 
-        bundle exec rake imageseek:create_similarities
-
+  see `ansible/` directory for more details
 
 # Configuration
 
-        config/
+  for rails settings see `config/`
+
+  for system settings follow these instructions, and create these files
+
+    # example ~/.picture-haus-env.sh
+    #
+    # these define an overall region and ssh key settings, used by ansible during provisioning
+    #
+    export EC2_REGION="us-west-1"
+    export EC2_KEYPAIR="your-keypair-name"
+
+    # these AWS_XXX tokens should have permissions to allow creation
+    # of ec2 instances, route53 zones, etc for provisioning servers
+    #
+    export AWS_ACCESS_KEY_ID="your-ec2-access-key-id"
+    export AWS_SECRET_KEY="your-ec2-secret-key"
+
+    # these AWS_S3_XXX tokens should have the following permissions
+    # to allow creation of s3 objects in the given bucket
+    #
+    #  {
+    #   "Statement": [
+    #     {
+    #       "Effect": "Allow",
+    #       "Action": [
+    #         "s3:AbortMultipartUpload",
+    #         "s3:CreateBucket",
+    #         "s3:DeleteBucket",
+    #         "s3:DeleteObject",
+    #         "s3:PutObject",
+    #         "s3:PutObjectAcl"
+    #       ],
+    #       "Resource": [
+    #         "arn:aws:s3:::my-bucket-of-images/*"
+    #       ]
+    #     }
+    #   ]
+    #  }
+    #
+    export AWS_S3_ACCESS_KEY_ID="your-s3-access-key-id"
+    export AWS_S3_SECRET_KEY="your-s3-secret-key"
+    export AWS_S3_BUCKET="your-s3-bucket"
 
 # Database creation, Database initialization
 
-        bundle exec rake -T | grep db
-        mysql_install_db --datadir=/tmp/database --basedir=/usr/local/Cellar/mysql/5.6.10
+  see `db/seeds.rb`
 
 # How to run the test suite
 
-        make
-
-# Services (job queues, cache servers, search engines, etc.)
+    make test
 
 # Deployment instructions
 
-# Research
+  see `FLYNN.md`
+
+# Overview of Controllers/Models and Libraries
+
+	Libraries
+	  HasManyFriends
+	  ActsAsTaggableOnSteriods
+	
+	Controllers
+	  Application
+	    current_page
+	    current_per_page
+	
+	  Welcome
+	    index
+	    feed
+	
+	Models
+	  Person
+	    has username
+	    has email
+	    has password
+	    has found many images 
+	
+	  Image
+	    has title
+	    has src
+	
+	  Finding
+	    has person
+	    has image
+	
+	  Similarity
+	    has image
+	    has similar_image
+	    has rating
+
+# Research / Helpful Links / More README
 
 * http://weblog.rubyonrails.org/2013/6/25/Rails-4-0-final/
 * http://stackoverflow.com/questions/8853748/capybara-and-rails-why-has-link-always-returns-false
@@ -168,77 +203,28 @@ Models
 * http://dev.mysql.com/doc/refman/5.1/en/automatic-start.html
 * http://dev.mysql.com/doc/refman/5.0/en/server-options.html
 * http://stackoverflow.com/questions/7927854/start-mysql-server-from-command-line-on-mac-os-lion
-
-
-# bärḏin.haus
-https://bitbucket.org/dermotte/liresolr
-https://github.com/kzwang/elasticsearch-image/issues/19
-http://www.lire-project.net/
-http://demo-itec.uni-klu.ac.at/liredemo/
-https://github.com/jobready/flynn-elasticsearch/blob/develop/Dockerfile
-https://flynn.io/
-
-        app: bundle exec puma -p $PORT
-        imgseek: $IMGSEEK
-        web: $SUDO -n balance -d -f -b ::ffff:0.0.0.0 80 0.0.0.0:18080
-        database: $MYSQLD --default-storage-engine=MyISAM --skip-grant-tables --skip-networking --datadir=$MYSQLD_DATA --log-error=/dev/stderr --long_query_time=1 --log-queries-not-using-indexes --slow-query-log=1 --slow_query_log_file=- --socket=/tmp/mysql.sock
-
-http://docs.ansible.com/ansible/ec2_facts_module.html
-http://docs.ansible.com/ansible/ec2_vpc_module.html
-http://docs.ansible.com/ansible/ec2_group_module.html
-http://cloud-images.ubuntu.com/locator/ec2/
-http://docs.ansible.com/ansible/ec2_module.html
-https://aws.amazon.com/ec2/instance-types/
-https://curbsidr.com/blog/ror-minimum-rights-policy-for-s3-that-works-with-carrierwave/
-https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
-http://docs.ruby-lang.org/en/2.0.0/Net/HTTP.html
-http://ruby-doc.org/core-2.0.0/IO.html#method-c-read
-http://ruby-doc.org/stdlib-2.2.0/libdoc/base64/rdoc/Base64.html
-http://ruby-doc.org/stdlib-1.9.3/libdoc/yaml/rdoc/YAML.html
-http://stackoverflow.com/questions/24830248/elasticsearch-id-based-on-document-field
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
-https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html
-https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html
-http://stackoverflow.com/questions/16242121/rails-4-passing-variable-to-partial
-http://stackoverflow.com/questions/17155734/css-selector-for-all-table-columns-greater-than-nth-of-type2
-https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child
-
-
-        # example ~/.picture-haus-env.sh
-        #
-        # these define an overall region and ssh key settings, used by ansible during provisioning
-        #
-        export EC2_REGION="us-west-1"
-        export EC2_KEYPAIR="your-keypair-name"
-
-        # these AWS_XXX tokens should have permissions to allow creation
-        # of ec2 instances, route53 zones, etc for provisioning servers
-        #
-        export AWS_ACCESS_KEY_ID="your-ec2-access-key-id"
-        export AWS_SECRET_KEY="your-ec2-secret-key"
-
-        # these AWS_S3_XXX tokens should have the following permissions
-        # to allow creation of s3 objects in the given bucket
-        #
-        #  {
-        #   "Statement": [
-        #     {
-        #       "Effect": "Allow",
-        #       "Action": [
-        #         "s3:AbortMultipartUpload",
-        #         "s3:CreateBucket",
-        #         "s3:DeleteBucket",
-        #         "s3:DeleteObject",
-        #         "s3:PutObject",
-        #         "s3:PutObjectAcl"
-        #       ],
-        #       "Resource": [
-        #         "arn:aws:s3:::my-bucket-of-images/*"
-        #       ]
-        #     }
-        #   ]
-        #  }
-        #
-        export AWS_S3_ACCESS_KEY_ID="your-s3-access-key-id"
-        export AWS_S3_SECRET_KEY="your-s3-secret-key"
-        export AWS_S3_BUCKET="your-s3-bucket"
+* https://bitbucket.org/dermotte/liresolr
+* https://github.com/kzwang/elasticsearch-image/issues/19
+* http://www.lire-project.net/
+* http://demo-itec.uni-klu.ac.at/liredemo/
+* https://github.com/jobready/flynn-elasticsearch/blob/develop/Dockerfile
+* https://flynn.io/
+* http://docs.ansible.com/ansible/ec2_facts_module.html
+* http://docs.ansible.com/ansible/ec2_vpc_module.html
+* http://docs.ansible.com/ansible/ec2_group_module.html
+* http://cloud-images.ubuntu.com/locator/ec2/
+* http://docs.ansible.com/ansible/ec2_module.html
+* https://aws.amazon.com/ec2/instance-types/
+* https://curbsidr.com/blog/ror-minimum-rights-policy-for-s3-that-works-with-carrierwave/
+* https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
+* http://docs.ruby-lang.org/en/2.0.0/Net/HTTP.html
+* http://ruby-doc.org/core-2.0.0/IO.html#method-c-read
+* http://ruby-doc.org/stdlib-2.2.0/libdoc/base64/rdoc/Base64.html
+* http://ruby-doc.org/stdlib-1.9.3/libdoc/yaml/rdoc/YAML.html
+* http://stackoverflow.com/questions/24830248/elasticsearch-id-based-on-document-field
+* https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
+* https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html
+* https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html
+* http://stackoverflow.com/questions/16242121/rails-4-passing-variable-to-partial
+* http://stackoverflow.com/questions/17155734/css-selector-for-all-table-columns-greater-than-nth-of-type2
+* https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child
