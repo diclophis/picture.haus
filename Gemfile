@@ -32,6 +32,9 @@ gem 'newrelic_rpm'
 # The mime-types library provides a library and registry for information about MIME content type definitions.
 gem 'mime-types'
 
+# Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser with XPath and CSS selector support. http://nokogiri.org/
+gem 'nokogiri'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

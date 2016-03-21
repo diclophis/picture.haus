@@ -290,6 +290,7 @@ DEPENDENCIES
   mime-types
   mocha
   newrelic_rpm
+  nokogiri
   pg
   poltergeist
   puma
