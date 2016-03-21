@@ -26,8 +26,16 @@ class Finding < ActiveRecord::Base
     similar_without_keywords.each do |image_id, rating|
       unless image_id.to_i == root_image_id.to_i
         if rating.to_f < 90.0 && is_still_found = Finding.find_by_image_id(image_id)
-          similarity = Similarity.new({:image_id => root_image_id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
-          similarity.save
+          #similarity = Similarity.new({:image_id => root_image_id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
+          #similarity.save
+          begin
+            Similarity.find_or_create_by({:image_id => root_image_id, :similar_image_id => image_id, :join_type => ""}) { |similarity|
+              similarity.rating = rating
+            }.save!
+          rescue ActiveRecord::RecordNotUnique
+            retry
+          end
+
           if (depth < max_depth) 
             link_similar(image_id, depth + 1, max_depth)
           end
