@@ -1,4 +1,5 @@
 #
+# TODO: rescue and retry: Net::ReadTimeout
 
 namespace 'picture_haus' do
   desc 'import'
@@ -25,10 +26,10 @@ namespace 'picture_haus' do
     directory_of_tagged_photos = ENV['DIR_OF_TAGGED_PHOTOS']
     raise "please set DIR_OF_TAGGED_PHOTOS=some/dir/of/pics" unless directory_of_tagged_photos && Dir.exists?(directory_of_tagged_photos)
 
-    picture_haus_host = "localhost"
-    picture_haus_port = 4444
-    picture_haus_username = ""
-    picture_haus_password = ""
+    picture_haus_host = ENV["PICTURE_HAUS_HOST"] || "localhost"
+    picture_haus_port = ENV["PICTURE_HAUS_PORT"] || 4444
+    picture_haus_username = ENV["PICTURE_HAUS_USERNAME"] || "test@test.com"
+    picture_haus_password = ENV["PICTURE_HAUS_PASSWORD"] || "qwerty123"
 
     http = Net::HTTP.new(picture_haus_host, picture_haus_port)
     http.use_ssl = false
@@ -51,61 +52,65 @@ namespace 'picture_haus' do
 
       if signed_in_response.is_a?(Net::HTTPFound)
 
-        new_finding_response = http.get(new_finding_path, { "Cookie" => extract_cookies(signed_in_response) })
+        image_finder_glob = File.join(directory_of_tagged_photos, "*")
 
-        csrf_token = extract_csrf_hash(new_finding_response)
+        Dir.glob(image_finder_glob) do |image_to_import|
+          next unless image_to_import && image_to_import.length > 0 && image_to_import != "." && image_to_import != ".."
 
-        image_to_import = ""
+          new_finding_response = http.get(new_finding_path, { "Cookie" => extract_cookies(signed_in_response) })
 
-        post_body = []
+          csrf_token = extract_csrf_hash(new_finding_response)
 
-        post_body << "#{DASHES}#{BOUNDARY}\r\n"
+          post_body = []
 
-        post_body << "Content-Disposition: form-data; name=\"#{csrf_token.keys[0]}\"\r\n"
-        post_body << "\r\n"
-        post_body << "#{csrf_token.values[0]}\r\n"
+          post_body << "#{DASHES}#{BOUNDARY}\r\n"
 
-        post_body << "#{DASHES}#{BOUNDARY}\r\n"
+          post_body << "Content-Disposition: form-data; name=\"#{csrf_token.keys[0]}\"\r\n"
+          post_body << "\r\n"
+          post_body << "#{csrf_token.values[0]}\r\n"
 
-        post_body << "Content-Disposition: form-data; name=\"utf8\"\r\n"
-        post_body << "\r\n"
-        post_body << "✓\r\n"
+          post_body << "#{DASHES}#{BOUNDARY}\r\n"
 
-        post_body << "#{DASHES}#{BOUNDARY}\r\n"
+          post_body << "Content-Disposition: form-data; name=\"utf8\"\r\n"
+          post_body << "\r\n"
+          post_body << "✓\r\n"
 
-        post_body << "Content-Disposition: form-data; name=\"finding[tag_list]\"\r\n"
-        post_body << "\r\n"
-        post_body << "test,import\r\n"
+          post_body << "#{DASHES}#{BOUNDARY}\r\n"
 
-        post_body << "#{DASHES}#{BOUNDARY}\r\n"
+          post_body << "Content-Disposition: form-data; name=\"finding[tag_list]\"\r\n"
+          post_body << "\r\n"
+          post_body << "test,import\r\n"
 
-        post_body << "Content-Disposition: form-data; name=\"finding[image][title]\"\r\n"
-        post_body << "\r\n"
-        post_body << "test-title\r\n"
+          post_body << "#{DASHES}#{BOUNDARY}\r\n"
 
-        post_body << "#{DASHES}#{BOUNDARY}\r\n"
+          post_body << "Content-Disposition: form-data; name=\"finding[image][title]\"\r\n"
+          post_body << "\r\n"
+          post_body << "test-title\r\n"
 
-        post_body << "Content-Disposition: form-data; name=\"finding[image][pending_upload]\"; filename=\"foo-bar-baz.png\"\r\n"
-        post_body << "Content-Type: image/jpeg\r\n"
-        post_body << "\r\n"
-        post_body << File.read(image_to_import)
+          post_body << "#{DASHES}#{BOUNDARY}\r\n"
 
-        post_body << "#{DASHES}#{BOUNDARY}#{DASHES}"
+          post_body << "Content-Disposition: form-data; name=\"finding[image][pending_upload]\"; filename=\"foo-bar-baz.png\"\r\n"
+          post_body << "Content-Type: image/jpeg\r\n"
+          post_body << "\r\n"
+          post_body << File.read(image_to_import)
 
-        post_body = post_body.join
+          post_body << "#{DASHES}#{BOUNDARY}#{DASHES}"
 
-        request = Net::HTTP::Post.new(findings_path)
-        request["Content-Type"] = "multipart/form-data, boundary=#{BOUNDARY}"
-        request["Cookie"] = extract_cookies(new_finding_response)
-        request["Content-Length"] = post_body.length
-        request.body = post_body
+          post_body = post_body.join
 
-        finding_created_response = http.request(request)
+          request = Net::HTTP::Post.new(findings_path)
+          request["Content-Type"] = "multipart/form-data, boundary=#{BOUNDARY}"
+          request["Cookie"] = extract_cookies(new_finding_response)
+          request["Content-Length"] = post_body.length
+          request.body = post_body
 
-        if redirect_location = finding_created_response["Location"]
-          redirect_uri = URI.parse(redirect_location)
-          if redirect_uri.path.starts_with?("/images/")
-            puts "OK"
+          finding_created_response = http.request(request)
+
+          if redirect_location = finding_created_response["Location"]
+            redirect_uri = URI.parse(redirect_location)
+            if redirect_uri.path.starts_with?("/images/")
+              puts "OK #{redirect_uri}"
+            end
           end
         end
       end
