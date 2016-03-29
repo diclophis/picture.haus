@@ -8,7 +8,7 @@ class FindingsController < ApplicationController
     @image = Image.where(:src => image_params[:image][:src]).first || Image.new(image_params[:image])
     @finding.image = @image
     @finding.person = current_person
-    if @finding.save
+    if @finding.save!
       redirect_to image_path(@image.id)
     else
       render :new
