@@ -188,6 +188,7 @@ var TextboxList = Class.create({
   },
   
   blur: function(noblur) {
+    //console.log('blur!!!');
     if(! this.current) return this;
     if(this.current.retrieveData('type') == 'input') {
       var input = this.current.retrieveData('input');
@@ -209,7 +210,15 @@ var TextboxList = Class.create({
   createInput: function(options) {
     var li = new Element('li', {'class': this.options.get('className') + '-input'});
     var el = new Element('input', Object.extend(options,{'type': 'text'}));
-    el.observe('click', function(e) { e.stop(); }).observe('focus', function(e) { if(! this.isSelfEvent('focus')) this.focus(li, true); }.bind(this)).observe('blur', function() { if(! this.isSelfEvent('blur')) this.blur(true); }.bind(this)).observe('keydown', function(e) { this.cacheData('lastvalue', this.value).cacheData('lastcaret', this.getCaretPosition()); });
+    el.observe('click', function(e) { e.stop(); }).observe('focus', function(e) {
+      if(! this.isSelfEvent('focus')) {
+        this.focus(li, true);
+      }
+    }.bind(this)).observe('blur', function() {
+      if(! this.isSelfEvent('blur')) {
+        this.blur(true);
+      }
+    }.bind(this)).observe('keydown', function(e) { this.cacheData('lastvalue', this.value).cacheData('lastcaret', this.getCaretPosition()); });
     var tmp = li.cacheData('type', 'input').cacheData('input', el).insert(el);
     return tmp;
   },
@@ -516,6 +525,14 @@ Element.addMethods({
       obj.lastinput = el;
       if(!obj.curOn) {
           obj.blurhide = obj.autoHide.bind(obj).delay(0.1);
+      }
+      new_value_el = obj.lastinput;
+
+      new_value_el.value = new_value_el.value.strip().gsub(",","");
+      if(!obj.options.get("spaceReplace").blank()) new_value_el.gsub(" ", obj.options.get("spaceReplace"));
+      if(!new_value_el.value.blank()) {
+        obj.newvalue = true;
+        obj.autoAdd(new_value_el);
       }
   },
   filter: function(D,E) { var C=[];for(var B=0,A=this.length;B<A;B++){if(D.call(E,this[B],B,this)){C.push(this[B]);}} return C; }
