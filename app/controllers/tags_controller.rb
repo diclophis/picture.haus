@@ -5,7 +5,7 @@ class TagsController < ApplicationController
     render :text => ["foo", "bar", "baz"].collect { |autocomplete|
       {
         :value => "#{autocomplete}",
-          :caption => "#{autocomplete}"
+        :caption => "#{autocomplete}"
       }
     }.to_json
   end

@@ -237,7 +237,7 @@ class Tag < ActiveRecord::Base
   end
 
   def normalize_name
-    self.name = self.name.gsub(/[^a-zA-Z0-9]/, '').downcase
+    self.name = self.name.gsub(/[^a-zA-Z0-9\-]/, '').downcase
   end
   
   class << self
