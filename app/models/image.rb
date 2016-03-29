@@ -76,7 +76,7 @@ class Image < ActiveRecord::Base
       file.body = body
       file.acl = 'public-read'
       saved = file.save
-      raise unless file.save
+      errors.add(:src, "could not save to s3!!!") unless file.save
       self.key = new_key
 
       connection = nil
