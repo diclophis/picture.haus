@@ -2,7 +2,7 @@ class TagsController < ApplicationController
   before_filter :authenticate_person!
 
   def index
-    render :text => ["foo", "bar", "baz"].collect { |autocomplete|
+    render :text => Tag.all.collect { |tag| tag.name }.collect { |autocomplete|
       {
         :value => "#{autocomplete}",
         :caption => "#{autocomplete}"
