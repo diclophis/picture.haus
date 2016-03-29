@@ -31,6 +31,8 @@ describe Finding do
       
       Finding.find_tagged_with("wang").should include(@finding)
       Finding.find_tagged_with("chung").should include(@finding)
+
+      @finding.reload.tag_list.should == ["wang", "chung"]
     end
   end
 end

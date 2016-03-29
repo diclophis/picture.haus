@@ -16,18 +16,16 @@ class Finding < ActiveRecord::Base
   private
 
   def add_image_to_image_seek
-    image_added = ImageSeek.add_image(self.image.id, self.image.public_url, is_url = true)
-    link_similar(self.image.id)
+    image_added = ImageSeek.add_image(self.image.id, self.image.public_url, self.tag_list, is_url = true)
+    link_similar(self.image.id, self.tag_list)
   end
 
   #TODO: make this not be recursive, and actually use tag-based weighting/nested search
-  def link_similar(root_image_id, depth = 0, max_depth = 1)
-    similar_without_keywords = ImageSeek.find_images_similar_to(root_image_id, 10)
+  def link_similar(root_image_id, tag_list = [], depth = 0, max_depth = 1)
+    similar_without_keywords = ImageSeek.find_images_similar_to(root_image_id, tag_list, 10)
     similar_without_keywords.each do |image_id, rating|
       unless image_id.to_i == root_image_id.to_i
         if rating.to_f < 90.0 && is_still_found = Finding.find_by_image_id(image_id)
-          #similarity = Similarity.new({:image_id => root_image_id, :similar_image_id => image_id, :rating => rating, :join_type => ""})
-          #similarity.save
           begin
             Similarity.find_or_create_by({:image_id => root_image_id, :similar_image_id => image_id, :join_type => ""}) { |similarity|
               similarity.rating = rating
@@ -37,7 +35,7 @@ class Finding < ActiveRecord::Base
           end
 
           if (depth < max_depth) 
-            link_similar(image_id, depth + 1, max_depth)
+            link_similar(image_id, tag_list, depth + 1, max_depth)
           end
         end
       end
