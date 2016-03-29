@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
     .all
     .joins("JOIN findings ON (findings.image_id = images.id)")
     .group("findings.image_id, images.id")
-    .order("findings.created_at DESC")
+    .order("MAX(findings.created_at) DESC")
     .paginate(
       :per_page => current_per_page,
       :page => current_page, 
