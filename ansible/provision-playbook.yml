@@ -33,6 +33,10 @@
             from_port: 22
             to_port: 22
             cidr_ip: "{{ public_ip }}/32"
+          - proto: tcp
+            from_port: 19999
+            to_port: 19999
+            cidr_ip: "{{ public_ip }}/32"
 
     - ec2:
         instance_type: m3.large
