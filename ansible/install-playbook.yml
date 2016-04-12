@@ -243,18 +243,18 @@
     - name: fetch netdata package
       get_url: dest=/var/tmp sha256sum="{{ netdata_package_sha256sum }}" url="{{ netdata_package_url }}"
 
-    - name: extra netdata package
-      shell: 'tar jxvf /var/tmp/{{ netdata_package_url|basename }}'
+    #- name: extra netdata package
+    #  shell: 'tar jxvf /var/tmp/{{ netdata_package_url|basename }}'
 
-    - name: install flags for netdata memory tweaks
-      sudo: true
-      shell: "{{ item }}"
-      with_items:
-        - echo 1 >/sys/kernel/mm/ksm/run
-        - echo 1000 >/sys/kernel/mm/ksm/sleep_millisecs
+    #- name: install flags for netdata memory tweaks
+    #  sudo: true
+    #  shell: "{{ item }}"
+    #  with_items:
+    #    - echo 1 >/sys/kernel/mm/ksm/run
+    #    - echo 1000 >/sys/kernel/mm/ksm/sleep_millisecs
 
-    - name: install netdata package
-      shell: 'cd netdata-1.0.0 && sudo ./netdata-installer.sh --install /opt --dont-wait'
+    #- name: install netdata package
+    #  shell: 'cd netdata-1.0.0 && sudo ./netdata-installer.sh --install /opt --dont-wait'
 
 
 #dpkg -l | grep jdk
