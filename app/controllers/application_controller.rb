@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_per_page
   def current_per_page
-    params[:per_page].to_i < 1 ? 20 : params[:per_page].to_i
+    params[:per_page].to_i < 1 ? 3 : params[:per_page].to_i
   end
 end
