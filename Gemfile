@@ -35,6 +35,9 @@ gem 'mime-types'
 # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser with XPath and CSS selector support. http://nokogiri.org/
 gem 'nokogiri'
 
+# Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
+gem 'mini_magick'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
