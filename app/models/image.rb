@@ -64,16 +64,31 @@ class Image < ActiveRecord::Base
 
       directory = connection.directories.get(bucket) || connection.directories.create(:key => bucket, :public => true)
 
-      #TODO!!!!
-      # upload that resume
-      new_key = SecureRandom.uuid #Digest::MD5.hexdigest(src)
+      #TODO!!!! upload that resume
+      new_key = SecureRandom.uuid
 
-      file = directory.files.get(new_key)
-      file = directory.files.new(:key => new_key) unless file
-      file.body = body
-      file.acl = 'public-read'
-      saved = file.save
-      errors.add(:src, "could not save to s3!!!") unless file.save
+      saved = ["-original", ""].all? do |size|
+        body.rewind
+
+        if size != "-original"
+          image = MiniMagick::Image.read(body, File.extname(src))
+          image.resize "1024x"
+          image.format "jpeg"
+          body_to_upload = image.to_blob
+        else
+          body_to_upload = body
+        end
+
+        key_with_size = (new_key + size)
+        file = directory.files.get(key_with_size)
+        file = directory.files.new(:key => key_with_size) unless file
+        file.body = body_to_upload
+        file.acl = 'public-read'
+        file.save
+      end
+
+      errors.add(:src, "could not save to s3!!!") unless saved
+
       self.key = new_key
 
       connection = nil
@@ -82,8 +97,8 @@ class Image < ActiveRecord::Base
     end
   end
 
-  def public_url
-    "https://#{bucket}.s3.amazonaws.com/" + key
+  def public_url(size = "")
+    "https://#{bucket}.s3.amazonaws.com/" + (key + size)
   end
 
   def bucket
