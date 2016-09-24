@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'fog'
-
 class Image < ActiveRecord::Base
   attr_accessor :pending_upload
 
